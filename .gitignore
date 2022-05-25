@@ -1,6 +1,6 @@
 docker/storage
 
-.env
+public/.env
 
 .idea
 

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\View;
+
 class SignUpController
 {
-    public function signup(): string
+    public function signUp(): View
     {
-        return 'signup';
+        return View::make('signup');
     }
 
 }
