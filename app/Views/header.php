@@ -7,6 +7,8 @@
 <!--    <link rel="stylesheet" href="--><?php //require_once VIEW_PATH . '../../public/css/style.css'?>
 </head>
 <body>
+<?php
+require_once VIEW_PATH . '/inc/navbar.php'; ?>
 
 <div class="container">
 

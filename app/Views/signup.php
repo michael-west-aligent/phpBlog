@@ -1,5 +1,4 @@
 
-
 <?php
 
     require_once VIEW_PATH . '/header.php';

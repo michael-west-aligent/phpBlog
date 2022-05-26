@@ -28,6 +28,11 @@ $router
     ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
     ->post('/invoices/create', [\App\Controllers\InvoiceController::class, 'index']);
 
+/** MORE ROUTES
+ * users/register
+ * users/login
+ */
+
 
 //echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
 
