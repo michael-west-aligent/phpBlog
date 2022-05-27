@@ -12,21 +12,20 @@ require_once VIEW_PATH . '/header.php';
         <div class="card card-body bg light mt-5">
             <h2> Login </h2>
             <p> Enter username and password </p>
-            //  Users controller, register method...I want the URL root, then go to users/register
-            //DATE IS INVALID, NOT REACHING REGISTER FUNCTION in USER CONTROLLER
             <form action="<?php echo VIEW_PATH . '/users/userLogin'; ?>" method="post">
+
                 <div class="form-group">
                     <label for="email"> Email: <sup>*</sup></label>
-                    <input type="email" name="email" class="form-control form-control-lg <?php echo (!empty($data
-                    ['email'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['email']; ?>">
-                    <span class="invalid-feedback"> <?php echo $data['email_err']; ?> </span>
+                    <input type="email" name="email" class="form-control form-control-lg" <?php echo (!empty($this->params
+                        ['emial_err']) && ($this->params['email_err'] != '')) ? 'is-invalid' : ''; ?> value="<?php echo !empty($this->params['email']) ? $this->params['email'] : ''; ?>">
+                    <span class="invalid-feedback"> <?php echo $this->params['email_err']; ?> </span>
                 </div>
 
                 <div class="form-group">
                     <label for="password"> Password: <sup>*</sup></label>
-                    <input type="password" name="password" class="form-control form-control-lg <?php echo (!empty($data
-                    ['password_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['password']; ?>">
-                    <span class="invalid-feedback"> <?php echo $data['password_err']; ?> </span>
+                    <input type="password" name="password" class="form-control form-control-lg" <?php echo (!empty($this->params
+                        ['password_err']) && ($this->params['password_err'] != '')) ? 'is-invalid' : ''; ?> value="<?php echo !empty($this->params['password']) ? $this->params['password'] : ''; ?>">
+                    <span class="invalid-feedback"> <?php echo $this->params['password_err']; ?> </span>
                 </div>
 
                 <div class="row">
@@ -34,7 +33,6 @@ require_once VIEW_PATH . '/header.php';
                         <input type="submit" value="Login" class="btn btn-success btn-block"
                     </div>
                     <div class="col">
-                        //VIEW PATH TO URL ROOT below
                         <a href="<?php VIEW_PATH . '/index.php';?>
                     /users/register" class="btn btn-light btn-block"> Not registered? Register to login .</a>
                     </div>

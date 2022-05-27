@@ -17,8 +17,6 @@ class UsersController
         //CHECK for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //PROCESS FORM
-            //INIT DATA
-
         }else {
             $data = [
                 'name' => '',
