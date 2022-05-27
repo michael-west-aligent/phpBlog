@@ -38,6 +38,9 @@ class View
         return (string) ob_get_clean();
     }
 
+    /**
+     * @throws ViewNotFoundException
+     */
     public function __toString(): string
     {
         return $this->render();
