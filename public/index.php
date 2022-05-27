@@ -22,14 +22,17 @@ $router = new Router();
 
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-    ->get('/signup', [\App\Controllers\SignUpController::class, 'signup'])
-    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
-    ->get('/invoices', [\App\Controllers\InvoiceController::class, 'invoices'])
-    ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-    ->post('/invoices/create', [\App\Controllers\InvoiceController::class, 'index']);
+//    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/register', [\App\Controllers\UsersController::class, 'register']);
 
 
-//echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
+/** MORE ROUTES
+ * users/register
+ * users/login
+ */
+
 
 (new App(
     $router,
