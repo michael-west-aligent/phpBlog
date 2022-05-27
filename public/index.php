@@ -22,9 +22,10 @@ $router = new Router();
 
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
-    ->get('/users/login', [\App\Controllers\LoginController::class, 'userLogin'])
-    ->get('/users/register', [\App\Controllers\UsersController::class, 'register']);
+//    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/register', [\App\Controllers\UsersController::class, 'register']);
 
 
 /** MORE ROUTES

@@ -12,18 +12,14 @@ class UsersController
     }
 
 
-    public function userRegister(): View
-    {
-        return View::make('users/userRegister');
-    }
-
+/** REGISTER A NEW USER  */
     public function register(){
         //CHECK for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //PROCESS FORM
+            //INIT DATA
+
         }else {
-//            echo 'load form';
-            //LOAD FORM
             $data = [
                 'name' => '',
                 'email' => '',
@@ -40,4 +36,28 @@ class UsersController
             return View::make('users/userRegister', $data);
         }
     }
+
+    /** LOGIN AS AN EXISTING USER  */
+    public function userLogin(){
+        //CHECK for POST
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //PROCESS FORM
+        }else {
+//            echo 'load form';
+            //LOAD FORM
+            $data = [
+                'email' => '',
+                'password' => '',
+                'email_err' => '',
+                'password_err' => '',
+            ];
+
+            //LOAD VIEW FILE
+//            $this->view('users/userRegister.php', $data);
+            return View::make('users/userLogin', $data);
+        }
+    }
+
+
+
 }

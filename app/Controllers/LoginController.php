@@ -8,15 +8,15 @@ use App\View;
 
 class LoginController
 {
-    public function login(): View
-    {
-        return View::make('login');
-    }
-
-    public function userLogin(): View
-    {
-        return View::make('users/userLogin');
-    }
+//    public function login(): View
+//    {
+//        return View::make('login');
+//    }
+//
+//    public function userLogin(): View
+//    {
+//        return View::make('users/userLogin');
+//    }
 
 
 }
