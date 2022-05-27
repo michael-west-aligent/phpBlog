@@ -6,7 +6,7 @@
         <div class="card card-body bg light mt-5">
         <h2> Make An Account</h2>
             <p> To start bloggin, please complete this form </p>
-            <form action="<?php echo VIEW_PATH . '/users/userRegister.php'; ?> users/register" method="post">
+            <form action="/users/register" method="post">
                 <div class="form-group">
                     <label for="name"> Name: <sup>*</sup></label>
                     <input type="text" name="name" class="form-control form-control-lg" <?php echo (!empty($this->params
@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="confirm_password"> Password: <sup>*</sup></label>
-                    <input type="confirm_password" name="confirm_password" class="form-control form-control-lg" <?php echo (!empty($this->params
+                    <label for="confirm_password"> Confirm Password: <sup>*</sup></label>
+                    <input type="password" name="confirm_password" class="form-control form-control-lg" <?php echo (!empty($this->params
                         ['confirm_password_err']) && ($this->params['confirm_password_err'] != '')) ? 'is-invalid' : ''; ?> value="<?php echo !empty($this->params['confirm_password']) ? $this->params['confirm_password'] : ''; ?>">
                     <span class="invalid-feedback"> <?php echo $this->params['confirm_password_err']; ?> </span>
                 </div>
@@ -44,8 +44,9 @@
 
                 <div class="row">
                     <div class="col">
-                    <input type="submit" value="Register" class="btn btn-success btn-block"
+                    <input type="submit" value="Register" class="btn btn-success btn-block"/>
                     </div>
+
                     <div class="col">
                     <a href="<?php VIEW_PATH . '/index.php';?>
                     /users/login" class="btn btn-light btn-block"> Already a blogger? Login instead.</a>

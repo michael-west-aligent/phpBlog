@@ -25,7 +25,8 @@ $router
 //    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
-    ->post('/users/register', [\App\Controllers\UsersController::class, 'register']);
+    ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin']);
 
 
 /** MORE ROUTES

@@ -12,8 +12,7 @@ require_once VIEW_PATH . '/header.php';
         <div class="card card-body bg light mt-5">
             <h2> Login </h2>
             <p> Enter username and password </p>
-            <form action="<?php echo VIEW_PATH . '/users/userLogin'; ?>" method="post">
-
+            <form action="/users/userLogin" method="post">
                 <div class="form-group">
                     <label for="email"> Email: <sup>*</sup></label>
                     <input type="email" name="email" class="form-control form-control-lg" <?php echo (!empty($this->params
@@ -30,11 +29,10 @@ require_once VIEW_PATH . '/header.php';
 
                 <div class="row">
                     <div class="col">
-                        <input type="submit" value="Login" class="btn btn-success btn-block"
+                        <input type="submit" value="Login" class="btn btn-success btn-block"/>
                     </div>
                     <div class="col">
-                        <a href="<?php VIEW_PATH . '/index.php';?>
-                    /users/register" class="btn btn-light btn-block"> Not registered? Register to login .</a>
+                        <a href="/users/register" class="btn btn-light btn-block"> Not registered? Register to login .</a>
                     </div>
                 </div>
 
