@@ -18,7 +18,6 @@ class UsersController
     public function register(){
         //CHECK for POST REQUEST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-//            die('submit');
              //SANITIZE POST DATA
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -38,7 +37,13 @@ class UsersController
             if(empty($data['email'])){
                 $data['email_err'] = 'Please enter an email';
             } else {
-                //CHECK EMAIL IS NOT BEING USED
+
+                //CHECK EMAIL IS NOT ALREADY IN DB
+                if($this->userModel->findUserByEmail($data)){
+                    $data['email_err'] = "Email being used";
+                }
+//            if($this->userModel->currentUser($data)){
+//                $data['email_err'] = "Email being used";
             }
 
             //Validate Name
@@ -119,6 +124,12 @@ class UsersController
             //Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
+            } else {
+                if ($this->userModel->findUserByEmail($data)){
+                    //USER FOUND
+                } else {
+                    $data['email_err'] = 'No user with that email ';
+                }
             }
 
             //Validate Password
@@ -126,20 +137,9 @@ class UsersController
                 $data['password_err'] = 'Please enter a password';
             }
 
-            /** STARTED HERE STEP 1 */
-            //check for user email
-//            if($this->userModel->findUserByEmail($data['email'])){
-//                //User Found
-//            }else {
-//                //User not found
-//                $data['email_err'] = 'No user with that email';
-//            }
-
-
             //MAKE SURE ERRORS ARE EMPTY
-            if (empty($this->data['email_err']) && empty($this->data['password_err'])) {
+            if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
-
 
                 //Check and set logged in User /** STEP 2 here logged in user takes in email and password  */
 //                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
@@ -151,10 +151,9 @@ class UsersController
 //                }
 //                return View::make('users/usersLogin', $data);
 
-
             } else {
                 //LOAD VIEW WITH ERRORS
-                return View::make('users/usersLogin', $data);
+                return View::make('user/userLogin', $data);
             }
 
 

@@ -30,10 +30,6 @@ class User {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
         $userStatement->execute([$data['email']]);
 
-        //if statement, to check result of select statement
-
-
-
         $dataRow = $userStatement->fetch();
 //        var_dump($row);
         $hashed_password = $dataRow['password'];
@@ -43,5 +39,21 @@ class User {
              return false;
          }
     }
+
+//    public function checkUserReal($data){
+//        $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
+//        $userStatement->execute([$data['email']]);
+//
+//        return $userStatement->fetch();
+//    }
+
+    public function findUserByEmail($data) {
+        $userStatement = $this->db->prepare('SELECT * FROM users WHERE email =?');
+        $userStatement->execute([$data['email']]);
+
+        return $userStatement->fetch();
+    }
+
+
 
 }
