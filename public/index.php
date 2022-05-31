@@ -10,10 +10,9 @@ use App\Config\App;
 use App\Config\Config;
 use App\Routers\Router;
 use App\Controllers\HomeController;
+use App\Config\DB;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-
-
 $dotenv->load();
 
 const VIEW_PATH = __DIR__ . '/../app/Views';
@@ -22,14 +21,13 @@ $router = new Router();
 
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-    ->get('/signup', [\App\Controllers\SignUpController::class, 'signup'])
-    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
-    ->get('/invoices', [\App\Controllers\InvoiceController::class, 'invoices'])
-    ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-    ->post('/invoices/create', [\App\Controllers\InvoiceController::class, 'index']);
+//    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin']);
 
-
-//echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
 
 (new App(
     $router,
