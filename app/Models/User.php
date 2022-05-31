@@ -50,9 +50,10 @@ class User {
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
-
-        return $userStatement->fetch();
+        $dataRow = $userStatement->fetch();
+        return $dataRow;
     }
+
 
 
 

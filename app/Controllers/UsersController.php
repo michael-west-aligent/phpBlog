@@ -42,8 +42,6 @@ class UsersController
                 if($this->userModel->findUserByEmail($data)){
                     $data['email_err'] = "Email being used";
                 }
-//            if($this->userModel->currentUser($data)){
-//                $data['email_err'] = "Email being used";
             }
 
             //Validate Name
@@ -78,14 +76,11 @@ class UsersController
 
               //REGISTER USER
               if($this->userModel->newRegister($data)){
-//                  echo('You are registerd');
-                  //FUTURE NOTE: return to blpgPost. if registered //
+
                   header('location: ' . 'http://localhost:8000/users/blogPosts');
               }
             } else {
-                //LOAD VIEW WITH ERRORS
-//                $this->view('users/register', $data);
-//              var_dump($data);
+                //LOAD VIEW WITH ERRORs
                 return View::make('users/userRegister', $data);
 
             }
@@ -109,6 +104,7 @@ class UsersController
 
     /** LOGIN AS AN EXISTING USER ------------------------------------------------------------ */
     public function userLogin(){
+
         //CHECK for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -121,38 +117,56 @@ class UsersController
                 'password_err' => '',
             ];
 
+            $dataRow = $this->userModel->findUserByEmail($data);
             //Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
-                if ($this->userModel->findUserByEmail($data)){
-                    //USER FOUND
-                } else {
+                if (!$dataRow){
                     $data['email_err'] = 'No user with that email ';
                 }
             }
+            $hashed_password = $dataRow['password'];
 
             //Validate Password
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
-            } else {
+            } elseif(!password_verify($data['password'], $hashed_password)) {
                 $data['password_err'] = 'Password no matchy match';
             }
+//            var_dump($data);
 
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
+
+
+                /** STARTING SESSIONS HERE */
+
+                //Check and set logged in user
+//                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
+//                if($loggedInUser){
+//                //CREATE SESSIN VARIABLES
+//                    $this->createUsersession($loggedInUser);
+//                } else  {
+//                    $data['password_err'] = 'Password incorrect';
+//                    return View::make('users/userLogin', $data);
+//                }
+
+
+
+
             } else {
                 //LOAD VIEW WITH ERRORS
                 return View::make('users/userLogin', $data);
             }
-
             //CHECK IF CURRENT USER DATA EXISTS
             if ($this->userModel->currentUser($data)) {
                 header('location: ' . 'http://localhost:8000/users/blogPosts');
             } else {
                 return View::make('users/userLogin');
             }
+
         }else {
             $data = [
                 'email' => '',
@@ -164,4 +178,14 @@ class UsersController
             return View::make('users/userLogin', $data);
         }
     }
+
+
+//    public function createUserSession($user){
+//        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
+//        $_SESSION['user_id'] = $user->id;
+//        $_SESSION['user_email'] = $user->email;
+//        $_SESSION['user_name'] = $user->name;
+//        //redirect to post controller
+//        redirect('pages/index');
+//    }
 }
