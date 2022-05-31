@@ -39,7 +39,6 @@ class UsersController
                 $data['email_err'] = 'Please enter an email';
             } else {
                 //CHECK EMAIL IS NOT BEING USED
-
             }
 
             //Validate Name
@@ -63,8 +62,10 @@ class UsersController
                 }
             }
 
+
+
             //Make sure errors are empty
-          if(empty($this->params['email_err']) && empty($this->params['name_err']) && empty($this->params['password_err']) && empty($this->params['confirm_password_err'])){
+          if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
                 //VALIDATED
 
                 //HASH PASSWORD
@@ -79,6 +80,7 @@ class UsersController
             } else {
                 //LOAD VIEW WITH ERRORS
 //                $this->view('users/register', $data);
+//              var_dump($data);
                 return View::make('users/userRegister', $data);
 
             }
@@ -124,21 +126,34 @@ class UsersController
                 $data['password_err'] = 'Please enter a password';
             }
 
-            /** DO I NEED THIS  */
+            /** STARTED HERE STEP 1 */
             //check for user email
-            if($this->userModel->findUserByEmail($data['email'])){
-            }else {
-                $data['email_err'] = 'No user with that email';
-            }
+//            if($this->userModel->findUserByEmail($data['email'])){
+//                //User Found
+//            }else {
+//                //User not found
+//                $data['email_err'] = 'No user with that email';
+//            }
 
 
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($this->data['email_err']) && empty($this->data['password_err'])) {
                 //VALIDATED
 
+
+                //Check and set logged in User /** STEP 2 here logged in user takes in email and password  */
+//                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
+//
+//                if($loggedInUser) {
+//                    //Create Session
+//                } else {
+//                    $data['password_err'] = 'Password incorrect';
+//                }
+//                return View::make('users/usersLogin', $data);
+
+
             } else {
                 //LOAD VIEW WITH ERRORS
-
                 return View::make('users/usersLogin', $data);
             }
 

@@ -27,21 +27,21 @@ class User {
 
     //Login as a user
     public function currentUser($data){
-        $userToLogin = $this->db->prepare('SELECT * FROM users WHERE email = ?');
-        $userToLogin->execute([$data['email']]);
+        $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
+        $userStatement->execute([$data['email']]);
 
         //if statement, to check result of select statement
 
-//        $row = $this->db->fetch();
-//        $hashed_password = $row->password;
+
+
+        $dataRow = $userStatement->fetch();
+//        var_dump($row);
+        $hashed_password = $dataRow['password'];
         if(password_verify($data['password'], $hashed_password)) {
-             return $row;
+             return $dataRow;
          }else{
              return false;
          }
     }
 
-    public function findUserByEmail(mixed $email)
-    {
-    }
 }
