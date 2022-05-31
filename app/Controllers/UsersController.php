@@ -135,27 +135,17 @@ class UsersController
             //Validate Password
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
+            } else {
+                $data['password_err'] = 'Password no matchy match';
             }
 
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
-
-                //Check and set logged in User /** STEP 2 here logged in user takes in email and password  */
-//                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
-//
-//                if($loggedInUser) {
-//                    //Create Session
-//                } else {
-//                    $data['password_err'] = 'Password incorrect';
-//                }
-//                return View::make('users/usersLogin', $data);
-
             } else {
                 //LOAD VIEW WITH ERRORS
-                return View::make('user/userLogin', $data);
+                return View::make('users/userLogin', $data);
             }
-
 
             //CHECK IF CURRENT USER DATA EXISTS
             if ($this->userModel->currentUser($data)) {
@@ -171,7 +161,6 @@ class UsersController
                 'password_err' => '',
             ];
             //LOAD VIEW FILE
-//            $this->view('users/userRegister.php', $data);
             return View::make('users/userLogin', $data);
         }
     }
