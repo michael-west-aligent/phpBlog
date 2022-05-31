@@ -10,10 +10,9 @@ use App\Config\App;
 use App\Config\Config;
 use App\Routers\Router;
 use App\Controllers\HomeController;
+use App\Config\DB;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-
-
 $dotenv->load();
 
 const VIEW_PATH = __DIR__ . '/../app/Views';
@@ -26,13 +25,8 @@ $router
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
-    ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin']);
-
-
-/** MORE ROUTES
- * users/register
- * users/login
- */
+    ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin']);
 
 
 (new App(

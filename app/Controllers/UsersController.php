@@ -5,18 +5,21 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\View;
-/** This was formally in SignUpController but got moved to UsersController */
+use App\Models\User;
+
 class UsersController
 {
-    public function __construct(){
-    }
+    protected $userModel;
 
+    public function __construct(){
+        $this->userModel = new User();
+    }
 /** REGISTER A NEW USER  */
     public function register(){
-        //CHECK for POST
+        //CHECK for POST REQUEST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 //            die('submit');
-             //SANITIZE POST DATE
+             //SANITIZE POST DATA
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             //PROCESS FORM
@@ -34,6 +37,9 @@ class UsersController
             //Validate Email
             if(empty($data['email'])){
                 $data['email_err'] = 'Please enter an email';
+            } else {
+                //CHECK EMAIL IS NOT BEING USED
+
             }
 
             //Validate Name
@@ -58,17 +64,22 @@ class UsersController
             }
 
             //Make sure errors are empty
-//            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
-//          if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
-//          if(empty($this->params['email_err']) && empty($this->params['name_err']) && empty($this->params['password_err']) && empty($this->params['confirm_password_err'])){
-          if(empty($this->data['email_err']) && empty($this->data['name_err']) && empty($this->data['password_err']) && empty($this->data['confirm_password_err'])){
+          if(empty($this->params['email_err']) && empty($this->params['name_err']) && empty($this->params['password_err']) && empty($this->params['confirm_password_err'])){
                 //VALIDATED
-                die('SUCCESS');
+
+                //HASH PASSWORD
+              $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+              //REGISTER USER
+              if($this->userModel->newRegister($data)){
+//                  echo('You are registerd');
+                  //FUTURE NOTE: return to blpgPost. if registered //
+                  header('location: ' . 'http://localhost:8000/users/blogPosts');
+              }
             } else {
                 //LOAD VIEW WITH ERRORS
-                //$this->view('users/register', $data);
+//                $this->view('users/register', $data);
                 return View::make('users/userRegister', $data);
-
 
             }
         }else {
@@ -89,45 +100,55 @@ class UsersController
         }
     }
 
-    /** LOGIN AS AN EXISTING USER  */
+    /** LOGIN AS AN EXISTING USER ------------------------------------------------------------ */
     public function userLogin(){
         //CHECK for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             //PROCESS FORM
-            $data =[
+            $data = [
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'email_err' => '',
                 'password_err' => '',
             ];
 
-
             //Validate Email
-            if(empty($data['email'])){
+            if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             }
 
             //Validate Password
-            if(empty($data['password'])){
+            if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
             }
+
+            /** DO I NEED THIS  */
+            //check for user email
+            if($this->userModel->findUserByEmail($data['email'])){
+            }else {
+                $data['email_err'] = 'No user with that email';
+            }
+
+
             //MAKE SURE ERRORS ARE EMPTY
-            if(empty($this->data['email_err']) && empty($this->data['password_err'])){
+            if (empty($this->data['email_err']) && empty($this->data['password_err'])) {
                 //VALIDATED
-                die('SUCCESS');
+
             } else {
                 //LOAD VIEW WITH ERRORS
-                //$this->view('users/register', $data);
+
                 return View::make('users/usersLogin', $data);
             }
 
 
-
-//            die('login');
-            //PROCESS FORM
+            //CHECK IF CURRENT USER DATA EXISTS
+            if ($this->userModel->currentUser($data)) {
+                header('location: ' . 'http://localhost:8000/users/blogPosts');
+            } else {
+                return View::make('users/userLogin');
+            }
         }else {
             $data = [
                 'email' => '',
