@@ -9,5 +9,7 @@
     </div>
 </div>
 
+<?php var_dump($this->params['posts']); ?>
+
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>

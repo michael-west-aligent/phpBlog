@@ -6,15 +6,28 @@ namespace App\Controllers;
 
 use App\View;
 //use App\Models\Posts; THIS IS NOT DONE YET.
-
+use App\Models\Post;
 
 class PostControllers{
 
+    protected $postModel;
+
+    public function __construct()
+    {
+        $this->postModel = new Post();
+    }
 
 
     public function blogPosts(){
+        //GET ALL POSTS
+        $posts = $this->postModel->getAllBlogPosts();
+
+            $data = [
+                'posts' => $posts
+            ];
         //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
-        return View::make('/posts/index');
+        return View::make('/posts/index', $data);
     }
+
 
 }

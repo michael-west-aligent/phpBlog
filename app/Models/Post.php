@@ -4,8 +4,9 @@ namespace App\Models;
 
 use App\Config\App;
 
-class Posts {
+class Post {
 
+    //use the DB
     public $db;
 
 
@@ -14,11 +15,12 @@ class Posts {
         $this->db = App::db();
     }
 
-
+    //GET ALL THE BLOG POTS FROM DB
     public function getAllBlogPosts()
     {
-        $this->db->query('SELECT * FROM posts');
-
-        $results
+        $postStatement = $this->db->query('SELECT * FROM posts');
+        //THIS SHOULD RETURN AN ARRAY OF OBJECT BACK
+        $results = $postStatement->fetchAll();
+        return $results;
     }
 }

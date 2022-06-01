@@ -44,12 +44,6 @@ require_once VIEW_PATH . '/header.php';
 
 <?php require_once VIEW_PATH . '/footer.php';?>
 
-
-
-
-
-
-
 <?php
 require_once VIEW_PATH . '/footer.php';
 ?>
