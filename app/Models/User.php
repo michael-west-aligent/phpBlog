@@ -28,6 +28,7 @@ class User {
     //Login as a user
     public function currentUser($data){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
+//        echo ($data['email']);
         $userStatement->execute([$data['email']]);
 
         $dataRow = $userStatement->fetch();

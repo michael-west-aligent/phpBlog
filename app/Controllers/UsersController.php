@@ -103,8 +103,8 @@ class UsersController
     }
 
     /** LOGIN AS AN EXISTING USER ------------------------------------------------------------ */
-    public function userLogin(){
 
+    public function userLogin(){
         //CHECK for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -140,22 +140,10 @@ class UsersController
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
 
-
-                /** STARTING SESSIONS HERE */
-
-                //Check and set logged in user
-//                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
-//                if($loggedInUser){
-//                //CREATE SESSIN VARIABLES
-//                    $this->createUsersession($loggedInUser);
-//                } else  {
-//                    $data['password_err'] = 'Password incorrect';
-//                    return View::make('users/userLogin', $data);
-//                }
-
-
-
-
+                $currentUser = $this->userModel->currentUser($data);
+                if($currentUser){
+                    $this->createUserSession($currentUser);
+                }
             } else {
                 //LOAD VIEW WITH ERRORS
                 return View::make('users/userLogin', $data);
@@ -179,13 +167,40 @@ class UsersController
         }
     }
 
+    public function createUserSession($user){
+        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_email'] = $user['email'];
+        $_SESSION['user_username'] = $user['username'];
+        //redirect to post controller
+//        die('working');
+        header('location '. '/users/blogPosts');
+    }
 
-//    public function createUserSession($user){
-//        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
-//        $_SESSION['user_id'] = $user->id;
-//        $_SESSION['user_email'] = $user->email;
-//        $_SESSION['user_name'] = $user->name;
-//        //redirect to post controller
-//        redirect('pages/index');
-//    }
+    //CREATE FUNCTIN TO DESTROY THE DESSIN USING DESTROY SESSIN KEYWORD>
+    //LOGOUT FUNCTION
+    //DESTROY SESSION
+
+    public function logout(){
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_email']);
+        unset($_SESSION['user_username']);
+        $data = [
+            'email' => '',
+            'password' => '',
+            'email_err' => '',
+            'password_err' => '',
+        ];
+        session_destroy();
+        return View::make('users/userLogin', $data);
+    }
+
+    public function isLoggedIn(){
+        if($_SESSION['user_id']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

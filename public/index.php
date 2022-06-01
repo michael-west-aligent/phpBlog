@@ -1,6 +1,7 @@
 <?php
 
 //require_once '../app/bootstrap.php';
+session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 //Init Core Library
@@ -21,12 +22,13 @@ $router = new Router();
 
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-//    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin']);
+
 
 
 (new App(
