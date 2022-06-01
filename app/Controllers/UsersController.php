@@ -150,7 +150,7 @@ class UsersController
             }
             //CHECK IF CURRENT USER DATA EXISTS
             if ($this->userModel->currentUser($data)) {
-                header('location: ' . 'http://localhost:8000/users/blogPosts');
+                header('location: ' . 'http://localhost:8000/blogPosts');
             } else {
                 return View::make('users/userLogin');
             }

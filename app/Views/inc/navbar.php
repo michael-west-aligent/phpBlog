@@ -43,9 +43,11 @@
                 </li>
             </ul>
         <?php else : ?>
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout">Logout</a>
             </li>
+        </ul>
         <?php endif ?>
 
 

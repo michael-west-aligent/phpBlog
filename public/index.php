@@ -4,8 +4,6 @@
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
-//Init Core Library
-//$init = new Core;
 
 use App\Config\App;
 use App\Config\Config;
@@ -27,8 +25,8 @@ $router
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
-    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin']);
-
+    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts']);
 
 
 (new App(
