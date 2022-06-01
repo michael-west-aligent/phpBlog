@@ -19,9 +19,7 @@ class DB
             PDO::ATTR_EMULATE_PREPARES   => false,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
-
         try {
-
             $this->pdo = new PDO(
                 $config['driver'] . ':host=' . $config['host'] . ';dbname=' . $config['database'],
                 $config['user'],
@@ -35,6 +33,8 @@ class DB
 
     public function __call(string $name, array $arguments)
     {
+//        var_dump($name);
+//        return call_user_func_array('name', $args);
         return call_user_func_array([$this->pdo, $name], $arguments);
     }
 }
