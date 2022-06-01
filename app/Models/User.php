@@ -28,11 +28,9 @@ class User {
     //Login as a user
     public function currentUser($data){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
-//        echo ($data['email']);
         $userStatement->execute([$data['email']]);
 
         $dataRow = $userStatement->fetch();
-//        var_dump($row);
         $hashed_password = $dataRow['password'];
         if(password_verify($data['password'], $hashed_password)) {
              return $dataRow;
@@ -40,13 +38,6 @@ class User {
              return false;
          }
     }
-
-//    public function checkUserReal($data){
-//        $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
-//        $userStatement->execute([$data['email']]);
-//
-//        return $userStatement->fetch();
-//    }
 
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email =?');

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\View;
-//use App\Models\Posts; THIS IS NOT DONE YET.
 use App\Models\Post;
 
 class PostControllers{

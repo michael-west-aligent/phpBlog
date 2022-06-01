@@ -11,5 +11,12 @@
 
 <?php var_dump($this->params['posts']); ?>
 
+<?php foreach($this->params['posts'] as $posts) : ?>
+
+<div class="card card-body mb-3">
+    <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>
+</div>
+
+<?php endforeach; ?>
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
