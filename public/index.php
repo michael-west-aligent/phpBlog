@@ -19,6 +19,7 @@ const VIEW_PATH = __DIR__ . '/../app/Views';
 $router = new Router();
 
 $router
+    //METHOD(i.e get) -ROUTE i.e (/) - CONTROLLER (i.e HOMECONTROLLER)  -FUNCTION NAME FOUND IN CONTROLLER (i.e HOME)
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
