@@ -1,6 +1,6 @@
 <?php require_once VIEW_PATH . '/header.php'; ?>
 
-<div class="row">
+<div class="row mb-4">
     <div class="col-md-6">
         <h1> Blog Posts</h1>
     </div>
@@ -15,6 +15,9 @@
 
 <div class="card card-body mb-3">
     <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>
+    <div class="bg-light-2 p-2 mb-3">
+        Blogged By
+    </div>
 </div>
 
 <?php endforeach; ?>
