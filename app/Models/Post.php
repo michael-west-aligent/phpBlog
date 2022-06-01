@@ -20,7 +20,9 @@ class Post {
     {
         $postStatement = $this->db->query('SELECT *,
                                                     posts.id as postId, 
-                                                    users.id as userId
+                                                    users.id as userId, 
+                                                    posts.created_at as postCreated,
+                                                    users.created_at as userCreated
                                                     FROM posts
                                                     INNER JOIN users
                                                     ON posts.user_id = users.id

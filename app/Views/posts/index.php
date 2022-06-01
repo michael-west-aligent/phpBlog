@@ -16,7 +16,7 @@
 <div class="card card-body mb-3">
     <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>
     <div class="bg-light p-2 mb-3">
-        Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['created_at']; ?>
+        Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['postCreated']; ?>
     </div>
 </div>
 
