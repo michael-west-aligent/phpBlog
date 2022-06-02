@@ -31,4 +31,14 @@ class Post {
         $results = $postStatement->fetchAll();
         return $results;
     }
+
+
+    public function addPost($data){
+        $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
+        $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
+        return true;
+
+    }
+
+
 }
