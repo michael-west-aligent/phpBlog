@@ -31,10 +31,11 @@ class PostControllers{
     public function addBlog() {
 
         $data = [
-            'posts' => $posts
+            'title' => '',
+            'body' => '',
         ];
         //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
-        return View::make('/posts/index', $data);
+        return View::make('/posts/addBlog', $data);
     }
 
 

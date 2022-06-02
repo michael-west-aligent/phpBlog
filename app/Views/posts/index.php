@@ -5,7 +5,7 @@
         <h1> Blog Posts</h1>
     </div>
     <div class="col-md-6">
-        <a href="<?php VIEW_PATH . 'blog/addBlog';?>" class="btn btn-primary float-right"> Add A Blog </a>
+        <a href="/blog/addBlog" class="btn btn-primary float-right"> Add A Blog </a>
     </div>
 </div>
 
