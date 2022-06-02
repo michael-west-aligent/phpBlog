@@ -29,7 +29,6 @@ class PostControllers{
     }
 
     public function addBlog() {
-
         $data = [
             'title' => '',
             'body' => '',
