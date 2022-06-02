@@ -47,6 +47,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout">Logout</a>
             </li>
+            <a class="nav-link" href="/blogPosts"> Return to All Blogs </a>
         </ul>
         <?php endif ?>
 

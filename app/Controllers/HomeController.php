@@ -15,4 +15,6 @@ class HomeController
 
         return View::make('index');
     }
+
+
 }

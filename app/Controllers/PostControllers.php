@@ -29,13 +29,44 @@ class PostControllers{
     }
 
     public function addBlog() {
-        $data = [
-            'title' => '',
-            'body' => '',
-        ];
-        //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
-        return View::make('/posts/addBlog', $data);
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
+            //CREATE NEW VARIABLE CALLED POST
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = [
+                'title' => trim($_POST['title']),
+                'blog_body' => trim($_POST['blog_body']),
+                //USER_ID IS COMING FROM CURRENT LOGGED IN USER.
+                'user_id' => $_SESSION['user_id'],
+                //ERROR VARIABLES
+                'title_err' => '',
+                'blog_body_err' => '',
+                ];
+
+                //VALIDATE data
+                if(empty($data['title'])) {
+                    $data['title_err'] = 'Please enter a title';
+                }
+                 if(empty($data['blog_body'])) {
+                $data['blog_body_err'] = 'Please enter a blog body';
+                 }
+
+                 //Make sure no errors
+                if(empty($data['title_err']) && empty($data['blog_body_err'])){
+                }else {
+                    //LOAD VIEWS WITH ERRORS
+                    return View::make('posts/addBlog', $data);
+                }
+        } else {
+            $data = [
+                'title' => '',
+                'blog_body' => '',
+                'title_err' => '',
+                'blog_body_err' => '',
+
+            ];
+            //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
+            return View::make('/posts/addBlog', $data);
+        }
     }
-
-
 }

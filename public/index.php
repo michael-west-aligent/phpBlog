@@ -28,8 +28,9 @@ $router
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
-    ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog']);
 
+    ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+    ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog']);
 
 (new App(
     $router,
