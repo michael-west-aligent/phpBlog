@@ -5,11 +5,11 @@
         <h1> Blog Posts</h1>
     </div>
     <div class="col-md-6">
-        <a href="<?php VIEW_PATH . 'blog/add.php';?>" class="btn btn-primary float-right"> Add A Blog </a>
+        <a href="<?php VIEW_PATH . 'blog/addBlog';?>" class="btn btn-primary float-right"> Add A Blog </a>
     </div>
 </div>
 
-<?php var_dump($this->params['posts']); ?>
+<?php //var_dump($this->params['posts']); ?>
 
 <?php foreach($this->params['posts'] as $posts) : ?>
 

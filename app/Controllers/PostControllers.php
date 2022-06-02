@@ -28,5 +28,14 @@ class PostControllers{
         return View::make('/posts/index', $data);
     }
 
+    public function addBlog() {
+
+        $data = [
+            'posts' => $posts
+        ];
+        //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
+        return View::make('/posts/index', $data);
+    }
+
 
 }
