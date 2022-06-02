@@ -18,6 +18,8 @@
     <div class="bg-light p-2 mb-3">
         Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['postCreated']; ?>
     </div>
+    <p class="card-text"><?php echo $posts['blog_body']?> </p>
+    <a href="<?php VIEW_PATH . 'blog/posts/show/';?> <?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
 </div>
 
 <?php endforeach; ?>
