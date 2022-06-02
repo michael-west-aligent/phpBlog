@@ -32,7 +32,8 @@ $router
 
     //IS IT OK TO HAVE 2 VERY SIMILAR
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
-    ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog']);
+    ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+    ->post('/blog/show/', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
 
 (new App(
     $router,

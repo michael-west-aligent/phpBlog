@@ -75,4 +75,16 @@ class PostControllers{
             return View::make('/posts/addBlog', $data);
         }
     }
+
+        //SHOW A SINGLE BLOG BASED ON ITS POT ID
+        //'showSingleBlog' gets passed in an ID
+        //posts(the controller)/showSingleBlog (the method)/ anything after is a parameter.
+    public function showSingleBlog($id){
+        $post = $this->postModel->getPostById($id);
+
+        $data = [];
+
+        return View::make('/posts/show', $data);
+    }
+
 }

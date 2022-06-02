@@ -32,7 +32,7 @@ class Post {
         return $results;
     }
 
-
+    //AD A NEW BLOG
     public function addPost($data){
         $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
         $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
@@ -40,5 +40,8 @@ class Post {
 
     }
 
+    public function getPostById($id){
+
+    }
 
 }

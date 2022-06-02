@@ -19,7 +19,9 @@
         Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['postCreated']; ?>
     </div>
     <p class="card-text"><?php echo $posts['blog_body']?> </p>
-    <a href="<?php VIEW_PATH . 'blog/posts/show/';?> <?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
+<!-- ORIGINAL    <a href="--><?php //VIEW_PATH . 'blog/posts/show/';?><!-- --><?php //echo $posts['postId'];?><!--" class="btn btn-dark"> View the Full Blog</a>-->
+    <a href="/blog/show/<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
+<!--IT IS GETTING THE SHOW/ID NUMVER FROM THE ABOVE LINE -->
 </div>
 
 <?php endforeach; ?>
