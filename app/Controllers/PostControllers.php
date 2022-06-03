@@ -86,10 +86,24 @@ class PostControllers{
         //posts(the controller)/showSingleBlog (the method)/ anything after is a parameter.
     public function showSingleBlog()
     {
+        $posts = $this->postModel->getPostById();
+
+//        $data = [
+//            'posts' => $posts
+//        ];
+            var_dump($posts);
+        //ALL COMMENTED OUT IS 1 thing
 //      $getBlogId = $_GET['id'];
         $data = [
-            'id' => $_GET['id']
+            'id' => $posts['id'],
+            'title' => $posts['title'],
+            'blog_body' => $posts['blog_body'],
+            'user_id' => $posts['user_id'],
+            'created_at' =>$posts['created_at'],
+
         ];
+
+
 //    var_dump($_GET['id']);
         return View::make ('posts/show', $data);
 

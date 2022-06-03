@@ -9,19 +9,18 @@
     </div>
 </div>
 
+
 <?php //var_dump($this->params['posts']); ?>
 
 <?php foreach($this->params['posts'] as $posts) : ?>
-<!--    <form action="/blog/show/?" method="post">-->
 <div class="card card-body mb-3">
     <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>
     <div class="bg-light p-2 mb-3">
         Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['postCreated']; ?>
     </div>
     <p class="card-text"><?php echo $posts['blog_body']?> </p>
-<!-- ORIGINAL    <a href="--><?php //VIEW_PATH . 'blog/posts/show/';?><!-- --><?php //echo $posts['postId'];?><!--" class="btn btn-dark"> View the Full Blog</a>-->
-    <a href="/blog/show?id=<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
-<!--IT IS GETTING THE SHOW/ID NUMVER FROM THE ABOVE LINE -->
+<!--    <a href="/blog/show?id=--><?php //echo $posts['postId'];?><!--" class="btn btn-dark"> View the Full Blog</a>-->
+    <a href="/blog/show?<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
 </div>
 
 <?php endforeach; ?>

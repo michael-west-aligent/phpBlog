@@ -40,8 +40,15 @@ class Post {
 
     }
 
-//    public function getPostById($id){
-//
-//    }
+
+    public function getPostById(){
+    $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
+
+    $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        echo($id);
+    $singleBlog->execute([$id]);
+    $results = $singleBlog->fetch();
+    return $results;
+    }
 
 }
