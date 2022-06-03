@@ -12,9 +12,12 @@ class HomeController
 {
     public function home()
     {
-
         return View::make('index');
     }
 
+//    public function errorPage()
+//    {
+//        return View::make()
+//    }
 
 }

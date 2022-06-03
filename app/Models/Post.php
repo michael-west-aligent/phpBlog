@@ -40,8 +40,8 @@ class Post {
 
     }
 
-    public function getPostById($id){
-
-    }
+//    public function getPostById($id){
+//
+//    }
 
 }

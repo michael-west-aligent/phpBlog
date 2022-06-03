@@ -28,12 +28,19 @@ $router
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
-
-
-    //IS IT OK TO HAVE 2 VERY SIMILAR
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
-    ->post('/blog/show/', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+
+
+    //STUCK HERE
+    ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+//    ->get('/blog/show/:[$id]', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+//    ->get('/blog/show/[$id]', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+
+
 
 (new App(
     $router,

@@ -76,15 +76,43 @@ class PostControllers{
         }
     }
 
+
+    /** SHOW PAGE FOR A SINGLE BLOG
+     *just need the ID param coming into the route.
+     */
+
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
         //'showSingleBlog' gets passed in an ID
         //posts(the controller)/showSingleBlog (the method)/ anything after is a parameter.
-    public function showSingleBlog($id){
-        $post = $this->postModel->getPostById($id);
+    public function showSingleBlog()
+    {
+//        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+//            $_GET = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+//        }
+//
+//        $getBlogId = $_GET['id'];
 
-        $data = [];
+        $data = [
+            'id' => $_GET['id']
+        ];
+//
+//    var_dump($_GET['id']);
+        return View::make ('posts/show', $data);
 
-        return View::make('/posts/show', $data);
+
     }
+
+
+//    public function showSingleBlog(){
+//        if($_REQUEST['REQUEST METHOD'] == 'GET'){
+//            $_GET = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+//            $data = [
+//              'id' => $_GET['?'],
+//            ];
+//        }
+//        return View::make('/posts/show', $data);
+//    }
+
+
 
 }
