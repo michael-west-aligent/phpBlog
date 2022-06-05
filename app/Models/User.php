@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Config\App;
 use App\Controllers\UsersController;
 
+
 class User {
 
     public $db;

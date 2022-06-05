@@ -100,10 +100,7 @@ class PostControllers{
             'blog_body' => $posts['blog_body'],
             'user_id' => $posts['user_id'],
             'created_at' =>$posts['created_at'],
-
         ];
-
-
 //    var_dump($_GET['id']);
         return View::make ('posts/show', $data);
 

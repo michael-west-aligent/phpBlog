@@ -12,11 +12,17 @@
 <br>
 <h1> <?php  echo $this->params['title']; ?> </h1>
 
+<div class="bg-secondary text-white p-2 mb-3">
+Blogged By <?php echo $this->params['id'];?> on <?php echo $this->params['created_at']; ?>
+
+
+</div>
 
 <br>
 <h4 class="card-title"> <?php echo $this->params['title']; ?> </h4>
 <h4 class="card-title"> <?php echo $this->params['id']; ?> </h4>
 <h4 class="card-title"> <?php echo $this->params['blog_body']; ?> </h4>
 <h4 class="card-title"> <?php echo $this->params['created_at']; ?> </h4>
+
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
