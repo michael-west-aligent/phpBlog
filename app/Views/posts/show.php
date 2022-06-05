@@ -1,17 +1,17 @@
 
 <?php require_once VIEW_PATH . '/header.php'; ?>
 
-<?php var_dump($this->params) ?>
+<?php //var_dump($this->params) ?>
 
 
  <?php $sigleBlog = explode('?', $_SERVER['REQUEST_URI']);
-
-
- var_dump($sigleBlog)
-
+// var_dump($sigleBlog)
  ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
+<br>
+<h1> <?php  echo $this->params['title']; ?> </h1>
+
 
 <br>
 <h4 class="card-title"> <?php echo $this->params['title']; ?> </h4>
