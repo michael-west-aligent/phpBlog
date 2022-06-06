@@ -30,9 +30,11 @@ $router
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
-
-    //STUCK HERE
-    ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+    ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
+    //HERE
+    ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+    ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+    ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost']);
 
 
 

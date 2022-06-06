@@ -87,6 +87,78 @@ class PostControllers{
     }
 
 
+    /**  STARTING EDIT BLOG PROCESS HEE*/
+    //EDIT needs to take in a parameter of $id as we need to know which post to edit.
+    public function editBlog() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = [
+                'id' => $_POST['id'],
+                'title' => trim($_POST['title']),
+                'blog_body' => trim($_POST['blog_body']),
+                //USER_ID IS COMING FROM CURRENT LOGGED IN USER.
+                'user_id' => $_SESSION['user_id'],
+                //ERROR VARIABLES
+                'title_err' => '',
+                'blog_body_err' => '',
+            ];
+
+            //VALIDATE data
+            if(empty($data['title'])) {
+                $data['title_err'] = 'Please enter a title';
+            }
+            if(empty($data['blog_body'])) {
+                $data['blog_body_err'] = 'Please enter a blog body';
+            }
+
+            //Make sure no errors
+            if(empty($data['title_err']) && empty($data['blog_body_err'])){
+                //VALIDATED
+                if($this->postModel->updatePost($data)){
+                    echo('tes');
+                    //REDIRECT TO ALL BLOG POSTS
+//                    header('location: ' . 'http://localhost:8000/blogPosts');
+                } else {
+                    die('Something went wrong');
+                }
+            }else {
+                //LOAD VIEWS WITH ERRORS
+                return View::make('posts/editBlog', $data);
+            }
+        } else {
+
+            //GET EXISITING POST FROM MODEL
+            $post = $this->postModel->getPostById();
+            //CHECK THE OWNER
+//            var_dump($post);
+//            echo ($post['user_id']);
+//            echo($_SESSION['user_id']);
+            if($post['user_id'] != $_SESSION['user_id'])
+            {
+                //if post does not belong to the user in session then redirect to blog posts
+                header('location' . 'http://localhost:8000/blogPosts');
+            }
+
+            $data = [
+                'id' => $post['id'],
+                'title' => $post['title'],
+                'blog_body' => $post['blog_body'],
+                'title_err' => '',
+                'blog_body_err' => '',
+
+            ];
+            var_dump($data);
+
+
+            //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
+            return View::make('/posts/editBlog', $data);
+        }
+    }
+
+    public function updatePost(){
+        $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
+    }
 
 
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
