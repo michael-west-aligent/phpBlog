@@ -88,6 +88,7 @@ class PostControllers{
 
 
 
+
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
     public function showSingleBlog()
     {
