@@ -17,7 +17,7 @@ Blogged By <?php echo $this->params['username'];?> on <?php echo $this->params['
 <?php if($this->params['user_id'] == $_SESSION['user_id']) : ?>
 
         <a href="/blog/edit?<?php echo $this->params['id'];?> " class="btn btn-dark"> Edit </a>
-        <form action="blog/delete?<?php echo $this->params['id'];?>" method="post">
+        <form class="float-right" action="blog/delete?<?php echo $this->params['id'];?>" method="post">
             <input type="submit" value="Delete" class="btn btn-danger">
         </form>
 <?php endif; ?>
