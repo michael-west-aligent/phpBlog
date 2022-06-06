@@ -14,18 +14,19 @@ Blogged By <?php echo $this->params['username'];?> on <?php echo $this->params['
 
 <p>  <?php echo $this->params['blog_body']; ?> </p>
 
-<?php foreach($this->params['posts'] as $posts) : ?>
-<?php if($this->params['posts']->user_id == $_SESSION['user_id']) : ?>
+<?php if($this->params['user_id'] == $_SESSION['user_id']) : ?>
 
+        <a href="/blog/edit?<?php echo $this->params['id'];?> " class="btn btn-dark"> Edit </a>
+        <form action="blog/delete?<?php echo $this->params['id'];?>" method="post">
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
 <?php endif; ?>
 
-<a href="/blog/edit?<?php echo $posts['postId'];?> " class="btn btn-dark"> Edit </a>
-//Want to have an edit and delete button but only if it belongs to the user
 
-<?php endforeach; ?>
 
-<a href="/blog/edit?<?php echo $posts['postId'];?> " class="btn btn-dark"> Edit </a>
-THIS IS NOT WORKING
+
+<!--<a href="/blog/edit?--><?php //echo $posts['postId'];?><!-- " class="btn btn-dark"> Edit </a>-->
+<!--THIS IS NOT WORKING-->
 <!--<h4 class="card-title"> --><?php //echo $this->params['title']; ?><!-- </h4>-->
 <!--<h4 class="card-title"> --><?php //echo $this->params['id']; ?><!-- </h4>-->
 <!--<h4 class="card-title"> --><?php //echo $this->params['blog_body']; ?><!-- </h4>-->

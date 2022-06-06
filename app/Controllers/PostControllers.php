@@ -104,7 +104,7 @@ class PostControllers{
 
 
         $data = [
-//            'id' => $posts['id'],
+            'id' => $posts['id'],
             'title' => $posts['title'],
             'blog_body' => $posts['blog_body'],
             'user_id' => $posts['user_id'],
