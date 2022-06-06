@@ -19,7 +19,6 @@
         Blogged By <?php echo $posts['username']; ?> on <?php echo $posts['postCreated']; ?>
     </div>
     <p class="card-text"><?php echo $posts['blog_body']?> </p>
-<!--    <a href="/blog/show?id=--><?php //echo $posts['postId'];?><!--" class="btn btn-dark"> View the Full Blog</a>-->
     <a href="/blog/show?<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
 </div>
 

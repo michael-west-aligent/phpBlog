@@ -33,11 +33,7 @@ $router
 
     //STUCK HERE
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
-//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
-//    ->get('/blog/show/:[$id]', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
-//    ->get('/blog/show/[$id]', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
-//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
-//    ->get('/blog/show/:id', [\App\Controllers\PostControllers::class, 'showSingleBlog']);
+
 
 
 

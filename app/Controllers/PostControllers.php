@@ -6,6 +6,9 @@ namespace App\Controllers;
 
 use App\View;
 use App\Models\Post;
+//THIS WAS ADDED to get the USER DATA - STEP 1
+use App\Models\User;
+
 
 class PostControllers{
 
@@ -13,24 +16,31 @@ class PostControllers{
 
     public function __construct()
     {
-        $this->postModel = new Post();
-    }
-    public function blogPosts(){
-        //GET ALL POSTS
-        $posts = $this->postModel->getAllBlogPosts();
+        //NOT WORKING
+//        if(!isLoggedIn()){
+//            header('location: ' . 'http://localhost:8000/users/login');
+//        }
 
+        $this->postModel = new Post();
+        //THIS WAS ADDED - STEP 2
+        //LOADING THE USER MODEL
+        //IN CONSTRUCTOR SO IT CAN BE USED EVERYWHERE
+        $this->userModel = new User();
+    }
+
+
+    //GET ALL POSTS
+    public function blogPosts(){
+        $posts = $this->postModel->getAllBlogPosts();
             $data = [
                 'posts' => $posts
             ];
-        //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
         return View::make('/posts/index', $data);
     }
 
     public function addBlog() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-//            die('submit');
         //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
-            //CREATE NEW VARIABLE CALLED POST
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'title' => trim($_POST['title']),
@@ -77,33 +87,43 @@ class PostControllers{
     }
 
 
-    /** SHOW PAGE FOR A SINGLE BLOG
-     *just need the ID param coming into the route.
-     */
 
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
-        //'showSingleBlog' gets passed in an ID
-        //posts(the controller)/showSingleBlog (the method)/ anything after is a parameter.
     public function showSingleBlog()
     {
         $posts = $this->postModel->getPostById();
+//        $user =  $this->userModel->getUserById($posts);
+        $user =  $this->userModel->getUserById($posts);
+        //since we have posts we have access to user_id filed in post table
 
+        //THIS WAS ADDED
 //        $data = [
 //            'posts' => $posts
 //        ];
-            var_dump($posts);
-        //ALL COMMENTED OUT IS 1 thing
 //      $getBlogId = $_GET['id'];
+
+
         $data = [
-            'id' => $posts['id'],
+//            'id' => $posts['id'],
             'title' => $posts['title'],
             'blog_body' => $posts['blog_body'],
             'user_id' => $posts['user_id'],
             'created_at' =>$posts['created_at'],
+            'username' => $user['username']
+
+            //THIS WAS ADDED
+//            'users' =>$user['users']
+//            //THIS WAS ADDED
+
         ];
-//    var_dump($_GET['id']);
+
+        var_dump($user);
+        var_dump($data);
+
         return View::make ('posts/show', $data);
+    }
 
-
+    private function isLoggedIn()
+    {
     }
 }

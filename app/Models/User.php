@@ -47,6 +47,13 @@ class User {
     }
 
 
+//    GET USER BY ID do not need userId on this page
+    public function getUserById($data) {
+        $userStatement = $this->db->prepare('SELECT * FROM users WHERE id = ?');
+        $userStatement->execute([$data['user_id']]);
+        $dataRow = $userStatement->fetch();
+        return $dataRow;
+    }
 
 
 }
