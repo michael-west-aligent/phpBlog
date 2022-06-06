@@ -45,7 +45,7 @@ class Post {
     $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
 
     $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-        echo($id);
+//        echo($id);
     $singleBlog->execute([$id]);
     $results = $singleBlog->fetch();
     return $results;

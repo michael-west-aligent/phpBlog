@@ -111,19 +111,13 @@ class PostControllers{
             'created_at' =>$posts['created_at'],
             'username' => $user['username']
 
-            //THIS WAS ADDED
-//            'users' =>$user['users']
-//            //THIS WAS ADDED
 
         ];
 
-        var_dump($user);
-        var_dump($data);
+//        var_dump($user);
+//        var_dump($data);
 
         return View::make ('posts/show', $data);
     }
 
-    private function isLoggedIn()
-    {
-    }
 }
