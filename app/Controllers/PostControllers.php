@@ -22,12 +22,9 @@ class PostControllers{
 //        }
 
         $this->postModel = new Post();
-        //THIS WAS ADDED - STEP 2
-        //LOADING THE USER MODEL
-        //IN CONSTRUCTOR SO IT CAN BE USED EVERYWHERE
+
         $this->userModel = new User();
     }
-
 
     //GET ALL POSTS
     public function blogPosts(){
@@ -45,9 +42,7 @@ class PostControllers{
             $data = [
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
-                //USER_ID IS COMING FROM CURRENT LOGGED IN USER.
                 'user_id' => $_SESSION['user_id'],
-                //ERROR VARIABLES
                 'title_err' => '',
                 'blog_body_err' => '',
                 ];
@@ -60,7 +55,7 @@ class PostControllers{
                 $data['blog_body_err'] = 'Please enter a blog body';
                  }
 
-                 //Make sure no errors
+                 //Make SURE NO ERRORS
                 if(empty($data['title_err']) && empty($data['blog_body_err'])){
                     //VALIDATED
                     if($this->postModel->addPost($data)){
@@ -81,25 +76,19 @@ class PostControllers{
                 'blog_body_err' => '',
 
             ];
-            //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
             return View::make('/posts/addBlog', $data);
         }
     }
 
 
-    /**  STARTING EDIT BLOG PROCESS HEE*/
-    //EDIT needs to take in a parameter of $id as we need to know which post to edit.
     public function editBlog() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'id' => $_POST['id'],
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
-                //USER_ID IS COMING FROM CURRENT LOGGED IN USER.
                 'user_id' => $_SESSION['user_id'],
-                //ERROR VARIABLES
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
@@ -111,14 +100,13 @@ class PostControllers{
             if(empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
             }
-
             //Make sure no errors
             if(empty($data['title_err']) && empty($data['blog_body_err'])){
                 //VALIDATED
                 if($this->postModel->updatePost($data)){
                     echo('tes');
-                    //REDIRECT TO ALL BLOG POSTS
-//                    header('location: ' . 'http://localhost:8000/blogPosts');
+//                    REDIRECT TO ALL BLOG POSTS
+                    header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
                     die('Something went wrong');
                 }
@@ -127,19 +115,13 @@ class PostControllers{
                 return View::make('posts/editBlog', $data);
             }
         } else {
-
             //GET EXISITING POST FROM MODEL
             $post = $this->postModel->getPostById();
             //CHECK THE OWNER
-//            var_dump($post);
-//            echo ($post['user_id']);
-//            echo($_SESSION['user_id']);
             if($post['user_id'] != $_SESSION['user_id'])
             {
-                //if post does not belong to the user in session then redirect to blog posts
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
-
             $data = [
                 'id' => $post['id'],
                 'title' => $post['title'],
@@ -148,10 +130,6 @@ class PostControllers{
                 'blog_body_err' => '',
 
             ];
-            var_dump($data);
-
-
-            //RETURN IS MAKING THE FILE IN VIEW FOLDER > POSTS FOLDER > INDEX.php
             return View::make('/posts/editBlog', $data);
         }
     }
@@ -160,22 +138,11 @@ class PostControllers{
         $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
     }
 
-
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
     public function showSingleBlog()
     {
         $posts = $this->postModel->getPostById();
-//        $user =  $this->userModel->getUserById($posts);
         $user =  $this->userModel->getUserById($posts);
-        //since we have posts we have access to user_id filed in post table
-
-        //THIS WAS ADDED
-//        $data = [
-//            'posts' => $posts
-//        ];
-//      $getBlogId = $_GET['id'];
-
-
         $data = [
             'id' => $posts['id'],
             'title' => $posts['title'],
@@ -183,14 +150,7 @@ class PostControllers{
             'user_id' => $posts['user_id'],
             'created_at' =>$posts['created_at'],
             'username' => $user['username']
-
-
         ];
-
-//        var_dump($user);
-//        var_dump($data);
-
         return View::make ('posts/show', $data);
     }
-
 }
