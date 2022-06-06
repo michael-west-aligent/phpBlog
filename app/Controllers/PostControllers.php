@@ -137,7 +137,7 @@ class PostControllers{
             if($post['user_id'] != $_SESSION['user_id'])
             {
                 //if post does not belong to the user in session then redirect to blog posts
-                header('location' . 'http://localhost:8000/blogPosts');
+                header('location: ' . 'http://localhost:8000/blogPosts');
             }
 
             $data = [
