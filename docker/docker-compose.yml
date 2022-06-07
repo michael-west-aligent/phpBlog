@@ -8,6 +8,8 @@ services:
     container_name: phpBlog-app
     restart: always
     working_dir: /var/www/
+    environment:
+      PHP_EXTENSIONS: xdebug
     volumes:
       - ../:/var/www
   nginx:
@@ -23,7 +25,6 @@ services:
     container_name: phpBlog-db
     image: mysql:8.0
     volumes:
-
       - ./storage/mysql:/var/lib/mysql
     restart: always
     environment:
