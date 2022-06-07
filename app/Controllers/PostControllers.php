@@ -93,6 +93,8 @@ class PostControllers{
                 'blog_body_err' => '',
             ];
 
+
+
             //VALIDATE data
             if(empty($data['title'])) {
                 $data['title_err'] = 'Please enter a title';

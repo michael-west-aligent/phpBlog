@@ -36,7 +36,7 @@ class Post {
     }
 
     public function updatePost($data){
-        $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?  WHERE id = ?');
+        $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
         header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
