@@ -11,29 +11,7 @@
             </li>
         </ul>
 
-
-
-<!--                THIS IS THE ORIGINAL CODE-->
-<!--        --><?php //if($_SESSION['user_id'] = null) : ?>
-<!--            --><?php //echo $_SESSION['user_id'] ?>
-<!--            <ul class="navbar-nav ml-auto">-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/users/register">Register</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/users/login">Login</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        --><?php //else :  ?>
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/users/login">Logout</a>-->
-<!--            </li>-->
-<!--        --><?php //endif ?>
-
-
-
         <?php if(empty($_SESSION['user_id'] )) : ?>
-<!--            --><?php //echo $_SESSION['user_id'] ?>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/users/register">Register</a>
@@ -44,6 +22,9 @@
             </ul>
         <?php else : ?>
         <ul class="navbar-nav ml-auto">
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Welcome --><?php //echo $this->params['username'];?><!-- </a>-->
+<!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout">Logout</a>
             </li>

@@ -12,7 +12,6 @@ class User {
 
     public function __construct()
     {
-
         $this->db = App::db();
     }
 

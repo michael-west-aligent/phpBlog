@@ -21,6 +21,8 @@ $router = new Router();
 $router
     //METHOD(i.e get) -ROUTE i.e (/) - CONTROLLER (i.e HOMECONTROLLER)  -FUNCTION NAME FOUND IN CONTROLLER (i.e HOME)
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
+
+    //BELOW LINE TO TRY AND GET ALL BLOGS TO HOMEPAGE- COME BACK
 //    ->get('/', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
@@ -36,8 +38,10 @@ $router
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
-    //HERE
-    ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog']);
+    ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
+//HERE
+//GET COMMENT
+    ->post('blog/addComments', [\App\Controllers\CommentControllers::class, 'addBlogComment']);
 
 
 

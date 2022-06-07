@@ -6,7 +6,6 @@ namespace App\Controllers;
 
 use App\View;
 use App\Models\Post;
-//THIS WAS ADDED to get the USER DATA - STEP 1
 use App\Models\User;
 
 
@@ -74,7 +73,6 @@ class PostControllers{
                 'blog_body' => '',
                 'title_err' => '',
                 'blog_body_err' => '',
-
             ];
             return View::make('/posts/addBlog', $data);
         }
