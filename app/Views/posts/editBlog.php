@@ -29,7 +29,6 @@ require_once VIEW_PATH . '/header.php';
         <input type="submit" class="btn btn-success" value="Submit"/>
 
 
-
     </form>
 </div>
 

@@ -22,6 +22,14 @@ Blogged By <?php echo $this->params['username'];?> on <?php echo $this->params['
         </form>
 <?php endif; ?>
 
+<div class="form-group">
+    <label for="comment"> Add Comment To Blog </label>
+    <textarea name="blog_body" class="form-control form-control-lg" <?php echo (!empty($this->params
+        ['blog_body_err']) && ($this->params['blog_body_err'] != '')) ? 'is-invalid' : ''; ?>
+        <?php echo ($this->params['blog_body']); ?>> </textarea>
+    <input type="submit" value="Submit Comment" class="btn btn-success">
+</div>
+
 
 
 

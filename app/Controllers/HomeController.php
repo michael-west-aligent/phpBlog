@@ -15,9 +15,4 @@ class HomeController
         return View::make('index');
     }
 
-//    public function errorPage()
-//    {
-//        return View::make()
-//    }
-
 }

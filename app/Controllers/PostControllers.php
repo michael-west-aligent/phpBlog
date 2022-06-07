@@ -92,9 +92,6 @@ class PostControllers{
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-
-
-
             //VALIDATE data
             if(empty($data['title'])) {
                 $data['title_err'] = 'Please enter a title';
@@ -161,6 +158,9 @@ class PostControllers{
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             if($this->postModel->deletePost())
             {
+                header('location: ' . 'http://localhost:8000/blogPosts');
+            } else {
+                die('something is not working ');
             }
         }
     }
