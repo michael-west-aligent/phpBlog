@@ -13,5 +13,7 @@ class Comment {
         $this->db = App::db();
     }
 
+    public function postById(){
 
+    }
 }
