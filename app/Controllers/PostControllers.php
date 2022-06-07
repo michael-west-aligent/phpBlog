@@ -153,4 +153,13 @@ class PostControllers{
         ];
         return View::make ('posts/show', $data);
     }
+
+    /** DELETE WORK STARTS HERE  */
+    public function deleteBlog(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if($this->postModel->deletePost())
+            {
+            }
+        }
+    }
 }

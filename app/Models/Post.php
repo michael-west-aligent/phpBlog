@@ -5,10 +5,7 @@ namespace App\Models;
 use App\Config\App;
 
 class Post {
-
-    //use the DB
     public $db;
-
 
     public function __construct()
     {
@@ -32,30 +29,35 @@ class Post {
         return $results;
     }
 
-    //AD A NEW BLOG
     public function addPost($data){
         $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
         $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
         return true;
-
     }
+
     public function updatePost($data){
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?  WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
         header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
-
     }
-
 
     public function getPostById(){
     $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
-
     $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-//        echo($id);
     $singleBlog->execute([$id]);
     $results = $singleBlog->fetch();
     return $results;
+    }
+
+    public function deletePost(){
+        $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
+        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        $deleteBlogPost->execute([$id]);
+        header('location: ' . 'http://localhost:8000/blogPosts');
+//        $results = $deleteBlogPost->fetch();
+//        return $results;
+        return true;
     }
 
 }

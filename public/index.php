@@ -31,10 +31,11 @@ $router
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
-    //HERE
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
-    ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost']);
+    ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
+    //HERE
+    ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog']);
 
 
 
