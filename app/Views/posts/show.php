@@ -11,27 +11,25 @@
 Blogged By <?php echo $this->params['username'];?> on <?php echo $this->params['created_at']; ?>
 </div>
 
-
 <p>  <?php echo $this->params['blog_body']; ?> </p>
-
-
-
-
 <?php if($this->params['user_id'] == $_SESSION['user_id']) : ?>
 
         <a href="/blog/edit?<?php echo $this->params['id'];?> " class="btn btn-dark"> Edit Blog </a>
         <form class="float-right" action="delete?<?php echo $this->params['id'];?>" method="post">
             <input type="submit" value="Delete Blog" class="btn btn-danger">
         </form>
+
 <?php endif; ?>
 <hr>
 <h3> Blog Replies </h3>
-
+<?php foreach ($this->params['comments'] as $comment) : ?>
 <div class="bg-secondary text-white p-2 mb-3">
-Replied by <p> php code here to get user_id of replier </p>
+Replied by <?php echo $comment['username'];?> at <?php echo $comment['created_at'];?>
 </div>
+    <p class="card-text"><?php echo $comment['body'];?> </p>
+    <hr>
+<?php endforeach;?>
 
-<p> CODE HERE TO GET THE COMMENT BODY </p>
 
 <div class="form-group">
     <label for="comment"> Add Comment To Blog </label>
@@ -44,15 +42,6 @@ Replied by <p> php code here to get user_id of replier </p>
     <input type="submit" value="Submit Comment" class="btn btn-success">
 </div>
 
-<?php var_dump($this->params['comments']); ?>
-
-<!--<a href="/blog/edit?--><?php //echo $posts['postId'];?><!-- " class="btn btn-dark"> Edit </a>-->
-<!--THIS IS NOT WORKING-->
-<!--<h4 class="card-title"> --><?php //echo $this->params['title']; ?><!-- </h4>-->
-<!--<h4 class="card-title"> --><?php //echo $this->params['id']; ?><!-- </h4>-->
-<!--<h4 class="card-title"> --><?php //echo $this->params['blog_body']; ?><!-- </h4>-->
-<!--<h4 class="card-title"> --><?php //echo $this->params['created_at']; ?><!-- </h4>-->
-<!--<h4 class="card-title"> --><?php //echo $this->params['username']; ?><!-- </h4>-->
-
+<?php //var_dump($this->params['comments']); ?>
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
