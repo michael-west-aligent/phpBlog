@@ -42,7 +42,7 @@ class Post {
 
     public function getPostById($id){
     $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
-    if (isset($postId)) {
+//    if (isset($postId)) {
 //        $id = $postId;
 //    } else {
 //        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -56,9 +56,6 @@ class Post {
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         $deleteBlogPost->execute([$id]);
-//        header('location: ' . 'http://localhost:8000/blogPosts');
-//        $results = $deleteBlogPost->fetch();
-//        return $results;
         return true;
     }
 
