@@ -12,7 +12,6 @@ class Comment {
 
     public function getCommentsById($id)
     {
-//        $commentsOnBlog = $this->db->prepare('SELECT * FROM comments WHERE post_id = ?');
         $commentsOnBlog = $this->db->prepare('SELECT body, username, comments.created_at, approved
                                                     FROM comments
                                                     INNER JOIN users
@@ -23,4 +22,15 @@ class Comment {
         return $dataRow;
     }
 
+    public function addComment($data){
+        $newComment = $this->db->prepare('INSERT INTO comments (user_id, body, post_id, created_at) VALUES(?, ?, ?, ?, NOW()); ');
+        $newComment->execute([$data['user_id'], $data['post_id'], $data['body'], $data['post_id']]);
+        return true;
+    }
+
+
+//    public function addComment($user_id, $body, $post_id){
+//        $newComment = $this->db->prepare('INSERT INTO comments (user_id, body, post_id, created_at) VALUES(?, ?, ?, ?, NOW()); ');
+//        $newComment->execute('user_id', 'body', 'post_id');
+//        return true;
 }

@@ -34,14 +34,14 @@ Replied by <?php echo $comment['username'];?> at <?php echo $comment['created_at
 <div class="form-group">
     <label for="comment"> Add Comment To Blog </label>
     <textarea
-            name="comment_body" class="form-control form-control-lg" <?php echo (!empty($this->params
-        ['body_err']) && ($this->params['body_err'] != '')) ? 'is-invalid' : ''; ?>
+            name="comment_body" class="form-control form-control-lg"
         >
-
     </textarea>
     <input type="submit" value="Submit Comment" class="btn btn-success">
 </div>
 
+<!--//TO VAR DUMP-->
+<?php var_dump($this->params[$data]); ?>
 <?php //var_dump($this->params['comments']); ?>
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>

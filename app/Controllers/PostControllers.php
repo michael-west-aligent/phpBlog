@@ -148,9 +148,7 @@ class PostControllers{
             'user_id' => $post['user_id'],
             'created_at' =>$post['created_at'],
             'username' => $user['username'],
-            //THIS WAS ADDED
-//            'body' => $comment['body'],
-//            'username' => $comment['username'],
+//THIS NOW GETS THE FULL COMMENTS array.
             'comments' =>$comment,
         ];
         return View::make ('posts/show', $data);

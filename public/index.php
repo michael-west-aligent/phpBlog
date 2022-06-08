@@ -41,7 +41,7 @@ $router
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
 //HERE
 //GET COMMENT
-    ->post('blog/show', [\App\Controllers\CommentControllers::class, 'getCommentsById']);
+    ->post('blog/show', [\App\Controllers\CommentControllers::class, 'addBlogComment']);
 
 
 

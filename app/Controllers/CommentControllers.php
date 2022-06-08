@@ -20,10 +20,16 @@ class CommentControllers {
         $this->commentModel = new Comment();
     }
 
-    public function showCommentByPostId(){
+    public function addBlogComment(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'user_id'=> $_SESSION['user_id'],
+                'post_id' => $_POST['post_id'],
+                'created_at' =>$_POST['created_at'],
+                'body' => $_POST['body']
+                ];
+            $this->commentModel->addComment($data);
 
+        }
     }
-
-
-
 }
