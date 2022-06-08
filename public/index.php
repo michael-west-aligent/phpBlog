@@ -18,6 +18,7 @@ const VIEW_PATH = __DIR__ . '/../app/Views';
 
 $router = new Router();
 
+
 $router
     //METHOD(i.e get) -ROUTE i.e (/) - CONTROLLER (i.e HOMECONTROLLER)  -FUNCTION NAME FOUND IN CONTROLLER (i.e HOME)
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
@@ -40,8 +41,7 @@ $router
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
 //HERE
-//GET COMMENT
-    ->post('blog/show', [\App\Controllers\CommentControllers::class, 'addBlogComment']);
+    ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment']);
 
 
 

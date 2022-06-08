@@ -21,14 +21,18 @@ class CommentControllers {
     }
 
     public function addBlogComment(){
+        $post = $this->postModel->getPostById();
+        $user =  $this->userModel->getUserById($post['user_id']);
+        $comment = $this->commentModel->getCommentsById($post['id']);
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
-                'user_id'=> $_SESSION['user_id'],
-                'post_id' => $_POST['post_id'],
-                'created_at' =>$_POST['created_at'],
-                'body' => $_POST['body']
+                'user_id' => $_SESSION['user_id'],
+                'username'=> $user['username'],
+                'id' => $post['id'],
+                'created_at' =>$comment['created_at'],
+                'body' => $comment['body']
                 ];
-            $this->commentModel->addComment($data);
+            $this->commentModel->addComment($user['username'], $comment['body'], $post['id']);
 
         }
     }

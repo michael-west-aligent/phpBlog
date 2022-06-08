@@ -34,9 +34,11 @@ class Router
 
     public function resolve(string $requestUri, string $requestMethod)
     {
-
         $route = explode('?', $requestUri)[0];
+//        echo("route $route \n");
         $action = $this->routes[$requestMethod][$route] ?? null;
+//        echo("action $action \n");
+//        echo("requestMethod $requestMethod \n");
 
         if (! $action) {
             throw new RouteNotFoundException();

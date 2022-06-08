@@ -8,7 +8,6 @@ require_once VIEW_PATH . '/header.php';
     <h2> Edit Blog</h2>
     <p> Fill out the form to create a new blog  </p>
     <form action="/blog/submitEdit" method="post">
-<!--        <form action="/blogPosts" method="get">-->
         <div class="form-group">
             <label for="title"> Title: <sup>*</sup></label>
             <input type="text" name="title" class="form-control form-control-lg" <?php echo (!empty($this->params
