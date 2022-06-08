@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+
 use App\View;
 use App\Models\Post;
 use App\Models\User;
-
+use App\Models\Comment;
 
 class PostControllers{
 
@@ -19,10 +20,9 @@ class PostControllers{
 //        if(!isLoggedIn()){
 //            header('location: ' . 'http://localhost:8000/users/login');
 //        }
-
         $this->postModel = new Post();
-
         $this->userModel = new User();
+        $this->commentModel = new Comment();
     }
 
     //GET ALL POSTS
@@ -138,15 +138,20 @@ class PostControllers{
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
     public function showSingleBlog()
     {
-        $posts = $this->postModel->getPostById();
-        $user =  $this->userModel->getUserById($posts);
+        $post = $this->postModel->getPostById();
+        $user =  $this->userModel->getUserById($post['user_id']);
+        $comment = $this->commentModel->getCommentsById($post['id']);
         $data = [
-            'id' => $posts['id'],
-            'title' => $posts['title'],
-            'blog_body' => $posts['blog_body'],
-            'user_id' => $posts['user_id'],
-            'created_at' =>$posts['created_at'],
-            'username' => $user['username']
+            'id' => $post['id'],
+            'title' => $post['title'],
+            'blog_body' => $post['blog_body'],
+            'user_id' => $post['user_id'],
+            'created_at' =>$post['created_at'],
+            'username' => $user['username'],
+            //THIS WAS ADDED
+//            'body' => $comment['body'],
+//            'username' => $comment['username'],
+            'comments' =>$comment,
         ];
         return View::make ('posts/show', $data);
     }

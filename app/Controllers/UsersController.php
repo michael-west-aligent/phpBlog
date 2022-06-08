@@ -85,7 +85,7 @@ class UsersController
 
     /** LOGIN AS AN EXISTING USER ------------------------------------------------------------ */
     public function userLogin(){
-        //CHECK for POST
+        //CHECK for POST DATA
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             //PROCESS FORM
@@ -112,7 +112,7 @@ class UsersController
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
             } elseif(!password_verify($data['password'], $hashed_password)) {
-                $data['password_err'] = 'Password no matchy match';
+                $data['password_err'] = 'Password does not match';
             }
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($data['email_err']) && empty($data['password_err'])) {
@@ -129,7 +129,7 @@ class UsersController
             if ($this->userModel->currentUser($data)) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             } else {
-                return View::make('users/userLogin');
+                return View::make('users/userLogin', $data);
             }
         }else {
             $data = [

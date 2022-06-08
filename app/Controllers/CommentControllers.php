@@ -20,8 +20,8 @@ class CommentControllers {
         $this->commentModel = new Comment();
     }
 
-    public function getCommentByPostId(){
-        $comment = $this->commentModel
+    public function showCommentByPostId(){
+
     }
 
 
