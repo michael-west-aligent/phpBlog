@@ -9,13 +9,11 @@ use mysql_xdevapi\CollectionModify;
 
 class Router
 {
-
     private array $routes;
 
     public function register(string $requestMethod, string $route, callable|array $action): self
     {
         $this->routes[$requestMethod][$route] = $action;
-
         return $this;
     }
 
@@ -37,7 +35,10 @@ class Router
     public function resolve(string $requestUri, string $requestMethod)
     {
         $route = explode('?', $requestUri)[0];
+//        echo("route $route \n");
         $action = $this->routes[$requestMethod][$route] ?? null;
+//        echo("action $action \n");
+//        echo("requestMethod $requestMethod \n");
 
         if (! $action) {
             throw new RouteNotFoundException();
