@@ -37,18 +37,23 @@
 <form action="/blog/addComment" method="post">
     <div class="form-group">
         <label for="comment"> Add Comment To Blog </label>
-        <textarea name="body" class="form-control form-control-lg" <?php echo $comment['body'];?>
-        >
+        <textarea name="body" class="form-control form-control-lg"
+<!--            --><?php //echo $comment['body'];?>
+
         </textarea>
         <input type="hidden" name="username" value="<?= $comment['username'];?> ">
-        <input type="hidden" name="body" value="<?= $comment['body'];?> ">
+        <input type="hidden" name="post_id" value="<?= $this->params['id'];?> ">
+<!--        <input type="hidden" name="body" value="--><?//= $comment['body'];?><!-- ">-->
         <input type="submit" value="Submit Comment" class="btn btn-success">
     </div>
 </form>
 
+
+
+
 <!--/SHOWING LOGGED IN USER-->
-<?php var_dump($_SESSION['user_id']); ?>
-<?php var_dump($comment['username']); ?>
+<?php //var_dump($_SESSION['user_id']); ?>
+<?php //var_dump($comment['username']); ?>
 <?php //var_dump($this->params['id']); ?>
 <?php //var_dump($this->params['username']); ?>
 <?php // var_dump($this->params['username']; ?>

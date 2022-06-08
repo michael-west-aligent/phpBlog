@@ -21,18 +21,25 @@ class CommentControllers {
     }
 
     public function addBlogComment(){
-        $post = $this->postModel->getPostById();
-        $user =  $this->userModel->getUserById($post['user_id']);
-        $comment = $this->commentModel->getCommentsById($post['id']);
+
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
                 'user_id' => $_SESSION['user_id'],
-                'username'=> $user['username'],
-                'id' => $post['id'],
-                'created_at' =>$comment['created_at'],
-                'body' => $comment['body']
+//                'username'=> $_POST['username'],
+                'post_id' => $_POST['post_id'],
+//                'created_at' =>$comment['created_at'],
+                'body' => $_POST['body']
                 ];
-            $this->commentModel->addComment($user['username'], $comment['body'], $post['id']);
+
+            $postId = $data['post_id'];
+            $post = $this->postModel->getPostById($postId);
+            $user =  $this->userModel->getUserById($post['user_id']);
+            $data['username'] = $user['username'];
+//        $user =  $this->userModel->getUserById();
+            $comment = $this->commentModel->getCommentsById($post['id']);
+
+            $this->commentModel->addComment($data);
+            header('location: ' . 'http://localhost:8000/blog/show?' . $_POST['post_id']);
 
         }
     }

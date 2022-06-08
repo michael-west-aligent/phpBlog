@@ -40,9 +40,13 @@ class Post {
         return true;
     }
 
-    public function getPostById(){
+    public function getPostById($id){
     $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
-    $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+    if (isset($postId)) {
+//        $id = $postId;
+//    } else {
+//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+//    }
     $singleBlog->execute([$id]);
     $results = $singleBlog->fetch();
     return $results;

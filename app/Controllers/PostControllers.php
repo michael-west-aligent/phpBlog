@@ -138,7 +138,8 @@ class PostControllers{
         //SHOW A SINGLE BLOG BASED ON ITS POT ID
     public function showSingleBlog()
     {
-        $post = $this->postModel->getPostById();
+        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        $post = $this->postModel->getPostById($id);
         $user =  $this->userModel->getUserById($post['user_id']);
         $comment = $this->commentModel->getCommentsById($post['id']);
         $data = [
