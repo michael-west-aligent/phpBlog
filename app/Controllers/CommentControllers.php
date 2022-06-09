@@ -35,9 +35,7 @@ class CommentControllers {
             $post = $this->postModel->getPostById($postId);
             $user =  $this->userModel->getUserById($post['user_id']);
             $data['username'] = $user['username'];
-//        $user =  $this->userModel->getUserById();
             $comment = $this->commentModel->getCommentsById($post['id']);
-
             $this->commentModel->addComment($data);
             header('location: ' . 'http://localhost:8000/blog/show?' . $_POST['post_id']);
 

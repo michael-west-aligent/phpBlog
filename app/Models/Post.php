@@ -31,6 +31,7 @@ class Post {
         $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
         $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
         return true;
+        header('location: ' . 'http://localhost:8000/blogPosts');
     }
 
     public function updatePost($data){

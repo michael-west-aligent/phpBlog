@@ -38,6 +38,7 @@ class PostControllers{
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+//            var_dump($_SESSION['user_id']);
             $data = [
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
@@ -59,6 +60,7 @@ class PostControllers{
                     //VALIDATED
                     if($this->postModel->addPost($data)){
                         //REDIRECT TO ALL BLOG POSTS
+                        //THIS WAS COMMENTED OUT
                         header('location: ' . 'http://localhost:8000/blogPosts');
                     } else {
                         die('Something went wrong');
@@ -113,7 +115,8 @@ class PostControllers{
             }
         } else {
             //GET EXISITING POST FROM MODEL
-            $post = $this->postModel->getPostById();
+            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+            $post = $this->postModel->getPostById($id);
             //CHECK THE OWNER
             if($post['user_id'] != $_SESSION['user_id'])
             {
