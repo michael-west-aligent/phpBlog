@@ -104,8 +104,6 @@ class UsersController
                     $data['email_err'] = 'No user with that email ';
                 }
             }
-
-
             $hashed_password = $dataRow['password'];
             //Validate Password
             if (empty($data['password'])) {
@@ -125,7 +123,8 @@ class UsersController
                 return View::make('users/userLogin', $data);
             }
             //CHECK IF CURRENT USER DATA EXISTS
-            if ($this->userModel->currentUser($data)) {
+            if ($this->userModel->currentUser($data))
+            {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             } else {
                 return View::make('users/userLogin', $data);
@@ -141,6 +140,8 @@ class UsersController
             return View::make('users/userLogin', $data);
         }
     }
+
+
 
     public function createUserSession($user){
         // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row

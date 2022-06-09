@@ -19,9 +19,6 @@
         <input type="submit" value="Delete Blog" class="btn btn-danger">
     </form>
 
-
-
-
 <?php endif; ?>
 <hr>
 <h3> Blog Replies </h3>
