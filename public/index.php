@@ -40,9 +40,10 @@ $router
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
-//HERE
-    ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment']);
-
+    ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
+    //HERE
+        //LOGIN AS AN ADMIN
+    ->post('/admin/home', [\App\Controllers\UsersController::class, 'userLogin']);
 
 
 
