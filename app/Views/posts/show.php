@@ -12,14 +12,26 @@
 </div>
 
 <p>  <?php echo $this->params['blog_body']; ?> </p>
-<?php if ($this->params['user_id'] == $_SESSION['user_id']) : ?>
+<?php
+if($_SESSION != null) :
+?>
+<?php  if ($this->params['user_id'] == $_SESSION['user_id']) : ?>
 
     <a href="/blog/edit?<?php echo $this->params['id']; ?> " class="btn btn-dark"> Edit Blog </a>
     <form class="float-right" action="delete?<?php echo $this->params['id']; ?>" method="post">
         <input type="submit" value="Delete Blog" class="btn btn-danger">
     </form>
+<?php endif; ?>
 
 <?php endif; ?>
+<!--//if ($this->params['user_id'] == $_SESSION['user_id']) : ?>-->
+<!---->
+<!--    <a href="/blog/edit?--><?php //echo $this->params['id']; ?><!-- " class="btn btn-dark"> Edit Blog </a>-->
+<!--    <form class="float-right" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post">-->
+<!--        <input type="submit" value="Delete Blog" class="btn btn-danger">-->
+<!--    </form>-->
+
+<?php //endif; ?>
 <hr>
 <h3> Blog Replies </h3>
 <?php foreach ($this->params['comments'] as $comment) : ?>
@@ -28,8 +40,10 @@
     </div>
     <p class="card-text"><?php echo $comment['body']; ?> </p>
     <hr>
+
 <?php endforeach; ?>
 
+<?php if ($_SESSION != null) : ?>
 
 <form action="/blog/addComment" method="post">
     <div class="form-group">
@@ -40,12 +54,15 @@
         </textarea>
         <input type="hidden" name="username" value="<?= $comment['username'];?> ">
         <input type="hidden" name="post_id" value="<?= $this->params['id'];?> ">
-<!--        <input type="hidden" name="body" value="--><?//= $comment['body'];?><!-- ">-->
+<!--        <input type="hidden" name="body" value="--> <?//= $comment['body'];?><!-- ">-->
         <input type="submit" value="Submit Comment" class="btn btn-success">
     </div>
 </form>
+<?php else : ?>
 
+<h2> Register or Login to make a comment </h2>
 
+<?php endif; ?>
 
 
 <!--/SHOWING LOGGED IN USER-->
