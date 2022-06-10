@@ -22,6 +22,13 @@ class User {
         return true;
     }
 
+    //Admin add a User
+    public function adminUserAdd(){
+//        $newUser = $this->db->prepare('INSERT INTO users (username, email, password) VALUES(?,?,?)');
+//        $newUser->execute([$data['name'], $data['email'], $data['password']]);
+//        return true;
+    }
+
     //Login as a user
     public function currentUser($email, $password){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
@@ -54,7 +61,6 @@ class User {
 
     public function getUserinfo(){
         $adminUserStatement = $this->db->prepare('SELECT id, username, email, is_admin, created_at, password from users;');
-//        $adminUserStatement->execute($data['id'], $data['username'],['$email'], ['$is_admin'], ['created_at']);
         $adminUserStatement->execute();
         $dataRow = $adminUserStatement->fetchAll();
         return $dataRow;

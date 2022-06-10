@@ -6,14 +6,18 @@ require_once VIEW_PATH . '/header.php';
 
 <div class="card card-body bg light mt-5">
     <table>
-        <h2> USERS   <input href="/admin/addUser" type="submit" class="btn btn-success" value="Add A New User"/> </h2>
+        <h2> USERS
+            <div class="button">
+                <a href="/admin/addUser" class="btn btn-success"> Add a New User </a>
+<!--            <input href="/admin/addUser" type="submit" class="btn btn-success" value="Add A New User"/>-->
+            </div>
+        </h2>
                 <td>
-<!--                    <input href="/admin/addUser" type="submit" class="btn btn-success" value="Add A New User"/>-->
                 </td>
         <tr>
             <th>id</th>
             <th>username</th>
-            <th>pasword</th>
+            <th>password</th>
             <th>is_admin</th>
             <th>created_at</th>
             <th>Remove User</th>

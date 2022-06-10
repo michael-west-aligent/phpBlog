@@ -41,11 +41,9 @@ $router
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
-    //HERE
-        //LOGIN AS AN ADMIN
-    ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome']);
-//    ->get('/admin/users', [\App\Controllers\UsersController::class,'adminGetUserData']);
+    ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
 
+    ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser']);
 
 
 
