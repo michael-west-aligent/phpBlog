@@ -213,11 +213,11 @@ class UsersController
         }
 
 //
-        public function adminGetUserData(){
-            $users = $this->userModel->getUserinfo();
-                $data = [
-                'users' => $users
-            ];
-            return View::make('/admin/home', $data );
-        }
+//        public function adminGetUserData(){
+//            $users = $this->userModel->getUserinfo();
+//                $data = [
+//                'users' => $users
+//            ];
+//            return View::make('/admin/home', $data );
+//        }
     }
