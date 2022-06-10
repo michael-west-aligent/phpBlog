@@ -40,7 +40,7 @@ class User {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
         $dataRow = $userStatement->fetch();
-        return $dataRow;t
+        return $dataRow;
     }
 
 

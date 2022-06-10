@@ -43,7 +43,7 @@ $router
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
     //HERE
         //LOGIN AS AN ADMIN
-    ->post('/admin/home', [\App\Controllers\UsersController::class, 'userLogin']);
+    ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome']);
 
 
 

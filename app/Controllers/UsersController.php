@@ -10,15 +10,18 @@ use App\Models\User;
 class UsersController
 {
     protected $userModel;
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->userModel = new User();
     }
 
-/** REGISTER A NEW USER  */
-    public function register(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    /** REGISTER A NEW USER  */
+    public function register()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data =[
+            $data = [
                 'name' => trim($_POST['name']),
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
@@ -29,45 +32,45 @@ class UsersController
                 'confirm_password_err' => ''
             ];
             //Validate Email
-            if(empty($data['email'])){
+            if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
                 //CHECK EMAIL IS NOT ALREADY IN DB
-                if($this->userModel->findUserByEmail($data)){
+                if ($this->userModel->findUserByEmail($data)) {
                     $data['email_err'] = "Email being used";
                 }
             }
             //Validate Name
-            if(empty($data['name'])){
+            if (empty($data['name'])) {
                 $data['name_err'] = 'Please enter a name';
             }
             //Validate Password
-            if(empty($data['password'])){
+            if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
-            } elseif(strlen($data['password']) <6 ){
+            } elseif (strlen($data['password']) < 6) {
                 $data['password_err'] = 'Password must be at least 6 characters';
             }
             //Validate Confirm Password
-            if(empty($data['confirm_password'])){
+            if (empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Please confirm password';
             } else {
-                if($data['password'] != $data['confirm_password']){
+                if ($data['password'] != $data['confirm_password']) {
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
             //Make sure errors are empty
-          if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
+            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                 //HASH PASSWORD
-              $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-              //REGISTER USER
-              if($this->userModel->newRegister($data)){
-                  header('location: ' . 'http://localhost:8000/users/blogPosts');
-              }
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                //REGISTER USER
+                if ($this->userModel->newRegister($data)) {
+                    header('location: ' . 'http://localhost:8000/users/blogPosts');
+                }
             } else {
                 //LOAD VIEW WITH ERRORs
                 return View::make('users/userRegister', $data);
             }
-        }else {
+        } else {
             $data = [
                 'name' => '',
                 'email' => '',
@@ -104,7 +107,6 @@ class UsersController
                     $data['email_err'] = 'No user with that email ';
                 }
             }
-
             //Validate Password
             $hashed_password = $dataRow['password'];
             if (empty($data['password'])) {
@@ -112,7 +114,6 @@ class UsersController
             } elseif (!password_verify($data['password'], $hashed_password)) {
                 $data['password_err'] = 'Password does not match';
             }
-
             /** HERE IS THE START OF CHANGES  */
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($data['email_err']) && empty($data['password_err'])) {
@@ -124,31 +125,25 @@ class UsersController
                     $this->createUserSession($currentUser);
                 }
             } else {
-                //LOAD VIEW WITH ERRORS
-//                return View::make('users/userLogin', $data);
-//                header('location: ' . 'http://localhost:8000/users/login');
             }
+
             //CHECK IF CURRENT USER DATA EXISTS  + CHECK IF USER IS AN ADMIN OR A GENERAL USER
             $user = $this->userModel->currentUser($data['email'], $data['password']);
-            if ($user)
-            {
+            if ($user != null) {
+//                $this->adminHome();
                 if ($user['is_admin'] == 1) {
                     header('location: ' . 'http://localhost:8000/admin/home');
+                    return View::make('/admin/home', $data);
                 }
-                if ($user['is_admin'] == 0 ) {
+                if ($user['is_admin'] == 0) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
-                    }
+//                    return View::make()
+                }
             } else {
+//                echo('hehe');
                 return View::make('users/userLogin', $data);
             }
-/** ORIFINAL LOGIN CODE THAT TAKES USER TO blogPosts */
-//            if ($this->userModel->currentUser($data)) {
-//                header('location: ' . 'http://localhost:8000/blogPosts');
-//            } else {
-//                return View::make('users/userLogin', $data);
-//            }
-
-        }else {
+        } else {
             $data = [
                 'email' => '',
                 'password' => '',
@@ -160,36 +155,55 @@ class UsersController
         }
     }
 
-
-
-    public function createUserSession($user){
-        var_dump($user);
-        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_username'] = $user['username'];
-//        header('location: '. '/users/blogPosts');
-    }
-
-    public function logout(){
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_email']);
-        unset($_SESSION['user_username']);
-        $data = [
-            'email' => '',
-            'password' => '',
-            'email_err' => '',
-            'password_err' => '',
-        ];
-        session_destroy();
-        return View::make('users/userLogin', $data);
-    }
-
-    public function isLoggedIn(){
-        if($_SESSION['user_id']) {
-            return true;
-        } else {
-            return false;
+    public function adminHome()
+    {
+        if ($_SESSION != null) {
+            if ($_SESSION['is_admin'] == 1) {
+                return View::make('/admin/home');
+            } else if ($_SESSION['is_admin'] == 0) {
+                header('location: ' . 'http://localhost:8000/blogPosts');
+            }
+        }
+        else {
+            header('location: ' . 'http://localhost:8000/users/login');
         }
     }
-}
+
+
+     public function createUserSession($user)
+        {
+//        var_dump($user);
+            // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_username'] = $user['username'];
+            $_SESSION['is_admin'] = $user['is_admin'];
+//        header('location: '. '/users/blogPosts');
+        }
+
+        public
+        function logout()
+        {
+            unset($_SESSION['user_id']);
+            unset($_SESSION['user_email']);
+            unset($_SESSION['user_username']);
+            $data = [
+                'email' => '',
+                'password' => '',
+                'email_err' => '',
+                'password_err' => '',
+            ];
+            session_destroy();
+            return View::make('users/userLogin', $data);
+        }
+
+        public
+        function isLoggedIn()
+        {
+            if ($_SESSION['user_id']) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
