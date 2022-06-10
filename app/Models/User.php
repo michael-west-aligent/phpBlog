@@ -52,5 +52,12 @@ class User {
     }
 
 
+    public function getUserinfo(){
+        $adminUserStatement = $this->db->prepare('SELECT id, username, email, is_admin, created_at from users;');
+//        $adminUserStatement->execute($data['id'], $data['username'],['$email'], ['$is_admin'], ['created_at']);
+        $adminUserStatement->execute();
+        $dataRow = $adminUserStatement->fetchAll();
+        return $dataRow;
+    }
 
 }

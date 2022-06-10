@@ -159,7 +159,12 @@ class UsersController
     {
         if ($_SESSION != null) {
             if ($_SESSION['is_admin'] == 1) {
-                return View::make('/admin/home');
+                $users = $this->userModel->getUserinfo();
+                $data = [
+                    'users' => $users
+                ];
+                return View::make('/admin/home', $data );
+//                return View::make('/admin/home');
             } else if ($_SESSION['is_admin'] == 0) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
@@ -168,6 +173,7 @@ class UsersController
             header('location: ' . 'http://localhost:8000/users/login');
         }
     }
+
 
 
      public function createUserSession($user)
@@ -197,13 +203,21 @@ class UsersController
             return View::make('users/userLogin', $data);
         }
 
-        public
-        function isLoggedIn()
+        public function isLoggedIn()
         {
             if ($_SESSION['user_id']) {
                 return true;
             } else {
                 return false;
             }
+        }
+
+//
+        public function adminGetUserData(){
+            $users = $this->userModel->getUserinfo();
+                $data = [
+                'users' => $users
+            ];
+            return View::make('/admin/home', $data );
         }
     }

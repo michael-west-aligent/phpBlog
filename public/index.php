@@ -44,6 +44,8 @@ $router
     //HERE
         //LOGIN AS AN ADMIN
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome']);
+//    ->get('/admin/users', [\App\Controllers\UsersController::class,'adminGetUserData']);
+
 
 
 
