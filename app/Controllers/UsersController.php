@@ -176,104 +176,93 @@ class UsersController
 
     public function adminAddUser()
     {
-        if ($_SESSION != null) {
-            if ($_SESSION['is_admin'] == 1) {
-                $users = $this->userModel->newRegister();
-                $data = [
-                    'users' => $users
-                ];
-                return View::make('/admin/addUser', $data );
-            } else if ($_SESSION['is_admin'] == 0) {
-                header('location: ' . 'http://localhost:8000/blogPosts');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = [
+                'name' => trim($_POST['name']),
+                'email' => trim($_POST['email']),
+                'password' => trim($_POST['password']),
+                'confirm_password' => trim($_POST['confirm_password']),
+                'is_admin' => trim($_POST['is_admin']),
+                'name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => ''
+            ];
+            //Validate Email
+            if (empty($data['email'])) {
+                echo('hello');
+                $data['email_err'] = 'Please enter an email';
             }
+            else {
+                //CHECK EMAIL IS NOT ALREADY IN DB
+                if ($this->userModel->findUserByEmail($data)) {
+                    $data['email_err'] = "Email being used";
+                }
+            }
+            //Validate Name
+            if (empty($data['name'])) {
+                $data['name_err'] = 'Please enter a name';
+            }
+            //Validate Password
+            if (empty($data['password'])) {
+                $data['password_err'] = 'Please enter a password';
+            } elseif (strlen($data['password']) < 6) {
+                $data['password_err'] = 'Password must be at least 6 characters';
+            }
+            //Validate Confirm Password
+            if (empty($data['confirm_password'])) {
+                $data['confirm_password_err'] = 'Please confirm password';
+            } else {
+                if ($data['password'] != $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match, try again';
+                }
+            }
+            //Make sure errors are empty
+            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                //HASH PASSWORD
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                //REGISTER USER
+//                if ($this->userModel->adminUserAdd($data)) {
+////                    header('location: ' . 'http://localhost:8000/admin/home');
+//                }
+            } else {
+                //LOAD VIEW WITH ERRORRs
+                return View::make('admin/addUser', $data);
+            }
+        } else {
+            $data = [
+                'name' => '',
+                'email' => '',
+                'password' => '',
+                'confirm_password' => '',
+                'is_admin' => '',
+                'name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'is_admin_err' => '',
+            ];
+            //LOAD VIEW FILE
+            return View::make('admin/addUser', $data);
         }
-        else {
-            header('location: ' . 'http://localhost:8000/users/login');
-            return View::make('admin/home');
-
+        if ($this->userModel->adminUserAdd($data)) {
+                    header('location: ' . 'http://localhost:8000/admin/home');
         }
-//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-//            $data = [
-//                'name' => trim($_POST['name']),
-//                'email' => trim($_POST['email']),
-//                'password' => trim($_POST['password']),
-//                'confirm_password' => trim($_POST['confirm_password']),
-//                'name_err' => '',
-//                'email_err' => '',
-//                'password_err' => '',
-//                'confirm_password_err' => ''
-//            ];
-//            //Validate Email
-//            if (empty($data['email'])) {
-//                $data['email_err'] = 'Please enter an email';
-//            } else {
-//                //CHECK EMAIL IS NOT ALREADY IN DB
-//                if ($this->userModel->findUserByEmail($data)) {
-//                    $data['email_err'] = "Email being used";
-//                }
-//            }
-//            //Validate Name
-//            if (empty($data['name'])) {
-//                $data['name_err'] = 'Please enter a name';
-//            }
-//            //Validate Password
-//            if (empty($data['password'])) {
-//                $data['password_err'] = 'Please enter a password';
-//            } elseif (strlen($data['password']) < 6) {
-//                $data['password_err'] = 'Password must be at least 6 characters';
-//            }
-//            //Validate Confirm Password
-//            if (empty($data['confirm_password'])) {
-//                $data['confirm_password_err'] = 'Please confirm password';
-//            } else {
-//                if ($data['password'] != $data['confirm_password']) {
-//                    $data['confirm_password_err'] = 'Passwords do not match, try again';
-//                }
-//            }
-//            //Make sure errors are empty
-//            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-//                //HASH PASSWORD
-//                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-//                //REGISTER USER
-//                if ($this->userModel->newRegister($data)) {
-//                    header('location: ' . 'http://localhost:8000/admin/home');
-//                }
-//            } else {
-//                //LOAD VIEW WITH ERRORs
-//                return View::make('admin/addUser', $data);
-//            }
-//        } else {
-//            $data = [
-//                'name' => '',
-//                'email' => '',
-//                'password' => '',
-//                'confirm_password' => '',
-//                'name_err' => '',
-//                'email_err' => '',
-//                'password_err' => '',
-//                'confirm_password_err' => ''
-//            ];
-//            //LOAD VIEW FILE
-//            return View::make('admin/addUser', $data);
-//        }
     }
 
 
 
      public function createUserSession($user)
         {
-//        var_dump($user);
             // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_username'] = $user['username'];
             $_SESSION['is_admin'] = $user['is_admin'];
-//        header('location: '. '/users/blogPosts');
         }
 
-        public
-        function logout()
+        public function logout()
         {
             unset($_SESSION['user_id']);
             unset($_SESSION['user_email']);

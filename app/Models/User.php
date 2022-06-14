@@ -23,10 +23,10 @@ class User {
     }
 
     //Admin add a User
-    public function adminUserAdd(){
-//        $newUser = $this->db->prepare('INSERT INTO users (username, email, password) VALUES(?,?,?)');
-//        $newUser->execute([$data['name'], $data['email'], $data['password']]);
-//        return true;
+    public function adminUserAdd($data){
+        $newUser = $this->db->prepare('INSERT INTO users (username, email, password, is_admin) VALUES(?,?,?,?)');
+        $newUser->execute([$data['name'], $data['email'], $data['password'], $data['is_admin']]);
+        return true;
     }
 
     //Login as a user

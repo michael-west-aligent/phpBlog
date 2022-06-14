@@ -43,7 +43,8 @@ $router
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
 
-    ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser']);
+    ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
+    ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser']);
 
 
 
