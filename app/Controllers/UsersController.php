@@ -218,8 +218,12 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
+            //VALIDATE IS ADMIN
+            if(isset($_POST['is_admin']) == 1) {
+            } else if ($_POST['is_admin'] == 0 );
+
             //Make sure errors are empty
-            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['is_admin_err'])) {
                 //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 //REGISTER USER

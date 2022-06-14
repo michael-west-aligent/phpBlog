@@ -35,10 +35,22 @@
                     <span style="color: darkred"> <?php echo $this->params['confirm_password_err']; ?> </span>
                 </div>
 
-                <div class="form-group">
-                    <label for="is_admin"> Is Admin: <sup>0=No Admin, 1 = Admin</sup></label>
-                    <input type="text" name="is_admin" class="form-control form-control-lg"  value="<?php echo !empty($this->params['is_admin']) ? $this->params['is_admin'] : ''; ?>">
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="is_admin"> Is Admin: <sup>0=No Admin, 1 = Admin</sup></label>-->
+<!--                    <input type="text" name="is_admin" class="form-control form-control-lg"  value="--><?php //echo !empty($this->params['is_admin']) ? $this->params['is_admin'] : ''; ?><!--">-->
+<!--                </div>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <label for="is_admin"> Is Admin: <sup>Tick box to make admin </sup></label>-->
+<!--                        <input type="checkbox" name="is_admin" class="form-control form-control-lg"  value="--><?php //echo !empty($this->params['is_admin'] == 1) ? $this->params['is_admin'] : ''; ?><!--">-->
+<!--                    </div>-->
+
+                    <div class="form-group">
+                        <label for="is_admin"> Is Admin: <sup>Tick box to make admin </sup></label>
+                        <input type="hidden" name="is_admin" class="form-control form-control-lg"  value="0"/>
+                        <input type="checkbox" name="is_admin" class="form-control form-control-lg"  value="1">
+                    </div>
+
 
                 <div class="row">
                     <div class="col">
