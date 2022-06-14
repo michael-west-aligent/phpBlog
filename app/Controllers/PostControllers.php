@@ -103,7 +103,6 @@ class PostControllers{
             if(empty($data['title_err']) && empty($data['blog_body_err'])){
                 //VALIDATED
                 if($this->postModel->updatePost($data)){
-                    echo('tes');
 //                    REDIRECT TO ALL BLOG POSTS
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {

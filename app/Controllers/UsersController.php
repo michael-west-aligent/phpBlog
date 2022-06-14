@@ -163,13 +163,12 @@ class UsersController
                 $data = [
                     'users' => $users
                 ];
-                return View::make('/admin/home', $data );
+                return View::make('/admin/home', $data);
 //                return View::make('/admin/home');
             } else if ($_SESSION['is_admin'] == 0) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
-        }
-        else {
+        } else {
             header('location: ' . 'http://localhost:8000/users/login');
         }
     }
@@ -183,7 +182,7 @@ class UsersController
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'is_admin' => trim($_POST['is_admin']),
+                'is_admin' => isset($_POST['is_admin']),
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
@@ -193,8 +192,7 @@ class UsersController
             if (empty($data['email'])) {
                 echo('hello');
                 $data['email_err'] = 'Please enter an email';
-            }
-            else {
+            } else {
                 //CHECK EMAIL IS NOT ALREADY IN DB
                 if ($this->userModel->findUserByEmail($data)) {
                     $data['email_err'] = "Email being used";
@@ -218,18 +216,10 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
-            //VALIDATE IS ADMIN
-            if(isset($_POST['is_admin']) == 1) {
-            } else if ($_POST['is_admin'] == 0 );
-
             //Make sure errors are empty
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['is_admin_err'])) {
                 //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                //REGISTER USER
-//                if ($this->userModel->adminUserAdd($data)) {
-////                    header('location: ' . 'http://localhost:8000/admin/home');
-//                }
             } else {
                 //LOAD VIEW WITH ERRORRs
                 return View::make('admin/addUser', $data);
@@ -251,51 +241,55 @@ class UsersController
             return View::make('admin/addUser', $data);
         }
         if ($this->userModel->adminUserAdd($data)) {
-                    header('location: ' . 'http://localhost:8000/admin/home');
+            header('location: ' . 'http://localhost:8000/admin/home');
         }
     }
 
-
-
-     public function createUserSession($user)
-        {
-            // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_email'] = $user['email'];
-            $_SESSION['user_username'] = $user['username'];
-            $_SESSION['is_admin'] = $user['is_admin'];
-        }
-
-        public function logout()
-        {
-            unset($_SESSION['user_id']);
-            unset($_SESSION['user_email']);
-            unset($_SESSION['user_username']);
+    public function adminUpdateUser()
+    {
+//        var_dump($_POST);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
-                'email' => '',
-                'password' => '',
-                'email_err' => '',
-                'password_err' => '',
+                'user_id' => (intval($_POST['id'])),
             ];
-            session_destroy();
-            return View::make('users/userLogin', $data);
+            $this->userModel->adminUpdate($data);
+            $this->userModel->adminUpdate([$data]) ;
         }
-
-        public function isLoggedIn()
-        {
-            if ($_SESSION['user_id']) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-//
-//        public function adminGetUserData(){
-//            $users = $this->userModel->getUserinfo();
-//                $data = [
-//                'users' => $users
-//            ];
-//            return View::make('/admin/home', $data );
-//        }
+        return View::make('admin/updateUser');
     }
+
+
+    public function createUserSession($user)
+    {
+        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_email'] = $user['email'];
+        $_SESSION['user_username'] = $user['username'];
+        $_SESSION['is_admin'] = $user['is_admin'];
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_email']);
+        unset($_SESSION['user_username']);
+        $data = [
+            'email' => '',
+            'password' => '',
+            'email_err' => '',
+            'password_err' => '',
+        ];
+        session_destroy();
+        return View::make('users/userLogin', $data);
+    }
+
+    public function isLoggedIn()
+    {
+        if ($_SESSION['user_id']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

@@ -32,7 +32,6 @@ $router
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
-//    ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
@@ -42,9 +41,12 @@ $router
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
-
     ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
-    ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser']);
+    ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
+//EDIT ADMIN
+    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/hello', [\App\Controllers\UsersController::class, 'adminUpdateUser']);
 
 
 

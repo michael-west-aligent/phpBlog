@@ -29,6 +29,15 @@ class User {
         return true;
     }
 
+    //Admin update user
+    public function adminUpdate($data){
+        $updateUserDetails = $this->db->prepare('UPDATE users SET is_admin = ? WHERE id = ? ');
+        $updateUserDetails->execute([1, $data['user_id']]);
+        header('location: ' . 'http://localhost:8000/admin/home');
+        return true;
+    }
+
+
     //Login as a user
     public function currentUser($email, $password){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
@@ -43,6 +52,7 @@ class User {
          }
     }
 
+    //find user by email
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
@@ -50,7 +60,7 @@ class User {
         return $dataRow;
     }
 
-
+    //find user by ID
     public function getUserById($id) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE id = ?');
         $userStatement->execute([$id]);
