@@ -20,12 +20,13 @@ require_once VIEW_PATH . '/header.php';
             <th>password</th>
             <th>is_admin</th>
             <th>created_at</th>
-<!--            <th>Remove User</th>-->
+            <th>Remove User</th>
             <th>Update User</th>
         </tr>
         <?php foreach ($this->params['users'] as $users) : ?>
-        <form action="/admin/updateUser" method="post">
+        <form action="/admin/userStatus" method="post">
             <input name="id" value="<?php echo $users['id'] ?>" type="hidden">
+            <input name="is_admin" value="<?php echo $users['is_admin'] ?>" type="hidden">
             <tr>
                 <td>
                     <p> <?php echo $users['id'] ?> </p>
@@ -42,14 +43,43 @@ require_once VIEW_PATH . '/header.php';
                 <td>
                     <p> <?php echo $users['created_at'] ?> </p>
                 </td>
-<!--                <td>-->
-<!--                    <button type="submit" value="Remove User"> Remove User</button>-->
-<!--                </td>-->
+                <td>
+                    <button type="submit" value="Remove User"> Remove User</button>
+                </td>
                 <td>
                     <button type="submit" value="Update User" class="btn btn-success"> Update User</button>
                 </td>
             </tr>
         </form>
+
+            <form action="/admin/userStatus" method="post">
+                <input name="id" value="<?php echo $users['id'] ?>" type="hidden">
+                <input name="is_admin" value="<?php echo $users['is_admin'] ?>" type="hidden">
+                <tr>
+                    <td>
+                        <p> <?php echo $users['id'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['username'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['password'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['is_admin'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['created_at'] ?> </p>
+                    </td>
+                    <td>
+                        <button type="submit" value="Remove User"> Remove User</button>
+                    </td>
+                    <td>
+                        <button type="submit" value="Update User" class="btn btn-success"> Update User</button>
+                    </td>
+                </tr>
+            </form>
+
         <?php endforeach; ?>
     </table>
 </div>

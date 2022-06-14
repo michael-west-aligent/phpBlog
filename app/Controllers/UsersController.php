@@ -248,15 +248,33 @@ class UsersController
     public function adminUpdateUser()
     {
 //        var_dump($_POST);
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'user_id' => (intval($_POST['id'])),
+                'is_admin' => (intval($_POST['is_admin'])),
             ];
-            $this->userModel->adminUpdate($data);
-            $this->userModel->adminUpdate([$data]) ;
-        }
-        return View::make('admin/updateUser');
+
+//            $this->userModel->adminUpdate($data);
+//            $this->userModel->adminUpdate([$data]) ;
+            return View::make('admin/updateUser', $data);
+//        }
+//        return View::make('admin/updateUser');
+    }
+
+    public function adminUpdateUser2(){
+        $data = [
+            'user_id' => (intval($_POST['user_id'])),
+            'is_admin' => isset($_POST['is_admin']),
+        ];
+        $this->userModel->adminUpdate($data);
+//        return View::make('admin/info');
+    }
+
+    public function removeUser() {
+
+
+
     }
 
 

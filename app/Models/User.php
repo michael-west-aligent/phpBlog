@@ -32,7 +32,7 @@ class User {
     //Admin update user
     public function adminUpdate($data){
         $updateUserDetails = $this->db->prepare('UPDATE users SET is_admin = ? WHERE id = ? ');
-        $updateUserDetails->execute([1, $data['user_id']]);
+        $updateUserDetails->execute([$data['is_admin'], $data['user_id']]);
         header('location: ' . 'http://localhost:8000/admin/home');
         return true;
     }

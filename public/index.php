@@ -44,9 +44,9 @@ $router
     ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
     ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
 //EDIT ADMIN
-    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
-    ->post('/hello', [\App\Controllers\UsersController::class, 'adminUpdateUser']);
+    ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser']);
 
 
 
