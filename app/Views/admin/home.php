@@ -65,6 +65,7 @@ $allPosts = $post->adminBlogInfoHome();
             <th>Title</th>
             <th>Blogged By</th>
             <th>Blog Body</th>
+            <th>PostId</th>
             <th>Update / Remove Blogs </th>
         </tr>
 
@@ -80,10 +81,21 @@ $allPosts = $post->adminBlogInfoHome();
                 <p> <?php echo $posts["title"] ?></p>
             </td>
             <td>
-                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>
+                <p> <?php echo $posts["postId"] ?></p>
+            </td>
+
+            <td>
+<!--                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
+                <a href="/admin/editBlog?<?php echo $posts['postId'] ?>" >
+<!--                    <input  value="Edit the blog">-->
+                    <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>
+                </a>
             </td>
         </tr>
+
         <?php endforeach; ?>
     </table>
 
 </div>
+
+//IF NOT USING A FORM DO NOT USE THE TYPE=SUBMIT

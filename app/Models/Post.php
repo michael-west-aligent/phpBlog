@@ -68,6 +68,13 @@ ORDER BY posts.created_at DESC;');
         header('location: ' . 'http://localhost:8000/blogPosts');
     }
 
+    public function adminUpdateBlog($data){
+        $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
+        $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
+        header('location: ' . 'http://localhost:8000/blogPosts');
+        return true;
+    }
+
     public function updatePost($data){
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);

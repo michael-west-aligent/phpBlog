@@ -44,8 +44,10 @@ $router
     //userstatus ?
     ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
     ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
-    //ADMIN GET POSTS
-    ->post('/admin/home', [\App\Controllers\PostControllers::class,'adminSeeBlogs']);
+    ->post('/admin/home', [\App\Controllers\PostControllers::class,'adminSeeBlogs'])
+    //ADMIN EDIT BLOG
+    ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+    ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog']);
 
 
 
