@@ -271,24 +271,20 @@ class UsersController
 //        return View::make('admin/info');
     }
 
+
+
     public function removeUser() {
-    if($_SERVER['REQUEST METHOD'] == 'POST'){
-        if($this->userModel->adminRemove())
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            header('location: ' . 'http://localhost:8000/admin/home');
-        } else {
-            die('something is not working');
+            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+            if($this->userModel->adminRemove($id))
+            {
+                header('location: ' . 'http://localhost:8000/admin/home');
+            } else {
+                die('something is not working');
             }
         }
     }
-
-//    public function deletePost(){
-//        $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
-//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-//        $deleteBlogPost->execute([$id]);
-//        return true;
-//    }
-
 
     public function createUserSession($user)
     {

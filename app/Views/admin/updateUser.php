@@ -26,20 +26,15 @@ require_once VIEW_PATH . '/header.php';
         </div>
 
         <input type="hidden" name="user_id" value="<?php echo$this->params['user_id']?>">
-        <input type="submit" class="btn btn-success" value="Update admin status"/>
-
-
-
-        <div class="form-group">
-            <label for="user_id"> Remove User  <sup></sup></label>
-            <form action="delete<?php echo $this->params['user_id'];?>?" method="post">
-                <input type="submit"  name="user_id" class="btn btn-danger" value="Submit" >
-            </form>
-        </div>
-
-
-
+        <input type="submit" class="btn btn-success" value="Submit"/>
     </form>
+
+    <div class="form-group">
+        <label for="user_id"> Remove User  <sup></sup></label>
+        <form  action="delete?<?php echo $this->params['user_id']?>" method="post">
+            <input type="submit"  name="user_id" class="btn btn-danger" value="Submit" >
+        </form>
+    </div>
 
 
 

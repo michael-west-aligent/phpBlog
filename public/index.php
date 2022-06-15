@@ -47,7 +47,7 @@ $router
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
     ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
 //REMOVW USER
-    ->post('/admin/removeUser', [\App\Controllers\UsersController::class, 'removeUser']);
+    ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser']);
 
 
 

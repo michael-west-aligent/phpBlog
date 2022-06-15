@@ -54,7 +54,6 @@ if($_SESSION != null) :
         </textarea>
         <input type="hidden" name="username" value="<?= $comment['username'];?> ">
         <input type="hidden" name="post_id" value="<?= $this->params['id'];?> ">
-<!--        <input type="hidden" name="body" value="--> <?//= $comment['body'];?><!-- ">-->
         <input type="submit" value="Submit Comment" class="btn btn-success">
     </div>
 </form>
