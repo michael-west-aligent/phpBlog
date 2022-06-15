@@ -11,7 +11,15 @@
         <h1> Blog Posts</h1>
     </div>
     <div class="col-md-6">
+<!--        --><?php //var_dump($_SESSION) ?>
+        <?php if($_SESSION['is_admin']) : ?>
+
         <a href="/blog/addBlog" class="btn btn-primary float-right"> Add A Blog </a>
+        <a href="/admin/home" class="btn float-right"> Return To Admin Home  </a>
+
+        <?php else : ?>
+    <a href="/blog/addBlog" class="btn btn-primary float-right"> Add A Blog </a>
+        <?php endif ?>
     </div>
 </div>
 
