@@ -20,11 +20,7 @@ $router = new Router();
 
 
 $router
-    //METHOD(i.e get) -ROUTE i.e (/) - CONTROLLER (i.e HOMECONTROLLER)  -FUNCTION NAME FOUND IN CONTROLLER (i.e HOME)
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-
-    //BELOW LINE TO TRY AND GET ALL BLOGS TO HOMEPAGE- COME BACK
-//    ->get('/', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
@@ -45,9 +41,12 @@ $router
     ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
     ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    //userstatus ?
     ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
-//REMOVW USER
-    ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser']);
+    ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
+    //ADMIN GET POSTS
+    ->post('/admin/home', [\App\Controllers\PostControllers::class,'adminSeeBlogs']);
+
 
 
 

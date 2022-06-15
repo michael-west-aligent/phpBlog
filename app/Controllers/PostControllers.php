@@ -16,10 +16,6 @@ class PostControllers{
 
     public function __construct()
     {
-        //NOT WORKING
-//        if(!isLoggedIn()){
-//            header('location: ' . 'http://localhost:8000/users/login');
-//        }
         $this->postModel = new Post();
         $this->userModel = new User();
         $this->commentModel = new Comment();
@@ -32,6 +28,16 @@ class PostControllers{
                 'posts' => $posts
             ];
         return View::make('/posts/index', $data);
+    }
+
+
+    //admin home page see blogs
+    public function adminSeeBlogs(){
+        $posts = $this->postModel->adminBlogInfoHome();
+        $blogData = [
+            'posts' => $posts
+        ];
+        return View::make('/admin/home', $blogData);
     }
 
     public function addBlog() {

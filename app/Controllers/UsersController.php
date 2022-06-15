@@ -6,10 +6,13 @@ namespace App\Controllers;
 
 use App\View;
 use App\Models\User;
+use App\Models\Post;
+use App\Models;
 
 class UsersController
 {
     protected $userModel;
+    private $postModel;
 
     public function __construct()
     {
@@ -133,7 +136,7 @@ class UsersController
 //                $this->adminHome();
                 if ($user['is_admin'] == 1) {
                     header('location: ' . 'http://localhost:8000/admin/home');
-                    return View::make('/admin/home', $data);
+//                    return View::make('/admin/home', $data);
                 }
                 if ($user['is_admin'] == 0) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
@@ -161,10 +164,9 @@ class UsersController
             if ($_SESSION['is_admin'] == 1) {
                 $users = $this->userModel->getUserinfo();
                 $data = [
-                    'users' => $users
+                    'users' => $users,
                 ];
                 return View::make('/admin/home', $data);
-//                return View::make('/admin/home');
             } else if ($_SESSION['is_admin'] == 0) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
@@ -247,19 +249,11 @@ class UsersController
 
     public function adminUpdateUser()
     {
-//        var_dump($_POST);
-//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'user_id' => (intval($_POST['id'])),
                 'is_admin' => (intval($_POST['is_admin'])),
             ];
-
-//            $this->userModel->adminUpdate($data);
-//            $this->userModel->adminUpdate([$data]) ;
             return View::make('admin/updateUser', $data);
-//        }
-//        return View::make('admin/updateUser');
     }
 
     public function adminUpdateUser2(){
@@ -268,10 +262,7 @@ class UsersController
             'is_admin' => isset($_POST['is_admin']),
         ];
         $this->userModel->adminUpdate($data);
-//        return View::make('admin/info');
     }
-
-
 
     public function removeUser() {
         if($_SERVER['REQUEST_METHOD'] == 'POST')

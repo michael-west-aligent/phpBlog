@@ -2,6 +2,11 @@
 require_once VIEW_PATH . '/header.php';
 ?>
 
+<?php
+$post = new \App\Models\Post();
+$allPosts = $post->adminBlogInfoHome();
+?>
+
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -9,49 +14,76 @@ require_once VIEW_PATH . '/header.php';
         <h2> USERS
             <div class="button">
                 <a href="/admin/addUser" class="btn btn-success"> Add a New User </a>
-<!--            <input href="/admin/addUser" type="submit" class="btn btn-success" value="Add A New User"/>-->
             </div>
         </h2>
-                <td>
-                </td>
+<!--        <td>-->
+<!--        </td>-->
         <tr>
             <th>id</th>
             <th>username</th>
-            <th>password</th>
             <th>is_admin</th>
             <th>created_at</th>
-<!--            <th>Remove User</th>-->
             <th>Update / Remove User</th>
         </tr>
+<!--        --><?php //var_dump($this->params['users']) ?>
         <?php foreach ($this->params['users'] as $users) : ?>
-        <form action="/admin/userStatus" method="post">
-            <input name="id" value="<?php echo $users['id'] ?>" type="hidden">
-            <input name="is_admin" value="<?php echo $users['is_admin'] ?>" type="hidden">
-            <tr>
-                <td>
-                    <p> <?php echo $users['id'] ?> </p>
-                </td>
-                <td>
-                    <p> <?php echo $users['username'] ?> </p>
-                </td>
-                <td>
-                    <p> <?php echo $users['password'] ?> </p>
-                </td>
-                <td>
-                    <p> <?php echo $users['is_admin'] ?> </p>
-                </td>
-                <td>
-                    <p> <?php echo $users['created_at'] ?> </p>
-                </td>
-<!--                <td>-->
-<!--                    <button type="submit" value="Remove User"> Remove User</button>-->
-<!--                </td>-->
-                <td>
-                    <button type="submit" value="Update User" class="btn btn-success"> Update / Remove User </button>
-                </td>
-            </tr>
-        </form>
+            <form action="/admin/userStatus" method="post">
+                <input name="id" value="<?php echo $users['id'] ?>" type="hidden">
+                <input name="is_admin" value="<?php echo $users['is_admin'] ?>" type="hidden">
+                <tr>
+                    <td>
+                        <p> <?php echo $users['id'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['username'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['is_admin'] ?> </p>
+                    </td>
+                    <td>
+                        <p> <?php echo $users['created_at'] ?> </p>
+                    </td>
+                    <td>
+                        <button type="submit" value="Update User" class="btn btn-success"> Update / Remove User</button>
+                    </td>
+                </tr>
+            </form>
 
         <?php endforeach; ?>
     </table>
+</div>
+
+
+<div class="card card-body bg light mt-5">
+<!--    --><?php //var_dump($allPosts); ?>
+    <table>
+        <h2> BLOGS </h2>
+        <div class="button">
+            <a href="/blog/addBlog" class="btn btn-success"> Add Blog Post </a>
+        </div>
+        <tr>
+            <th>Title</th>
+            <th>Blogged By</th>
+            <th>Blog Body</th>
+            <th>Update / Remove Blogs </th>
+        </tr>
+
+        <?php foreach ($allPosts as $posts) : ?>
+        <tr>
+            <td>
+                <p> <?php echo $posts["title"] ?></p>
+            </td>
+            <td>
+                <p> <?php echo $posts["username"] ?></p>
+            </td>
+            <td>
+                <p> <?php echo $posts["title"] ?></p>
+            </td>
+            <td>
+                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
 </div>
