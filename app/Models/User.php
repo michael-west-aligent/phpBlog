@@ -37,6 +37,19 @@ class User {
         return true;
     }
 
+    //ADMIN REMOVE USER
+    public function adminRemove(){
+    $deleteUser = $this->db->prepare('DELETE FROM users where id = ?');
+    $deleteUser->execute(['user_id']);
+    }
+
+//    public function deletePost(){
+//        $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
+//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+//        $deleteBlogPost->execute([$id]);
+//        return true;
+//    }
+
 
     //Login as a user
     public function currentUser($email, $password){

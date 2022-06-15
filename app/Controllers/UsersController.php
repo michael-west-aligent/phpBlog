@@ -272,10 +272,22 @@ class UsersController
     }
 
     public function removeUser() {
-
-
-
+    if($_SERVER['REQUEST METHOD'] == 'POST'){
+        if($this->userModel->adminRemove())
+        {
+            header('location: ' . 'http://localhost:8000/admin/home');
+        } else {
+            die('something is not working');
+            }
+        }
     }
+
+//    public function deletePost(){
+//        $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
+//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+//        $deleteBlogPost->execute([$id]);
+//        return true;
+//    }
 
 
     public function createUserSession($user)

@@ -12,6 +12,8 @@ require_once VIEW_PATH . '/header.php';
 
 <?php //var_dump($_POST['id']) ?>
 <!--        --><?php //var_dump($this->params['is_admin'])?>
+<!--                --><?php //var_dump($this->params['id'])?>
+
         <div class="form-group">
             <label for="is_admin"> Is Admin: <sup>Tick box to make admin </sup></label>
 <!--            <input type="hidden" name="is_admin" class="form-control form-control-lg"  value="0"/>-->
@@ -22,11 +24,11 @@ require_once VIEW_PATH . '/header.php';
             <input type="checkbox"  name="is_admin"  class="form-control form-control-lg"  value="<?php echo 1?>" checked>
             <?php endif ?>
         </div>
-        </div>
-    <input type="hidden" name="user_id" value="<?php echo$this->params['user_id']?>">
+        <input type="hidden" name="user_id" value="<?php echo$this->params['user_id']?>">
         <input type="submit" class="btn btn-success" value="Submit"/>
     </form>
 </div>
+
 
 
 

@@ -43,10 +43,11 @@ $router
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
     ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
     ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
-//EDIT ADMIN
     ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
-    ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser']);
+    ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+//REMOVW USER
+    ->post('/admin/removeUser', [\App\Controllers\UsersController::class, 'removeUser']);
 
 
 
