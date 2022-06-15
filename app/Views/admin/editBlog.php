@@ -8,8 +8,8 @@ require_once VIEW_PATH . '/header.php';
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
-    <h2> Edit Blog</h2>
-    <p> Fill out the form to create a new blog  </p>
+    <h2> Admin Edit Blog</h2>
+    <p> Edit the blog title or blog body!  </p>
     <form action="/blog/submitEdit" method="post">
         <div class="form-group">
             <label for="title"> Title: <sup>*</sup></label>
@@ -27,9 +27,16 @@ require_once VIEW_PATH . '/header.php';
                    > <?php echo ($this->params['blog_body']); ?> </textarea>
             <span style="color: darkred"> <?php echo $this->params['blog_body_err']; ?> </span>
         </div>
-        <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
-        <input type="submit" class="btn btn-success" value="Submit"/>
 
+<a href="/admin/home">
+        <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
+        <input type="submit" onclick="window.location.href = 'http://localhost:8000/admin/home';" class="btn btn-success" value="Make Blog Changes "/>
+</a>
+
+<!--        <a href="/admin/editBlog?--><?php //echo $posts['postId'] ?><!--" >-->
+<!--                               <input  value="Edit the blog">-->
+<!--            <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
+<!--        </a>-->
 
     </form>
 </div>

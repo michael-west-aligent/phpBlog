@@ -78,7 +78,7 @@ $allPosts = $post->adminBlogInfoHome();
                 <p> <?php echo $posts["username"] ?></p>
             </td>
             <td>
-                <p> <?php echo $posts["title"] ?></p>
+                <p> <?php echo $posts["blog_body"] ?></p>
             </td>
             <td>
                 <p> <?php echo $posts["postId"] ?></p>

@@ -158,12 +158,17 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
+
+            var_dump($data);
             //VALIDATE data
             if (empty($data['title'])) {
                 $data['title_err'] = 'Please enter a title';
             }
+            //validate body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
+            }elseif (strlen($data['blog_body']) < 76){
+                $data['blog_body_err'] = 'Blog body must be less than 51 characters';
             }
             //Make sure no errors
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
