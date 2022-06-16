@@ -52,7 +52,7 @@ if ($_SESSION != null) :
         <?php endif ?>
         <input type="hidden" name="post_id" value="<?php echo $singleBlog ?>">
         <input type="hidden" name="approved" value="<?php echo 1?>">
-        <input type="submit" class="btn btn-success" value="Submit"/>
+        <input type="submit" class="btn btn-success" value="Approve Comment"/>
     </form>
 
 

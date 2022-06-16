@@ -38,12 +38,15 @@ class CommentControllers {
         }
     }
 
-//    public function approveComment()
-//    {
-//        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-//
-//        }
-//
-//    }
+    public function adminApproved()
+    {
+        $data = [
+            'comment_id' => $_POST['comment_id'],
+            'approved' => $_POST['approved'],
+            'post_id' => $_POST['post_id']
+        ];
+
+        $this->postModel->adminApproved($data);
+    }
 
 }

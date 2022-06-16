@@ -53,7 +53,7 @@ $router
     ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
     //ADMIN APPROVE COMMENTS
     ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog'])
-    ->post('/admin/approvedComment', [\App\Controllers\PostControllers::class, 'adminApproved']);
+    ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'adminApproved']);
 
 
 
