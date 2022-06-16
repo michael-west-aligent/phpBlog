@@ -28,6 +28,15 @@ class Comment {
         $newComment->execute([$data['user_id'], $data['body'], $data['post_id']]);
         return true;
     }
+
+
+    public function adminApproveComment()
+    {
+
+
+    }
+
+
     }
 
 //    public function addComment($user_id, $body, $post_id)

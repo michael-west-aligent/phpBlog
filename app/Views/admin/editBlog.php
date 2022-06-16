@@ -29,14 +29,14 @@ require_once VIEW_PATH . '/header.php';
         </div>
 
         <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
-        <input type="submit" class="btn btn-success" value="Make Blog Changes "/>
-<!--        <input type="submit" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post" class="btn btn-danger" value="Delete Blog" />-->
-
-
-<!--        <form class="float-right" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post">-->
-<!--            <input type="submit" value="Delete Blog" class="btn btn-danger">-->
-<!--        </form>-->
-
-
+        <input type="submit" class="btn btn-success"  value="Make Blog Changes "/>
     </form>
+
+<!--    <a href="/admin/home" >-->
+<!--        <button type="submit" value="Update User" class="btn btn-success"> Make Blog Changes </button>-->
+<!--    </a>-->
+
+    <a href="/admin/approveBlogComment?<?php echo $this->params['id']?> " >
+        <button type="submit" value="Update User" class="btn btn-success"> View Full Blog with comments</button>
+    </a>
 </div>

@@ -71,7 +71,7 @@ ORDER BY posts.created_at DESC;');
     public function adminUpdateBlog($data){
         $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
-        header('location: ' . 'http://localhost:8000/blogPosts');
+        header('location: ' . 'http://localhost:8000/admin/home');
         return true;
     }
 
@@ -84,11 +84,6 @@ ORDER BY posts.created_at DESC;');
 
     public function getPostById($id){
     $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
-//    if (isset($postId)) {
-//        $id = $postId;
-//    } else {
-//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-//    }
     $singleBlog->execute([$id]);
     $results = $singleBlog->fetch();
     return $results;

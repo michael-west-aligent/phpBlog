@@ -205,6 +205,7 @@ class PostControllers
     public function updatePost()
     {
         $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
+        $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
     }
 
     //SHOW A SINGLE BLOG BASED ON ITS POT ID
@@ -225,6 +226,25 @@ class PostControllers
             'comments' => $comment,
         ];
         return View::make('posts/show', $data);
+    }
+
+    public function adminFullBlog()
+    {
+        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        $post = $this->postModel->getPostById($id);
+        $user = $this->userModel->getUserById($post['user_id']);
+        $comment = $this->commentModel->getCommentsById($post['id']);
+        $data = [
+            'id' => $post['id'],
+            'title' => $post['title'],
+            'blog_body' => $post['blog_body'],
+            'user_id' => $post['user_id'],
+            'created_at' => $post['created_at'],
+            'username' => $user['username'],
+            //THIS NOW GETS THE FULL COMMENTS array.
+            'comments' => $comment,
+        ];
+        return View::make('admin/approveComments', $data);
     }
 
     public function deleteBlog()

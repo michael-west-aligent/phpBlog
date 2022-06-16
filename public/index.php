@@ -49,7 +49,11 @@ $router
     ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
     ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
     //ADMIN DELETE
-    ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog']);
+    ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog'])
+    ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
+    //ADMIN APPROVE COMMENTS
+    ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog']);
+
 
 
 

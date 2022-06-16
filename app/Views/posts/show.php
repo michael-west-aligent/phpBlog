@@ -15,10 +15,9 @@
 <?php
 if($_SESSION != null) :
 ?>
+
 <?php  if ($this->params['user_id'] == $_SESSION['user_id']) : ?>
-
     <a href="/blog/edit?<?php echo $this->params['id']; ?> " class="btn btn-dark"> Edit Blog </a>
-
     <form class="float-right" action="/blog/delete" method="post">
         <input type="hidden" name="postId" value="<?= $this->params['id'];?> ">
         <input type="submit" value="Delete Blog" class="btn btn-danger">
@@ -27,24 +26,27 @@ if($_SESSION != null) :
 
 <?php endif; ?>
 
-<!--//if ($this->params['user_id'] == $_SESSION['user_id']) : ?>-->
-<!---->
-<!--    <a href="/blog/edit?--><?php //echo $this->params['id']; ?><!-- " class="btn btn-dark"> Edit Blog </a>-->
-<!--    <form class="float-right" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post">-->
-<!--        <input type="submit" value="Delete Blog" class="btn btn-danger">-->
-<!--    </form>-->
-<?php //endif; ?>
-
 <hr>
 
 <h3> Blog Replies </h3>
+<?php //var_dump($this->params['comments']) ?>
+
 <?php foreach ($this->params['comments'] as $comment) : ?>
+
+
+<!--    --><?php //var_dump($comment['approved']) ?>
+
+
+<?php if ($comment['approved'] != null) :?>
+    <input type="hidden">
     <div class="bg-secondary text-white p-2 mb-3">
         Replied by <?php echo $comment['username']; ?> at <?php echo $comment['created_at']; ?>
     </div>
     <p class="card-text"><?php echo $comment['body']; ?> </p>
     <hr>
+    </input>
 
+<?php endif ?>
 <?php endforeach; ?>
 
 <?php if ($_SESSION != null) : ?>
@@ -68,17 +70,7 @@ if($_SESSION != null) :
 <?php endif; ?>
 
 
-<!--/SHOWING LOGGED IN USER-->
-<?php //var_dump($_SESSION['user_id']); ?>
-<?php //var_dump($comment['username']); ?>
-<?php //var_dump($this->params['id']); ?>
-<?php //var_dump($this->params['username']); ?>
-<?php // var_dump($this->params['username']; ?>
+
 
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
-
-<!---->
-<!--<div class="button">-->
-<!--    <a href="/blog/show?--><?php //echo $posts['postId']?><!-- " class="btn btn-danger"> Delete Blog </a>-->
-<!--</div>-->
