@@ -75,6 +75,13 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
+    public function adminApproved($data) {
+        $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
+        $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);
+        header('location: ' . 'http://localhost:8000/admin/approveBlogComment?' . $data['post_id']);
+        return true;
+    }
+
     public function updatePost($data){
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);

@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-6">
 <!--        --><?php //var_dump($_SESSION) ?>
-        <?php if($_SESSION['is_admin']) : ?>
+        <?php if($_SESSION != null && $_SESSION['is_admin']) : ?>
 
         <a href="/blog/addBlog" class="btn btn-primary float-right"> Add A Blog </a>
         <a href="/admin/home" class="btn float-right"> Return To Admin Home  </a>

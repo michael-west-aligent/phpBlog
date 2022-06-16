@@ -12,7 +12,7 @@ class Comment {
 
     public function getCommentsById($id)
     {
-        $commentsOnBlog = $this->db->prepare('SELECT body, username, comments.created_at, approved
+        $commentsOnBlog = $this->db->prepare('SELECT body, username, comments.created_at, approved, comments.id
                                                     FROM comments
                                                     INNER JOIN users
                                                     ON comments.user_id = users.id
@@ -28,14 +28,6 @@ class Comment {
         $newComment->execute([$data['user_id'], $data['body'], $data['post_id']]);
         return true;
     }
-
-
-    public function adminApproveComment()
-    {
-
-
-    }
-
 
     }
 

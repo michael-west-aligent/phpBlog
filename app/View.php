@@ -23,8 +23,7 @@ class View
     {
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
 
-//        echo("viewpath: $viewPath");
-//        die();
+
 
         if (! file_exists($viewPath)) {
             throw new ViewNotFoundException();

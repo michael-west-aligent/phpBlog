@@ -38,12 +38,12 @@ class CommentControllers {
         }
     }
 
-    public function approveComment()
-    {
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        }
-
-    }
+//    public function approveComment()
+//    {
+//        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+//
+//        }
+//
+//    }
 
 }

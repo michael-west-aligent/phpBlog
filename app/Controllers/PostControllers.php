@@ -247,6 +247,19 @@ class PostControllers
         return View::make('admin/approveComments', $data);
     }
 
+    public function adminApproved()
+    {
+//        var_dump($_POST);
+//        die('whatever');
+        $data = [
+            'comment_id' => $_POST['comment_id'],
+            'approved' => $_POST['approved'],
+            'post_id' => $_POST['post_id']
+        ];
+
+        $this->postModel->adminApproved($data);
+    }
+
     public function deleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

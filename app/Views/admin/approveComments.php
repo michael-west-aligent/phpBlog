@@ -1,6 +1,6 @@
 <?php require_once VIEW_PATH . '/header.php'; ?>
 
-<?php $singleBlog = explode('?', $_SERVER['REQUEST_URI']);
+<?php $singleBlog = explode('?', $_SERVER['REQUEST_URI']) [1];
 ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
@@ -27,28 +27,40 @@ if ($_SESSION != null) :
 <hr>
 
 <h3> Blog Replies </h3>
-<?php var_dump($this->params['comments']) ?>
+<?php //var_dump($this->params['comments']) ?>
+
+
+
 <?php foreach ($this->params['comments'] as $comment) : ?>
 
-                <?php var_dump($comment['approved']) ?>
+    <?php var_dump($comment['approved']) ?>
 
-    <?php if ($comment['approved'] == null) : ?>
+<!--    --><?php //if ($comment['approved'] == null) : ?>
+    <form method="post" action="/admin/approvedComment">
         <input type="hidden">
         <div class="bg-secondary text-white p-2 mb-3">
             Replied by <?php echo $comment['username']; ?> at <?php echo $comment['created_at']; ?>
         </div>
-        <p class="card-text"><?php echo $comment['body']; ?>
-            <input type="submit" value="Approve Comment" class=" float-right btn btn-success">
-            <input type="submit" value="Delete Comment" class=" float-right btn btn-danger">
-        </p>
-        <hr>
-        </input>
+        <h4 class="card-text"><?php echo $comment['body']; ?>    </h4>
+        <label for="approved"> Approve Comment: <sup>Tick box to Approve Comment </sup></label>
+        <?php if ($comment['approved'] == 0 || $comment['approved'] == null) : ?>
+            <input type="checkbox"  class="form-control form-control-lg" value="0">
+            <input type="hidden" name="comment_id" value="<?php echo $comment['id'] ?>">
+        <?php else:?>
+            <input type="checkbox" class="form-control form-control-lg" value="<?php echo 1?>" checked>
+            <input type="hidden" name="comment_id" value="<?php echo $comment['id'] ?>">
+        <?php endif ?>
+        <input type="hidden" name="post_id" value="<?php echo $singleBlog ?>">
+        <input type="hidden" name="approved" value="<?php echo 1?>">
+        <input type="submit" class="btn btn-success" value="Submit"/>
+    </form>
 
-    <?php endif ?>
+
 <?php endforeach; ?>
 
-<?php if ($_SESSION != null) : ?>
 
+
+<?php if ($_SESSION != null) : ?>
     <form action="/blog/addComment" method="post">
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label>
