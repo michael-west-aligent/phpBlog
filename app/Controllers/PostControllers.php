@@ -106,8 +106,11 @@ class PostControllers
             if (empty($data['title'])) {
                 $data['title_err'] = 'Please enter a title';
             }
+            //validate body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
+            }elseif (strlen($data['blog_body']) < 76){
+                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
             //Make sure no errors
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
@@ -123,14 +126,10 @@ class PostControllers
                 return View::make('admin/editBlog', $data);
             }
         } else {
-            //GET EXISITING POST FROM MODEL
+            //GET EXISTING POST FROM MODEL
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
             var_dump($post);
-            //CHECK THE OWNER
-//            if ($post->user_id != $_SESSION['user_id']) {
-////                header('location: ' . 'http://localhost:8000/blogPosts');
-//            }
             $data = [
                 'id' => $post['id'],
                 'title' => $post['title'],
@@ -168,7 +167,7 @@ class PostControllers
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
             }elseif (strlen($data['blog_body']) < 76){
-                $data['blog_body_err'] = 'Blog body must be less than 51 characters';
+                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
             //Make sure no errors
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
@@ -228,12 +227,24 @@ class PostControllers
         return View::make('posts/show', $data);
     }
 
-    /** DELETE WORK STARTS HERE  */
     public function deleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($this->postModel->deletePost()) {
+            if ($this->postModel->deletePost($_POST['postId'])) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
+            } else {
+                die('something is not working ');
+            }
+        }
+    }
+
+
+    public function adminDeleteBlog()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($this->postModel->deletePost($_POST['postId'],))
+            {
+                header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('something is not working ');
             }

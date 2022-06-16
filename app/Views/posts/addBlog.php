@@ -26,6 +26,7 @@ require_once VIEW_PATH . '/header.php';
                 <?php echo ($this->params['blog_body']); ?>> </textarea>
             <span style="color: darkred"> <?php echo $this->params['blog_body_err']; ?> </span>
         </div>
+
         <input type="submit" class="btn btn-success" value="Submit"/>
 
     </form>

@@ -18,21 +18,25 @@ if($_SESSION != null) :
 <?php  if ($this->params['user_id'] == $_SESSION['user_id']) : ?>
 
     <a href="/blog/edit?<?php echo $this->params['id']; ?> " class="btn btn-dark"> Edit Blog </a>
-    <form class="float-right" action="delete?<?php echo $this->params['id']; ?>" method="post">
+
+    <form class="float-right" action="/blog/delete" method="post">
+        <input type="hidden" name="postId" value="<?= $this->params['id'];?> ">
         <input type="submit" value="Delete Blog" class="btn btn-danger">
     </form>
 <?php endif; ?>
 
 <?php endif; ?>
+
 <!--//if ($this->params['user_id'] == $_SESSION['user_id']) : ?>-->
 <!---->
 <!--    <a href="/blog/edit?--><?php //echo $this->params['id']; ?><!-- " class="btn btn-dark"> Edit Blog </a>-->
 <!--    <form class="float-right" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post">-->
 <!--        <input type="submit" value="Delete Blog" class="btn btn-danger">-->
 <!--    </form>-->
-
 <?php //endif; ?>
+
 <hr>
+
 <h3> Blog Replies </h3>
 <?php foreach ($this->params['comments'] as $comment) : ?>
     <div class="bg-secondary text-white p-2 mb-3">
@@ -73,3 +77,8 @@ if($_SESSION != null) :
 
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
+
+<!---->
+<!--<div class="button">-->
+<!--    <a href="/blog/show?--><?php //echo $posts['postId']?><!-- " class="btn btn-danger"> Delete Blog </a>-->
+<!--</div>-->

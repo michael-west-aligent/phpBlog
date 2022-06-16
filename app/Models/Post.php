@@ -94,10 +94,10 @@ ORDER BY posts.created_at DESC;');
     return $results;
     }
 
-    public function deletePost(){
+    public function deletePost($postId){
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
-        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-        $deleteBlogPost->execute([$id]);
+//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        $deleteBlogPost->execute([$postId]);
         return true;
     }
 

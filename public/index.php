@@ -47,7 +47,10 @@ $router
     ->post('/admin/home', [\App\Controllers\PostControllers::class,'adminSeeBlogs'])
     //ADMIN EDIT BLOG
     ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
-    ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog']);
+    ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+    //ADMIN DELETE
+    ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog']);
+
 
 
 

@@ -7,6 +7,7 @@ $post = new \App\Models\Post();
 $allPosts = $post->adminBlogInfoHome();
 ?>
 
+
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -55,7 +56,7 @@ $allPosts = $post->adminBlogInfoHome();
 
 
 <div class="card card-body bg light mt-5">
-<!--    --><?php //var_dump($allPosts); ?>
+    <?php var_dump($allPosts); ?>
     <table>
         <h2> BLOGS </h2>
         <div class="button">
@@ -66,7 +67,8 @@ $allPosts = $post->adminBlogInfoHome();
             <th>Blogged By</th>
             <th>Blog Body</th>
             <th>PostId</th>
-            <th>Update / Remove Blogs </th>
+            <th>Update Blog </th>
+            <th>Remove Blog </th>
         </tr>
 
         <?php foreach ($allPosts as $posts) : ?>
@@ -88,14 +90,22 @@ $allPosts = $post->adminBlogInfoHome();
 <!--                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
                 <a href="/admin/editBlog?<?php echo $posts['postId'] ?>" >
 <!--                    <input  value="Edit the blog">-->
-                    <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>
+                    <button type="submit" value="Update User" class="btn btn-success"> Update Blog </button>
                 </a>
             </td>
-        </tr>
 
+            <td>
+                <?php echo $posts['postId'] ?>
+                <form action="/admin/deleteBlog" method="post">
+                    <input type="hidden" name="postId" value="<?= $posts['postId'];?> ">
+<!--                    <button type="submit" value="Delete Blog" class="btn btn-danger"> Delete Blog</button>-->
+                    <input type="submit" value="Delete Blog" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </table>
 
 </div>
 
-//IF NOT USING A FORM DO NOT USE THE TYPE=SUBMIT
+<!--//IF NOT USING A FORM DO NOT USE THE TYPE=SUBMIT-->

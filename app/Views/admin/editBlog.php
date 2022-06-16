@@ -4,7 +4,7 @@ require_once VIEW_PATH . '/header.php';
 
 <!--<a href="/admin/home" class="btn btn-light"> Back to Admin Home </a>-->
 
-<?php //echo var_dump($this->params['post']) ?>
+<?php echo var_dump($this->params['id']) ?>
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -28,15 +28,15 @@ require_once VIEW_PATH . '/header.php';
             <span style="color: darkred"> <?php echo $this->params['blog_body_err']; ?> </span>
         </div>
 
-<a href="/admin/home">
         <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
-        <input type="submit" onclick="window.location.href = 'http://localhost:8000/admin/home';" class="btn btn-success" value="Make Blog Changes "/>
-</a>
+        <input type="submit" class="btn btn-success" value="Make Blog Changes "/>
+<!--        <input type="submit" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post" class="btn btn-danger" value="Delete Blog" />-->
 
-<!--        <a href="/admin/editBlog?--><?php //echo $posts['postId'] ?><!--" >-->
-<!--                               <input  value="Edit the blog">-->
-<!--            <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
-<!--        </a>-->
+
+<!--        <form class="float-right" action="delete?--><?php //echo $this->params['id']; ?><!--" method="post">-->
+<!--            <input type="submit" value="Delete Blog" class="btn btn-danger">-->
+<!--        </form>-->
+
 
     </form>
 </div>
