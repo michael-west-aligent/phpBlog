@@ -89,7 +89,6 @@ class UsersController
         }
     }
 
-    /** LOGIN AS AN EXISTING USER ------------------------------------------------------------ */
     public function userLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -122,28 +121,21 @@ class UsersController
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
                 $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
-                //VARDUMP to check currentUSer details
-//                var_dump($currentUser);
                 if ($currentUser) {
                     $this->createUserSession($currentUser);
                 }
             } else {
             }
-
             //CHECK IF CURRENT USER DATA EXISTS  + CHECK IF USER IS AN ADMIN OR A GENERAL USER
             $user = $this->userModel->currentUser($data['email'], $data['password']);
             if ($user != null) {
-//                $this->adminHome();
                 if ($user['is_admin'] == 1) {
                     header('location: ' . 'http://localhost:8000/admin/home');
-//                    return View::make('/admin/home', $data);
                 }
                 if ($user['is_admin'] == 0) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
-//                    return View::make()
                 }
             } else {
-//                echo('hehe');
                 return View::make('users/userLogin', $data);
             }
         } else {

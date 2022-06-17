@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Models;
+
 use App\Config\App;
 
-class Post {
+class Post
+{
     public $db;
 
     public function __construct()
@@ -59,44 +62,40 @@ ORDER BY posts.created_at DESC;');
         return $results;
     }
 
-
-
-    public function addPost($data){
+    public function addPost($data)
+    {
         $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
         $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
         return true;
         header('location: ' . 'http://localhost:8000/blogPosts');
     }
 
-    public function adminUpdateBlog($data){
+    public function adminUpdateBlog($data)
+    {
         $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
         header('location: ' . 'http://localhost:8000/admin/home');
         return true;
     }
 
-//    public function adminApproved($data) {
-//        $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
-//        $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);
-//        header('location: ' . 'http://localhost:8000/admin/approveBlogComment?' . $data['post_id']);
-//        return true;
-//    }
-
-    public function updatePost($data){
+    public function updatePost($data)
+    {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
         header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }
 
-    public function getPostById($id){
-    $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
-    $singleBlog->execute([$id]);
-    $results = $singleBlog->fetch();
-    return $results;
+    public function getPostById($id)
+    {
+        $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
+        $singleBlog->execute([$id]);
+        $results = $singleBlog->fetch();
+        return $results;
     }
 
-    public function deletePost($postId){
+    public function deletePost($postId)
+    {
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
 //        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         $deleteBlogPost->execute([$postId]);

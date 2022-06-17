@@ -154,30 +154,26 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            //VALIDATE data
+            //VALIDATE TITLE
             if (empty($data['title'])) {
                 $data['title_err'] = 'Please enter a blog title';
             }
+            //VALIDATE body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
             } elseif (strlen($data['blog_body']) > 76) {
                 $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
-            //Make sure no errors
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                //VALIDATED
                 if ($this->postModel->updatePost($data)) {
-//                    REDIRECT TO ALL BLOG POSTS
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
                     die('Something went wrong');
                 }
             } else {
-                //LOAD VIEWS WITH ERRORS
                 return View::make('posts/editBlog', $data);
             }
         } else {
-            //GET EXISTING POST FROM MODEL
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
             //CHECK THE OWNER

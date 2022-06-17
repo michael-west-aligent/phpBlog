@@ -33,10 +33,6 @@ if($_SESSION != null) :
 
 <?php foreach ($this->params['comments'] as $comment) : ?>
 
-
-<!--    --><?php //var_dump($comment['approved']) ?>
-
-
 <?php if ($comment['approved'] != null) :?>
     <input type="hidden">
     <div class="bg-secondary text-white p-2 mb-3">
@@ -54,7 +50,7 @@ if($_SESSION != null) :
 <form action="/blog/addComment" method="post">
     <div class="form-group">
         <label for="comment"> Add Comment To Blog </label>
-        <textarea name="body" class="form-control form-control-lg"
+        <textarea maxlength="50" name="body" class="form-control form-control-lg"
 <!--            --><?php //echo $comment['body'];?>
 
         </textarea>

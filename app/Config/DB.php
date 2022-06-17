@@ -33,8 +33,6 @@ class DB
 
     public function __call(string $name, array $arguments)
     {
-//        var_dump($name);
-//        return call_user_func_array('name', $args);
         return call_user_func_array([$this->pdo, $name], $arguments);
     }
 }
