@@ -30,6 +30,14 @@ class Post
 
     }
 
+    public function numberofComments(){
+        $statement = $this->db->query('COUNT * FROM TABLE posts');
+
+        $results = $statement->fetchAll();
+        return $results;
+
+    }
+
     public function adminBlogInfoHome()
     {
         $postInfo = $this->db->query('SELECT *,

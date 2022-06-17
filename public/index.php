@@ -28,11 +28,14 @@ $router
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
+    //GET NUMBER OF BLOG COMMENTS
+     ->get('/blogComments', [\App\Controllers\PostControllers::class, 'getBlogComments'])
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+    //CHANGE to 'editBlog
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])

@@ -27,10 +27,21 @@ class PostControllers
     {
         $posts = $this->postModel->getAllBlogPosts();
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
         ];
         return View::make('/posts/index', $data);
     }
+
+
+    public function getBlogComments()
+    {
+        $posts = $this->postModel->numberofComments();
+        $postData = [
+            'posts' => $posts
+        ];
+        return View::make('/posts/index', $postData);
+    }
+
 
 
     //admin home page see blogs
@@ -171,6 +182,7 @@ class PostControllers
                     die('Something went wrong');
                 }
             } else {
+                //LOAD VIEWS WITH ERRORS
                 return View::make('posts/editBlog', $data);
             }
         } else {

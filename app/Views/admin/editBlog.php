@@ -2,9 +2,6 @@
 require_once VIEW_PATH . '/header.php';
 ?>
 
-<!--<a href="/admin/home" class="btn btn-light"> Back to Admin Home </a>-->
-
-<?php echo var_dump($this->params['id']) ?>
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -31,10 +28,6 @@ require_once VIEW_PATH . '/header.php';
         <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
         <input type="submit" class="btn btn-success"  value="Make Blog Changes "/>
     </form>
-
-<!--    <a href="/admin/home" >-->
-<!--        <button type="submit" value="Update User" class="btn btn-success"> Make Blog Changes </button>-->
-<!--    </a>-->
 
     <a href="/admin/approveBlogComment?<?php echo $this->params['id']?> " >
         <button type="submit" value="Update User" class="btn btn-success"> View Full Blog with comments</button>

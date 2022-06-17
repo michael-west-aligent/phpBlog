@@ -108,15 +108,16 @@ class UsersController
                 if (!$dataRow) {
                     $data['email_err'] = 'No user with that email ';
                 }
-            }
-            //Validate Password
+                //This will fix the problem but is not good as there is no warning
+//            } header('location:' . 'http://localhost:8000/admin/home');
+        }
+//            Validate Password
             $hashed_password = $dataRow['password'];
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
             } elseif (!password_verify($data['password'], $hashed_password)) {
                 $data['password_err'] = 'Password does not match';
             }
-            /** HERE IS THE START OF CHANGES  */
             //MAKE SURE ERRORS ARE EMPTY
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 //VALIDATED
@@ -126,7 +127,6 @@ class UsersController
                 }
             } else {
             }
-            //CHECK IF CURRENT USER DATA EXISTS  + CHECK IF USER IS AN ADMIN OR A GENERAL USER
             $user = $this->userModel->currentUser($data['email'], $data['password']);
             if ($user != null) {
                 if ($user['is_admin'] == 1) {

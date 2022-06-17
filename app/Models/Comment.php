@@ -42,7 +42,6 @@ class Comment {
         $deleteBlogPostComment->execute([$comment_id]);
         return true;
     }
-
 }
 
 

@@ -49,9 +49,11 @@ if($_SESSION != null) :
 
 <form action="/blog/addComment" method="post">
     <div class="form-group">
-        <label for="comment"> Add Comment To Blog </label>
-        <textarea maxlength="50" name="body" class="form-control form-control-lg"
-<!--            --><?php //echo $comment['body'];?>
+        <label for="comment"> Add Comment To Blog </label> <sup>* Blog Comments can be a maximum of 50 characters</sup>
+<!--        <textarea maxlength="50" name="body" class="form-control form-control-lg"-->
+        <textarea name="body" class="form-control form-control-lg"
+
+        <!--            --><?php //echo $comment['body'];?>
 
         </textarea>
         <input type="hidden" name="username" value="<?= $comment['username'];?> ">
