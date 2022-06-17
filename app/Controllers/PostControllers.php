@@ -247,8 +247,11 @@ class PostControllers
         return View::make('admin/approveComments', $data);
     }
 
+    //THIS WAS MOVED TO COMMENT CONTROLLER
 //    public function adminApproved()
 //    {
+////        var_dump($_POST);
+////        die('whatever');
 //        $data = [
 //            'comment_id' => $_POST['comment_id'],
 //            'approved' => $_POST['approved'],

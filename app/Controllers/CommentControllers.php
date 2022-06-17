@@ -38,6 +38,7 @@ class CommentControllers {
         }
     }
 
+    //THIS WAS ADDED FROM POST CONTROLLER
     public function adminApproved()
     {
         $data = [
@@ -45,8 +46,22 @@ class CommentControllers {
             'approved' => $_POST['approved'],
             'post_id' => $_POST['post_id']
         ];
+    //This was changed from postModel to commentModel.
+//        $this->postModel->adminApproved($data);
+        $this->commentModel->adminApproved($data);
+    }
 
-        $this->postModel->adminApproved($data);
+
+    public function adminDeleteBlogComment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($this->commentModel->adminDeleteComment($_POST['comment_id'],))
+            {
+                header('location: ' . 'http://localhost:8000/admin/home');
+            } else {
+                die('something is not working ');
+            }
+        }
     }
 
 }

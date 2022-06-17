@@ -29,12 +29,21 @@ class Comment {
         return true;
     }
 
+    //This was moved from post model to comment model .
+    public function adminApproved($data) {
+        $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
+        $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);
+        header('location: ' . 'http://localhost:8000/admin/approveBlogComment?' . $data['post_id']);
+        return true;
     }
 
-//    public function addComment($user_id, $body, $post_id)
-//    {
-//        $newComment = $this->db->prepare('INSERT INTO comments (user_id, body, post_id, created_at) VALUES(?, ?, ?, ?, NOW()); ');
-//        $newComment->execute('user_id', 'body', 'post_id');
-//        return true;
-//    }
-//}
+    public function adminDeleteComment($comment_id){
+        $deleteBlogPostComment = $this->db->prepare('DELETE FROM comments WHERE id = ?');
+        $deleteBlogPostComment->execute([$comment_id]);
+        return true;
+    }
+
+}
+
+
+

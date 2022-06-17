@@ -84,7 +84,6 @@ $allPosts = $post->adminBlogInfoHome();
             <td>
                 <p> <?php echo $posts["postId"] ?></p>
             </td>
-
             <td>
 <!--                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
                 <a href="/admin/editBlog?<?php echo $posts['postId'] ?>" >
