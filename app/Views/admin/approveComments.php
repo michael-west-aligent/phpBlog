@@ -10,7 +10,7 @@
 <div class="bg-secondary text-white p-2 mb-3">
     Blogged By<?php echo $this->params['username']; ?> on <?php echo $this->params['created_at']; ?>
 </div>
-<p>  <?php echo $this->params['blog_body']; ?> </p>
+<h3>  <?php echo $this->params['blog_body']; ?> </h3>
 <?php
 if ($_SESSION != null) :
     ?>
@@ -23,7 +23,7 @@ if ($_SESSION != null) :
 <?php endif; ?>
 <?php endif; ?>
 
-<h3> Blog Replies </h3>1
+<h3> Blog Replies </h3>
 <?php //var_dump($this->params['comments']) ?>
 
 <?php foreach ($this->params['comments'] as $comment) : ?>

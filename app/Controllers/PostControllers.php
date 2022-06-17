@@ -46,9 +46,7 @@ class PostControllers
     public function addBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //IF IT IS SUBMITTED SANITIZE THE POST ARRAY
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-//            var_dump($_SESSION['user_id']);
             $data = [
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
@@ -56,21 +54,20 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-
             //VALIDATE data
             if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a title';
+                $data['title_err'] = 'Please enter a blog title';
             }
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
+            } elseif (strlen($data['blog_body']) > 76) {
+                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
-
             //Make SURE NO ERRORS
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 //VALIDATED
                 if ($this->postModel->addPost($data)) {
                     //REDIRECT TO ALL BLOG POSTS
-                    //THIS WAS COMMENTED OUT
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
                     die('Something went wrong');
@@ -157,16 +154,13 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-
-            var_dump($data);
             //VALIDATE data
             if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a title';
+                $data['title_err'] = 'Please enter a blog title';
             }
-            //validate body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
-            }elseif (strlen($data['blog_body']) < 76){
+            } elseif (strlen($data['blog_body']) > 76) {
                 $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
             //Make sure no errors
@@ -183,7 +177,7 @@ class PostControllers
                 return View::make('posts/editBlog', $data);
             }
         } else {
-            //GET EXISITING POST FROM MODEL
+            //GET EXISTING POST FROM MODEL
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
             //CHECK THE OWNER
@@ -196,7 +190,6 @@ class PostControllers
                 'blog_body' => $post['blog_body'],
                 'title_err' => '',
                 'blog_body_err' => '',
-
             ];
             return View::make('/posts/editBlog', $data);
         }

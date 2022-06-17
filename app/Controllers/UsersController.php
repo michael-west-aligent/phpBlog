@@ -192,7 +192,6 @@ class UsersController
             ];
             //Validate Email
             if (empty($data['email'])) {
-                echo('hello');
                 $data['email_err'] = 'Please enter an email';
             } else {
                 //CHECK EMAIL IS NOT ALREADY IN DB
