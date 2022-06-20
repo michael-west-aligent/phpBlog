@@ -60,13 +60,10 @@ class CommentControllers
                 $post['comment_error'] = $data['comment_error'];
                 return View::make('posts/show', $post);
             }
-
-
 //            header('location: ' . 'http://localhost:8000/blog/show?' . $_POST['post_id']);
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
-
             $data = [
                 'id' => $post['id'],
                 'title' => $post['title'],
@@ -85,8 +82,6 @@ class CommentControllers
             'approved' => $_POST['approved'],
             'post_id' => $_POST['post_id']
         ];
-        //This was changed from postModel to commentModel.
-//        $this->postModel->adminApproved($data);
         $this->commentModel->adminApproved($data);
     }
 
