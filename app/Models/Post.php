@@ -51,7 +51,9 @@ class Post
         $statement = $this->db->prepare('SELECT COUNT(post_id) as postComments from comments WHERE post_id = ?;');
             $statement->bindParam(1, $postId);
         $statement->execute();
-        return   $statement->fetchAll();
+//        var_dump( $statement->fetchAll());
+//        die('wh');
+        return   $statement->fetch();
     }
 
 
