@@ -12,7 +12,7 @@ class HomeController
 {
     public function home()
     {
-        return View::make('index');
+        return View::make('homepage');
     }
 
 }

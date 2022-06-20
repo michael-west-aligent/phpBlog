@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="col">
-                    <a href="<?php VIEW_PATH . '/index.php';?>
+                    <a href="<?php VIEW_PATH . '/homepage.php';?>
                     /users/login" class="btn btn-light btn-block"> Already a blogger? Login instead.</a>
                     </div>
                 </div>
