@@ -14,11 +14,26 @@ class Post
     }
 
     //GET ALL THE BLOG POTS FROM DB
+//    public function getAllBlogPosts()
+//    {
+//        $postStatement = $this->db->query('SELECT *,
+//                                                    posts.id as postId,
+//                                                    users.id as userId,
+//                                                    posts.created_at as postCreated,
+//                                                    users.created_at as userCreated
+//                                                    FROM posts
+//                                                    INNER JOIN users
+//                                                    ON posts.user_id = users.id
+//                                                    ORDER BY posts.created_at DESC');
+//        $results = $postStatement->fetchAll();
+//        return $results;
+//    }
+
     public function getAllBlogPosts()
     {
         $postStatement = $this->db->query('SELECT *,
-                                                    posts.id as postId, 
-                                                    users.id as userId, 
+                                                    posts.id as postId,
+                                                    users.id as userId,
                                                     posts.created_at as postCreated,
                                                     users.created_at as userCreated
                                                     FROM posts
@@ -26,17 +41,19 @@ class Post
                                                     ON posts.user_id = users.id
                                                     ORDER BY posts.created_at DESC');
         $results = $postStatement->fetchAll();
+        foreach ($results as &$result ) {
+            $result['postComments'] = $this->numberofComments($result['postId']);
+        }
         return $results;
-
     }
 
-    public function numberofComments(){
-        $statement = $this->db->query('COUNT * FROM TABLE posts');
-
-        $results = $statement->fetchAll();
-        return $results;
-
+        public function numberofComments($postId){
+        $statement = $this->db->prepare('SELECT COUNT(post_id) as postComments from comments WHERE post_id = ?;');
+            $statement->bindParam(1, $postId);
+        $statement->execute();
+        return   $statement->fetchAll();
     }
+
 
     public function adminBlogInfoHome()
     {

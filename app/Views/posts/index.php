@@ -17,8 +17,9 @@
     </div>
 </div>
 
-
 <?php foreach($this->params['posts'] as $posts) : ?>
+<?php var_dump($posts); ?>
+
 <div class="card card-body mb-3">
     <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>
     <div class="bg-light p-2 mb-3">
@@ -27,7 +28,7 @@
 
     <p class="card-text"><?php echo $posts['blog_body']?> </p>
     <a href="/blog/show?<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
-    <p> Number of Blog Comments </p>
+    <p> Number of Blog Replies  <?php echo $posts['postComments']; ?>  </p>
 
 
 </div>

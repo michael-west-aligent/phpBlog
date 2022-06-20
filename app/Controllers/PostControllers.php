@@ -35,11 +35,11 @@ class PostControllers
 
     public function getBlogComments()
     {
-        $posts = $this->postModel->numberofComments();
-        $postData = [
-            'posts' => $posts
+        $blogComments = $this->postModel->numberofComments();
+        $commentData = [
+            'blogComments' => $blogComments
         ];
-        return View::make('/posts/index', $postData);
+        return View::make('/posts/index', $commentData);
     }
 
 
@@ -248,20 +248,6 @@ class PostControllers
         return View::make('admin/approveComments', $data);
     }
 
-    //THIS WAS MOVED TO COMMENT CONTROLLER
-//    public function adminApproved()
-//    {
-////        var_dump($_POST);
-////        die('whatever');
-//        $data = [
-//            'comment_id' => $_POST['comment_id'],
-//            'approved' => $_POST['approved'],
-//            'post_id' => $_POST['post_id']
-//        ];
-//
-//        $this->postModel->adminApproved($data);
-//    }
-
     public function deleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -272,7 +258,6 @@ class PostControllers
             }
         }
     }
-
 
     public function adminDeleteBlog()
     {
