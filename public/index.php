@@ -34,7 +34,14 @@ $router
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+
+
+    //CHANGE THIS TO editBlog
+//    ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'editBlog'])
+
+    //THIS IS THE ORIGINAL LINE OF CODE
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
+
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])

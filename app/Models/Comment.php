@@ -19,7 +19,7 @@ class Comment {
                                                     WHERE post_id = ?;');
         $commentsOnBlog->execute([$id]);
         $dataRow = $commentsOnBlog->fetchAll();
-        return $dataRow;
+        return is_bool($dataRow) ? [] : $dataRow;
     }
 
     public function addComment($data)

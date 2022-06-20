@@ -18,10 +18,6 @@
 </div>
 
 <?php foreach($this->params['posts'] as $posts) : ?>
-<!--<pre>-->
-<?php //var_dump($posts); ?>
-<!--</pre>-->
-
 
 <div class="card card-body mb-3">
     <h4 class="card-title"> <?php echo $posts['title']; ?> </h4>

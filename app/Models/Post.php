@@ -51,6 +51,7 @@ class Post
         $statement = $this->db->prepare('SELECT COUNT(post_id) as postComments from comments WHERE post_id = ?;');
             $statement->bindParam(1, $postId);
         $statement->execute();
+
         return   $statement->fetch();
     }
 
@@ -107,6 +108,14 @@ ORDER BY posts.created_at DESC;');
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
+        header('location: ' . 'http://localhost:8000/blogPosts');
+        return true;
+    }
+
+    public function updateEditPost($data)
+    {
+        $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
+        $newBlogPost->execute([$data['title'], $data['blog_body'], $data['id']]);
         header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }

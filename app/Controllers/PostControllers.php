@@ -110,6 +110,7 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
+//                        die("here");
             //VALIDATE data
             if (empty($data['title'])) {
                 $data['title_err'] = 'Please enter a title';
@@ -117,9 +118,11 @@ class PostControllers
             //validate body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
-            }elseif (strlen($data['blog_body']) < 76){
+            }elseif (strlen($data['blog_body']) > 76){
                 $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+                //            die("here");
             }
+//            die("here");
             //Make sure no errors
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 //VALIDATED
@@ -133,7 +136,8 @@ class PostControllers
                 //LOAD VIEWS WITH ERRORS
                 return View::make('admin/editBlog', $data);
             }
-        } else {
+        } else
+        {
             //GET EXISTING POST FROM MODEL
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
@@ -151,7 +155,6 @@ class PostControllers
     }
     return View::make('admin/editBlog');
     }
-
 
     public function editBlog()
     {
@@ -205,6 +208,53 @@ class PostControllers
 
     public function updatePost()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = [
+                'id' => $_POST['post_id'],
+                'title' => trim($_POST['title']),
+                'blog_body' => trim($_POST['blog_body']),
+//                'user_id' => $_SESSION['user_id'],
+                'title_err' => '',
+                'blog_body_err' => '',
+            ];
+            //VALIDATE TITLE
+            if (empty($data['title'])) {
+                $data['title_err'] = 'Please enter a blog title';
+            }
+            //VALIDATE body length
+            if (empty($data['blog_body'])) {
+                $data['blog_body_err'] = 'Please enter a blog body';
+            } elseif (strlen($data['blog_body']) > 76) {
+                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+            }
+            if (empty($data['title_err']) && empty($data['blog_body_err'])) {
+                if ($this->postModel->updateEditPost($data)) {
+                    header('location: ' . 'http://localhost:8000/blogPosts');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+            else {
+                //LOAD VIEWS WITH ERRORS
+                return View::make('posts/editBlog', $data);
+            }
+        } else {
+            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+            $post = $this->postModel->getPostById($id);
+            //CHECK THE OWNER
+            if ($post['user_id'] != $_SESSION['user_id']) {
+                header('location: ' . 'http://localhost:8000/blogPosts');
+            }
+            $data = [
+                'id' => $post['id'],
+                'title' => $post['title'],
+                'blog_body' => $post['blog_body'],
+                'title_err' => '',
+                'blog_body_err' => '',
+            ];
+            return View::make('/posts/editBlog', $data);
+        }
         $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
         $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
     }
@@ -225,6 +275,7 @@ class PostControllers
             'username' => $user['username'],
 //THIS NOW GETS THE FULL COMMENTS array.
             'comments' => $comment,
+            'comment_error'=>''
         ];
         return View::make('posts/show', $data);
     }
@@ -258,6 +309,7 @@ class PostControllers
             }
         }
     }
+
 
     public function adminDeleteBlog()
     {

@@ -1,6 +1,15 @@
-<?php require_once VIEW_PATH . '/header.php'; ?>
+<?php use App\Models\Comment;
+
+require_once VIEW_PATH . '/header.php'; ?>
 
 <?php $singleBlog = explode('?', $_SERVER['REQUEST_URI']);
+$commentModel = new comment();
+if(sizeof($singleBlog)>1) {
+    $comments = $commentModel->getCommentsById($singleBlog[1]);
+} else {
+    $comments = [];
+}
+
 ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
@@ -30,8 +39,7 @@ if($_SESSION != null) :
 
 <h3> Blog Replies </h3>
 <?php //var_dump($this->params['comments']) ?>
-
-<?php foreach ($this->params['comments'] as $comment) : ?>
+<?php foreach ($comments as $comment) : ?>
 
 <?php if ($comment['approved'] != null) :?>
     <input type="hidden">
@@ -51,11 +59,19 @@ if($_SESSION != null) :
     <div class="form-group">
         <label for="comment"> Add Comment To Blog </label> <sup>* Blog Comments can be a maximum of 50 characters</sup>
 <!--        <textarea maxlength="50" name="body" class="form-control form-control-lg"-->
-        <textarea name="body" class="form-control form-control-lg"
+<!--        <textarea name="body" class="form-control form-control-lg"-->
 
         <!--            --><?php //echo $comment['body'];?>
+<!---->
+<!--        </textarea>-->
+        <div class="form-group">
 
-        </textarea>
+            <textarea name="blog_body" class="form-control form-control-lg" <?php echo (!empty($this->params
+                [' comment_error']) && ($this->params['comment_error'] != '')) ? 'is-invalid' : ''; ?>
+                   ></textarea>
+            <span style="color: darkred"> <?php echo $this->params['comment_error']; ?> </span>
+        </div>
+
         <input type="hidden" name="username" value="<?= $comment['username'];?> ">
         <input type="hidden" name="post_id" value="<?= $this->params['id'];?> ">
         <input type="submit" value="Submit Comment" class="btn btn-success">
