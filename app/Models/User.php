@@ -37,7 +37,7 @@ class User {
         return true;
     }
 
-
+    //Admin remove a user
     public function adminRemove($id){
         $deleteUser = $this->db->prepare('DELETE FROM users where id = ?');
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -75,7 +75,7 @@ class User {
         return $dataRow;
     }
 
-
+    //get needed user info
     public function getUserinfo(){
         $adminUserStatement = $this->db->prepare('SELECT id, username, email, is_admin, created_at, password from users;');
         $adminUserStatement->execute();

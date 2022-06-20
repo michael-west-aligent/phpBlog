@@ -109,8 +109,8 @@ class UsersController
                     $data['email_err'] = 'No user with that email ';
                 }
                 //This will fix the problem but is not good as there is no warning
-//            } header('location:' . 'http://localhost:8000/admin/home');
-        }
+            } header('location:' . 'http://localhost:8000/admin/home');
+//        }
 //            Validate Password
             $hashed_password = $dataRow['password'];
             if (empty($data['password'])) {
