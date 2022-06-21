@@ -17,11 +17,12 @@ $router = new Router();
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
-    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
-    ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])
-    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'logout'])
+
+//    ->get('/users/blogPosts', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/blogComments', [\App\Controllers\PostControllers::class, 'getBlogComments'])
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])

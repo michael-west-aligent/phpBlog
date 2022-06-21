@@ -22,11 +22,9 @@
             </ul>
         <?php else : ?>
         <ul class="navbar-nav ml-auto">
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">Welcome --><?php //echo $this->params['username'];?><!-- </a>-->
-<!--            </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="/users/logout">Logout</a>
+<!--                direct to login page when logged out -->
+                <a class="nav-link" href="/users/login">Logout</a>
             </li>
             <a class="nav-link" href="/blogPosts"> Return to All Blogs </a>
         </ul>

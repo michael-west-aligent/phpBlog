@@ -38,7 +38,7 @@
 
                 <div class="row">
                     <div class="col">
-                    <input type="submit" value="Register" class="btn btn-success btn-block"/>
+                    <input  type="submit" value="Register" class="btn btn-success btn-block"/>
                     </div>
 
                     <div class="col">

@@ -38,7 +38,7 @@ class UsersController
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
-                //CHECK EMAIL IS NOT ALREADY IN DB
+                //Check the DB for email, if exists display validation warning.
                 if ($this->userModel->findUserByEmail($data)) {
                     $data['email_err'] = "Email being used";
                 }
@@ -61,19 +61,19 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
-            //Make sure errors are empty
+            //Make sure there are no errors and then hashpassword
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                 //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                //REGISTER USER
+                //REGISTER USER and direct to login page
                 if ($this->userModel->newRegister($data)) {
-                    header('location: ' . 'http://localhost:8000/users/blogPosts');
+                    header('location: ' . 'http://localhost:8000/users/login');
                 }
             } else {
-                //LOAD VIEW WITH ERRORs
                 return View::make('users/userRegister', $data);
             }
-        } else {
+        }
+        else {
             $data = [
                 'name' => '',
                 'email' => '',
@@ -84,7 +84,6 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            //LOAD VIEW FILE
             return View::make('users/userRegister', $data);
         }
     }
@@ -291,12 +290,12 @@ class UsersController
         return View::make('users/userLogin', $data);
     }
 
-    public function isLoggedIn()
-    {
-        if ($_SESSION['user_id']) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public function isLoggedIn()
+//    {
+//        if ($_SESSION['user_id']) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }
