@@ -33,12 +33,14 @@ $router
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
     ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
     ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
-
-    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
-
+//
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
-    ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/admin/updateUserStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
+//
+
     ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
+
     ->post('/admin/home', [\App\Controllers\PostControllers::class, 'adminSeeBlogs'])
     ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
     ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])

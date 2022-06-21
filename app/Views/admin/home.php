@@ -7,7 +7,6 @@ $post = new \App\Models\Post();
 $allPosts = $post->adminBlogInfoHome();
 ?>
 
-
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -17,17 +16,15 @@ $allPosts = $post->adminBlogInfoHome();
                 <a href="/admin/addUser" class="btn btn-success"> Add a New User </a>
             </div>
         </h2>
-
         <tr>
             <th>id</th>
             <th>username</th>
             <th>is_admin</th>
             <th>created_at</th>
-            <th>Update / Remove User</th>
+            <th>Update Status / Remove User</th>
         </tr>
-<!--        --><?php //var_dump($this->params['users']) ?>
         <?php foreach ($this->params['users'] as $users) : ?>
-            <form action="/admin/userStatus" method="post">
+            <form action="/admin/updateUserStatus" method="post">
                 <input name="id" value="<?php echo $users['id'] ?>" type="hidden">
                 <input name="is_admin" value="<?php echo $users['is_admin'] ?>" type="hidden">
                 <tr>
@@ -48,7 +45,6 @@ $allPosts = $post->adminBlogInfoHome();
                     </td>
                 </tr>
             </form>
-
         <?php endforeach; ?>
     </table>
 </div>
