@@ -29,7 +29,7 @@ class PostControllers
         $data = [
             'posts' => $posts,
         ];
-        return View::make('/posts/index', $data);
+        return View::make('/blogs/home', $data);
     }
 
 
@@ -39,7 +39,7 @@ class PostControllers
         $commentData = [
             'blogComments' => $blogComments
         ];
-        return View::make('/posts/index', $commentData);
+        return View::make('/blogs/home', $commentData);
     }
 
 
