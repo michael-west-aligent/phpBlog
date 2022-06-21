@@ -107,9 +107,11 @@ class UsersController
                 if (!$dataRow) {
                     $data['email_err'] = 'No user with that email ';
                 }
-            } header('location:' . 'http://localhost:8000/admin/home');
-//        }
+//            } header('location:' . 'http://localhost:8000/admin/home');
+        }
 //            Validate Password
+
+
             $hashed_password = $dataRow['password'];
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
