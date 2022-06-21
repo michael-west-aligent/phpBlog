@@ -8,7 +8,7 @@ require_once VIEW_PATH . '/header.php';
 <div class="card card-body bg light mt-5">
     <h2> Edit Blog</h2>
     <p> Fill out the form to create a new blog  </p>
-    <form action="/blog/submitEdit" method="post">
+    <form action="/blog/updatePost" method="post">
         <div class="form-group">
             <label for="title"> Title: <sup>*</sup></label>
             <input type="text" name="title" class="form-control form-control-lg" <?php echo (!empty($this->params
@@ -25,7 +25,6 @@ require_once VIEW_PATH . '/header.php';
                    > <?php echo ($this->params['blog_body']); ?></textarea>
             <span style="color: darkred"> <?php echo $this->params['blog_body_err']; ?> </span>
         </div>
-        <?php var_dump($this->params['id']); ?>
         <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
         <input type="submit" class="btn btn-success" value="Submit"/>
 

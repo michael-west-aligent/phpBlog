@@ -128,7 +128,6 @@ class PostControllers
                 //GET EXISTING POST FROM MODEL
                 $id = explode('?', $_SERVER['REQUEST_URI'])[1];
                 $post = $this->postModel->getPostById($id);
-                var_dump($post);
                 $data = [
                     'id' => $post['id'],
                     'title' => $post['title'],
@@ -201,25 +200,23 @@ class PostControllers
                 'id' => $_POST['post_id'],
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
-//                'user_id' => $_SESSION['user_id'],
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            //VALIDATE TITLE
+            //Validate the title
             if (empty($data['title'])) {
                 $data['title_err'] = 'Please enter a blog title';
             }
-            //VALIDATE body length
+            //Validate the blog_body length
             if (empty($data['blog_body'])) {
                 $data['blog_body_err'] = 'Please enter a blog body';
             } elseif (strlen($data['blog_body']) > 76) {
                 $data['blog_body_err'] = 'Blog body must be less than 76 characters';
             }
+            //if no error updateEditPost and redirect to blogPosts
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 if ($this->postModel->updateEditPost($data)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
-                } else {
-                    die('Something went wrong');
                 }
             } else {
                 //LOAD VIEWS WITH ERRORS
@@ -228,7 +225,7 @@ class PostControllers
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
-            //CHECK THE OWNER
+            //Check the owner
             if ($post['user_id'] != $_SESSION['user_id']) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
