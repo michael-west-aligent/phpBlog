@@ -1,7 +1,4 @@
 
-i am footer
-
-
 
 
 </div>

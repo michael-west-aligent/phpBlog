@@ -19,9 +19,7 @@ class DB
             PDO::ATTR_EMULATE_PREPARES   => false,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
-
         try {
-
             $this->pdo = new PDO(
                 $config['driver'] . ':host=' . $config['host'] . ';dbname=' . $config['database'],
                 $config['user'],

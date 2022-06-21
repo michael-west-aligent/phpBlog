@@ -23,6 +23,8 @@ class View
     {
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
 
+
+
         if (! file_exists($viewPath)) {
             throw new ViewNotFoundException();
         }
@@ -38,6 +40,9 @@ class View
         return (string) ob_get_clean();
     }
 
+    /**
+     * @throws ViewNotFoundException
+     */
     public function __toString(): string
     {
         return $this->render();
