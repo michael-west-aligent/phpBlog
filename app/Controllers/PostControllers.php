@@ -33,16 +33,14 @@ class PostControllers
     }
 
 
-    public function getBlogComments()
-    {
-        $blogComments = $this->postModel->numberofComments();
-        $commentData = [
-            'blogComments' => $blogComments
-        ];
-        return View::make('/blogs/home', $commentData);
-    }
-
-
+//    public function getBlogComments()
+//    {
+//        $blogComments = $this->postModel->numberofComments();
+//        $commentData = [
+//            'blogComments' => $blogComments
+//        ];
+//        return View::make('/blogs/home', $commentData);
+//    }
 
     //admin home page see blogs
     public function adminSeeBlogs()
