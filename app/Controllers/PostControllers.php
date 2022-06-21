@@ -12,7 +12,6 @@ use App\Models\Comment;
 
 class PostControllers
 {
-
     protected $postModel;
 
     public function __construct()
@@ -32,7 +31,7 @@ class PostControllers
         return View::make('/blogs/home', $data);
     }
 
-    //admin home page see blogs
+    //admin homepage see blogs
     public function adminSeeBlogs()
     {
         $posts = $this->postModel->adminBlogInfoHome();

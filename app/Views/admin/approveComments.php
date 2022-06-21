@@ -60,6 +60,7 @@ if ($_SESSION != null) :
 <?php endforeach; ?>
 
 <?php if ($_SESSION != null) : ?>
+
 <!--    <form action="/blog/addComment" method="post">-->
 <!--        <div class="form-group">-->
 <!--            <label for="comment"> Add Comment To Blog </label>-->
@@ -72,6 +73,7 @@ if ($_SESSION != null) :
 <!--            <input type="submit" value="Submit Comment" class="btn btn-success">-->
 <!--        </div>-->
 <!--    </form>-->
+
 <?php else : ?>
     <h2> Register or Login to make a comment </h2>
 <?php endif; ?>

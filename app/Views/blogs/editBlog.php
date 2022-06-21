@@ -4,7 +4,6 @@ require_once VIEW_PATH . '/header.php';
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
-
 <div class="card card-body bg light mt-5">
     <h2> Edit Blog</h2>
     <p> Fill out the form to create a new blog  </p>
@@ -27,7 +26,6 @@ require_once VIEW_PATH . '/header.php';
         </div>
         <input type="hidden" name="post_id" value="<?= $this->params['id'] ?>"/>
         <input type="submit" class="btn btn-success" value="Submit"/>
-
 
     </form>
 </div>

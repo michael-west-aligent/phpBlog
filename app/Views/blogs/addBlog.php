@@ -8,7 +8,6 @@ require_once VIEW_PATH . '/header.php';
 <div class="card card-body bg light mt-5">
     <h2> Add A New Blog </h2>
     <p> Fill out the form to create a new blog  </p>
-    <!--    <form action="/posts/addBlog" method="post">-->
     <form action="/blog/addBlog" method="post">
         <div class="form-group">
             <label for="title"> Title: <sup>*</sup></label>
@@ -26,9 +25,7 @@ require_once VIEW_PATH . '/header.php';
                 <?php echo ($this->params['blog_body']); ?>> </textarea>
             <span style="color: darkred"> <?php echo $this->params['blog_body_err']; ?> </span>
         </div>
-
         <input type="submit" class="btn btn-success" value="Submit"/>
-
     </form>
 </div>
 

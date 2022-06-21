@@ -6,20 +6,17 @@ namespace App\Controllers;
 
 use App\View;
 use App\Models\User;
-use App\Models\Post;
-use App\Models;
+
 
 class UsersController
 {
     protected $userModel;
-    private $postModel;
 
     public function __construct()
     {
         $this->userModel = new User();
     }
 
-    /** REGISTER A NEW USER  */
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -110,7 +107,6 @@ class UsersController
                 if (!$dataRow) {
                     $data['email_err'] = 'No user with that email ';
                 }
-//                //This will fix the problem but is not good as there is no warning
             } header('location:' . 'http://localhost:8000/admin/home');
 //        }
 //            Validate Password
@@ -295,12 +291,4 @@ class UsersController
         return View::make('users/userLogin', $data);
     }
 
-//    public function isLoggedIn()
-//    {
-//        if ($_SESSION['user_id']) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }
