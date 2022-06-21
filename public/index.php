@@ -30,14 +30,12 @@ $router
     ->post('/blog/updatePost', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
-
-
     ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
-
-
     ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
     ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
+
     ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
+
     ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
     ->post('/admin/userStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
     ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
