@@ -259,11 +259,10 @@ class PostControllers
             'user_id' => $post['user_id'],
             'created_at' => $post['created_at'],
             'username' => $user['username'],
-//THIS NOW GETS THE FULL COMMENTS array.
             'comments' => $comment,
             'comment_error' => ''
         ];
-        return View::make('posts/show', $data);
+        return View::make('blogs/show', $data);
     }
 
     public function adminFullBlog()

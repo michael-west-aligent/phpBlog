@@ -22,12 +22,13 @@ $router
     ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/login', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
-
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
-
-
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+
+
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
+
+
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     //THIS IS THE ORIGINAL LINE OF CODE
