@@ -49,9 +49,7 @@ $allPosts = $post->adminBlogInfoHome();
     </table>
 </div>
 
-
 <div class="card card-body bg light mt-5">
-<!--    --><?php //var_dump($allPosts); ?>
     <table>
         <h2> BLOGS </h2>
         <div class="button">
@@ -62,45 +60,35 @@ $allPosts = $post->adminBlogInfoHome();
             <th>Blogged By</th>
             <th>Blog Body</th>
             <th>PostId</th>
-            <th>Update Blog </th>
-            <th>Remove Blog </th>
+            <th>Update Blog</th>
+            <th>Remove Blog</th>
         </tr>
-
         <?php foreach ($allPosts as $posts) : ?>
-        <tr>
-            <td>
-                <p> <?php echo $posts["title"] ?></p>
-            </td>
-            <td>
-                <p> <?php echo $posts["username"] ?></p>
-            </td>
-            <td>
-                <p> <?php echo $posts["blog_body"] ?></p>
-            </td>
-            <td>
-                <p> <?php echo $posts["postId"] ?></p>
-            </td>
-            <td>
-<!--                <button type="submit" value="Update User" class="btn btn-success"> Update / Remove Blog </button>-->
-                <a href="/admin/editBlog?<?php echo $posts['postId'] ?>" >
-<!--                    <input  value="Edit the blog">-->
-                    <button type="submit" value="Update User" class="btn btn-success"> Update Blog </button>
-                </a>
-            </td>
-
-            <td>
-<!--                --><?php //echo $posts['postId'] ?>
-                <form action="/admin/deleteBlog" method="post">
-                    <input type="hidden" name="postId" value="<?= $posts['postId'];?> ">
-                    <input type="submit" value="Delete Blog" class="btn btn-danger">
-                </form>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <p> <?php echo $posts["title"] ?></p>
+                </td>
+                <td>
+                    <p> <?php echo $posts["username"] ?></p>
+                </td>
+                <td>
+                    <p> <?php echo $posts["blog_body"] ?></p>
+                </td>
+                <td>
+                    <p> <?php echo $posts["postId"] ?></p>
+                </td>
+                <td>
+                    <a href="/admin/editBlog?<?php echo $posts['postId'] ?>">
+                        <button type="submit" value="Update User" class="btn btn-success"> Update Blog</button>
+                    </a>
+                </td>
+                <td>
+                    <form action="/admin/deleteBlog" method="post">
+                        <input type="hidden" name="postId" value="<?= $posts['postId']; ?> ">
+                        <input type="submit" value="Delete Blog" class="btn btn-danger">
+                    </form>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </table>
-
 </div>
-
-<!--<a href="/admin/approveBlogComment?--><?php //echo $this->params['id']?><!-- " >-->
-<!--    <button type="submit" value="Update User" class="btn btn-success"> View Full Blog with comments</button>-->
-<!--</a>-->

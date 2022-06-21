@@ -38,13 +38,18 @@ $router
     ->post('/admin/updateUserStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
     ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
 //
-
     ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
-
     ->post('/admin/home', [\App\Controllers\PostControllers::class, 'adminSeeBlogs'])
-    ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+
+
+//    ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+        //WHY DOES THIS WORK WHEN I DELETE THE POST REQUEST, BUT THE METHOD IN THE ADMINEDITBLOG is POST?
     ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+
+
     ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog'])
+
+
     ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog'])
     ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'adminApproved'])

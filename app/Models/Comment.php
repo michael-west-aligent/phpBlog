@@ -29,7 +29,6 @@ class Comment {
         return true;
     }
 
-    //This was moved from post model to comment model .
     public function adminApproved($data) {
         $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
         $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);

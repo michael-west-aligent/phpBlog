@@ -15,21 +15,18 @@ class User {
         $this->db = App::db();
     }
 
-    //Register a user
     public function newRegister ($data) {
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password) VALUES(?,?,?)');
         $newUser->execute([$data['name'], $data['email'], $data['password']]);
         return true;
     }
 
-    //Admin add a User
     public function adminUserAdd($data){
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password, is_admin) VALUES(?,?,?,?)');
         $newUser->execute([$data['name'], $data['email'], $data['password'], $data['is_admin']]);
         return true;
     }
 
-    //Admin update user
     public function adminUpdate($data){
         $updateUserDetails = $this->db->prepare('UPDATE users SET is_admin = ? WHERE id = ? ');
         $updateUserDetails->execute([$data['is_admin'], $data['user_id']]);
@@ -37,7 +34,6 @@ class User {
         return true;
     }
 
-    //Admin remove a user
     public function adminRemove($id){
         $deleteUser = $this->db->prepare('DELETE FROM users where id = ?');
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -45,7 +41,6 @@ class User {
         return true;
     }
 
-    //Login as a user
     public function currentUser($email, $password){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
         $userStatement->execute([$email]);
@@ -59,7 +54,6 @@ class User {
          }
     }
 
-    //find user by email
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT username, email, password FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
@@ -67,7 +61,6 @@ class User {
         return $dataRow;
     }
 
-    //find user by ID
     public function getUserById($id) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE id = ?');
         $userStatement->execute([$id]);
@@ -75,7 +68,6 @@ class User {
         return $dataRow;
     }
 
-    //get needed user info
     public function getUserinfo(){
         $adminUserStatement = $this->db->prepare('SELECT id, username, email, is_admin, created_at, password from users;');
         $adminUserStatement->execute();

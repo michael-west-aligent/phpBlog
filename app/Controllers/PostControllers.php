@@ -22,7 +22,7 @@ class PostControllers
         $this->commentModel = new Comment();
     }
 
-    //GET ALL POSTS
+    //Get All Blog Posts
     public function blogPosts()
     {
         $posts = $this->postModel->getAllBlogPosts();
@@ -99,7 +99,7 @@ class PostControllers
                     'title_err' => '',
                     'blog_body_err' => '',
                 ];
-//                        die("here");
+
                 //VALIDATE data
                 if (empty($data['title'])) {
                     $data['title_err'] = 'Please enter a title';
@@ -110,12 +110,10 @@ class PostControllers
                 } elseif (strlen($data['blog_body']) > 76) {
                     $data['blog_body_err'] = 'Blog body must be less than 76 characters';
                 }
-//            die("here");
                 //Make sure no errors
                 if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                     //VALIDATED
                     if ($this->postModel->updatePost($data)) {
-//                    REDIRECT TO ALL BLOG POSTS
                         header('location: ' . 'http://localhost:8000/blogPosts');
                     } else {
                         die('Something went wrong');
@@ -125,7 +123,6 @@ class PostControllers
                     return View::make('admin/editBlog', $data);
                 }
             } else {
-                //GET EXISTING POST FROM MODEL
                 $id = explode('?', $_SERVER['REQUEST_URI'])[1];
                 $post = $this->postModel->getPostById($id);
                 $data = [
@@ -134,7 +131,6 @@ class PostControllers
                     'blog_body' => $post['blog_body'],
                     'title_err' => '',
                     'blog_body_err' => '',
-
                 ];
                 return View::make('/admin/editBlog', $data);
             }
@@ -275,7 +271,6 @@ class PostControllers
             'user_id' => $post['user_id'],
             'created_at' => $post['created_at'],
             'username' => $user['username'],
-            //THIS NOW GETS THE FULL COMMENTS array.
             'comments' => $comment,
         ];
         return View::make('admin/approveComments', $data);
@@ -291,7 +286,6 @@ class PostControllers
             }
         }
     }
-
 
     public function adminDeleteBlog()
     {
