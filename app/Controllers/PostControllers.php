@@ -173,7 +173,7 @@ class PostControllers
                 }
             } else {
                 //LOAD VIEWS WITH ERRORS
-                return View::make('posts/editBlog', $data);
+                return View::make('blogs/editBlog', $data);
             }
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -189,7 +189,7 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            return View::make('/posts/editBlog', $data);
+            return View::make('/blogs/editBlog', $data);
         }
     }
 
@@ -223,7 +223,7 @@ class PostControllers
                 }
             } else {
                 //LOAD VIEWS WITH ERRORS
-                return View::make('posts/editBlog', $data);
+                return View::make('blogs/editBlog', $data);
             }
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -239,7 +239,7 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            return View::make('/posts/editBlog', $data);
+            return View::make('/blogs/editBlog', $data);
         }
         $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
         $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);

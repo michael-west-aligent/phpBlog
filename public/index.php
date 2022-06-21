@@ -24,14 +24,11 @@ $router
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
-
-
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
-
-
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
     ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
-    //THIS IS THE ORIGINAL LINE OF CODE
+
+
     ->post('/blog/submitEdit', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
     ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
