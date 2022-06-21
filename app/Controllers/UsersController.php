@@ -100,6 +100,7 @@ class UsersController
                 'password_err' => '',
             ];
             $dataRow = $this->userModel->findUserByEmail($data);
+
             //Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
@@ -107,46 +108,85 @@ class UsersController
                 if (!$dataRow) {
                     $data['email_err'] = 'No user with that email ';
                 }
-//            } header('location:' . 'http://localhost:8000/admin/home');
-        }
-//            Validate Password
-
-
-            $hashed_password = $dataRow['password'];
-            if (empty($data['password'])) {
-                $data['password_err'] = 'Please enter a password';
-            } elseif (!password_verify($data['password'], $hashed_password)) {
-                $data['password_err'] = 'Password does not match';
             }
-            //Make sure errors are empty, if empty of error create a new user
-            if (empty($data['email_err']) && empty($data['password_err'])) {
-                $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
-                if ($currentUser) {
-                    $this->createUserSession($currentUser);
-                }
+//            header('location:' . 'http://localhost:8000/admin/home');
+//        }
+            if(!empty($dataRow)) {
+                $hashed_password = $dataRow['password'];
+            } else {$hashed_password = '';
             }
-            $user = $this->userModel->currentUser($data['email'], $data['password']);
-            if ($user != null) {
-                if ($user['is_admin'] == 1) {
-                    //if logged in as an admin direct to admin homepage
-                    header('location: ' . 'http://localhost:8000/admin/home');
+                if (empty($data['password'])) {
+//                    $data['password_err'] = 'Please enter a password';
                 }
-                if ($user['is_admin'] == 0) {
-                    //if logged in a general user direct to blogPosts homepage.
-                    header('location: ' . 'http://localhost:8000/blogPosts');
+
+                elseif (!password_verify($data['password'], $hashed_password)) {
+                    $data['password_err'] = 'Password does not match';
+                }
+                //Make sure errors are empty, if empty of error create a new user
+                if (empty($data['email_err']) && empty($data['password_err'])) {
+                    $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
+                    if ($currentUser) {
+                        $this->createUserSession($currentUser);
+                    }
+                }
+                $user = $this->userModel->currentUser($data['email'], $data['password']);
+                if ($user != null) {
+                    if ($user['is_admin'] == 1) {
+                        //if logged in as an admin direct to admin homepage
+                        header('location: ' . 'http://localhost:8000/admin/home');
+                    }
+                    if ($user['is_admin'] == 0) {
+                        //if logged in a general user direct to blogPosts homepage.
+                        header('location: ' . 'http://localhost:8000/blogPosts');
+                    }
+                } else {
+                    return View::make('users/userLogin', $data);
                 }
             } else {
+                $data = [
+                    'email' => '',
+                    'password' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                ];
+                //LOAD VIEW FILE
                 return View::make('users/userLogin', $data);
-            }
-        } else {
-            $data = [
-                'email' => '',
-                'password' => '',
-                'email_err' => '',
-                'password_err' => '',
-            ];
-            //LOAD VIEW FILE
-            return View::make('users/userLogin', $data);
+
+//            Validate Password
+//            $hashed_password = $dataRow['password'];
+//            if (empty($data['password'])) {
+//                $data['password_err'] = 'Please enter a password';
+//            } elseif (!password_verify($data['password'], $hashed_password)) {
+//                $data['password_err'] = 'Password does not match';
+//            }
+//            //Make sure errors are empty, if empty of error create a new user
+//            if (empty($data['email_err']) && empty($data['password_err'])) {
+//                $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
+//                if ($currentUser) {
+//                    $this->createUserSession($currentUser);
+//                }
+//            }
+//            $user = $this->userModel->currentUser($data['email'], $data['password']);
+//            if ($user != null) {
+//                if ($user['is_admin'] == 1) {
+//                    //if logged in as an admin direct to admin homepage
+//                    header('location: ' . 'http://localhost:8000/admin/home');
+//                }
+//                if ($user['is_admin'] == 0) {
+//                    //if logged in a general user direct to blogPosts homepage.
+//                    header('location: ' . 'http://localhost:8000/blogPosts');
+//                }
+//            } else {
+//                return View::make('users/userLogin', $data);
+//            }
+//        } else {
+//            $data = [
+//                'email' => '',
+//                'password' => '',
+//                'email_err' => '',
+//                'password_err' => '',
+//            ];
+//            //LOAD VIEW FILE
         }
     }
 
@@ -192,9 +232,13 @@ class UsersController
                     $data['email_err'] = "Email being used";
                 }
             }
-            //Validate Name
+            //Validate name
             if (empty($data['name'])) {
                 $data['name_err'] = 'Please enter a name';
+            } else {
+                if($this->userModel->finderUserByUsername($data)) {
+                    $data['name_err'] = "name being used";
+                }
             }
             //Validate Password
             if (empty($data['password'])) {

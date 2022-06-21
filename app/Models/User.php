@@ -44,7 +44,9 @@ class User {
         $userStatement->execute([$email]);
 
         $dataRow = $userStatement->fetch();
-        $hashed_password = $dataRow['password'];
+        if(!is_bool($dataRow)) {
+            $hashed_password = $dataRow['password'];
+        } else {$hashed_password = ''; }
         if(password_verify($password, $hashed_password)) {
              return $dataRow;
          }else{
@@ -52,11 +54,12 @@ class User {
          }
     }
 
+
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT username, email, password FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
         $dataRow = $userStatement->fetch();
-        return $dataRow;
+        return is_bool($dataRow) ? [] : $dataRow;
     }
 
     public function finderUserByUsername($data) {

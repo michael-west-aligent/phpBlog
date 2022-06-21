@@ -44,8 +44,6 @@ $router
 
     //WHY DOES THIS WORK WHEN I DELETE THE POST REQUEST, BUT THE METHOD IN THE ADMINEDITBLOG is POST?
 //    ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
-
-
     ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
     ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog'])
     ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
