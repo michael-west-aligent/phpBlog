@@ -60,17 +60,18 @@ if ($_SESSION != null) :
 <?php endforeach; ?>
 
 <?php if ($_SESSION != null) : ?>
-    <form action="/blog/addComment" method="post">
-        <div class="form-group">
-            <label for="comment"> Add Comment To Blog </label>
-            <textarea name="body" class="form-control form-control-lg"
-            <!--            --><?php //echo $comment['body'];?>
-            </textarea>
-            <input type="hidden" name="username" value="<?= $comment['username']; ?> ">
-            <input type="hidden" name="post_id" value="<?= $this->params['id']; ?> ">
-            <input type="submit" value="Submit Comment" class="btn btn-success">
-        </div>
-    </form>
+<!--    <form action="/blog/addComment" method="post">-->
+<!--        <div class="form-group">-->
+<!--            <label for="comment"> Add Comment To Blog </label>-->
+<!--            <textarea name="body" class="form-control form-control-lg"-->
+            <!--            -->
+            <?php //echo $comment['body'];?>
+<!--          </textarea>-->
+<!--            <input type="hidden" name="username" value="--><?//= $comment['username']; ?><!-- ">-->
+<!--            <input type="hidden" name="post_id" value="--><?//= $this->params['id']; ?><!-- ">-->
+<!--            <input type="submit" value="Submit Comment" class="btn btn-success">-->
+<!--        </div>-->
+<!--    </form>-->
 <?php else : ?>
     <h2> Register or Login to make a comment </h2>
 <?php endif; ?>

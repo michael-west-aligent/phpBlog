@@ -30,6 +30,6 @@ require_once VIEW_PATH . '/header.php';
     </form>
 
     <a href="/admin/approveBlogComment?<?php echo $this->params['id']?> " >
-        <button type="submit" value="Update User" class="btn btn-success"> View Full Blog with comments</button>
+        <button type="submit" value="Update User" class="btn btn-success"> View Full Blog to Approve or Remove Comments </button>
     </a>
 </div>

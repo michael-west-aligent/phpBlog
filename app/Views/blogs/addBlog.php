@@ -20,7 +20,7 @@ require_once VIEW_PATH . '/header.php';
 
 
         <div class="form-group">
-            <label for="body"> Blog Body: <sup>*</sup></label>
+            <label for="body"> Blog Body: <sup>* This needs to be less than 76 characters</sup></label>
             <textarea name="blog_body" class="form-control form-control-lg" <?php echo (!empty($this->params
                 ['blog_body_err']) && ($this->params['blog_body_err'] != '')) ? 'is-invalid' : ''; ?>
                 <?php echo ($this->params['blog_body']); ?>> </textarea>

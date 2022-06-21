@@ -61,6 +61,13 @@ class User {
         return $dataRow;
     }
 
+    public function finderUserByUsername($data) {
+        $userStatement = $this->db->prepare('SELECT username FROM users WHERE username =?');
+        $userStatement->execute([$data['name']]);
+        $dataRow = $userStatement->fetch();
+        return $dataRow;
+    }
+
     public function getUserById($id) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE id = ?');
         $userStatement->execute([$id]);

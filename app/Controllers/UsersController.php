@@ -46,6 +46,10 @@ class UsersController
             //Validate Name
             if (empty($data['name'])) {
                 $data['name_err'] = 'Please enter a name';
+            } else {
+                if($this->userModel->finderUserByUsername($data)) {
+                    $data['name_err'] = "Username being used";
+                }
             }
             //Validate Password
             if (empty($data['password'])) {

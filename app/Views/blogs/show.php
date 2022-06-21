@@ -9,11 +9,12 @@ if(sizeof($singleBlog)>1) {
 } else {
     $comments = [];
 }
+
 ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
-<h1> <?php echo $this->params['title']; ?> </h1>
+<h1> Blog Title:  <?php echo $this->params['title']; ?> </h1>
 
 <div class="bg-secondary text-white p-2 mb-3">
     Blogged By<?php echo $this->params['username']; ?> on <?php echo $this->params['created_at']; ?>
@@ -33,6 +34,8 @@ if($_SESSION != null) :
 <?php endif; ?>
 
 <?php endif; ?>
+
+<hr>
 
 <h3> Blog Replies </h3>
 <?php foreach ($comments as $comment) : ?>
@@ -54,19 +57,33 @@ if($_SESSION != null) :
     <form action="/blog/addComment" method="post">
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label> <sup>* Blog Comments can be a maximum of 50 characters</sup>
+            <!--        <textarea maxlength="50" name="body" class="form-control form-control-lg"-->
+            <!--        <textarea name="body" class="form-control form-control-lg"-->
+
+            <!--            --><?php //echo $comment['body'];?>
+            <!---->
+            <!--        </textarea>-->
             <div class="form-group">
+
             <textarea name="blog_body" class="form-control form-control-lg" <?php echo (!empty($this->params
-                [' comment_error']) && ($this->params['comment_error'] != '')) ? 'is-invalid' : ''; ?>></textarea>
+                [' comment_error']) && ($this->params['comment_error'] != '')) ? 'is-invalid' : ''; ?>
+                   ></textarea>
                 <span style="color: darkred"> <?php echo $this->params['comment_error']; ?> </span>
             </div>
+
             <input type="hidden" name="username" value="<?= $comment['username'];?> ">
             <input type="hidden" name="post_id" value="<?= $this->params['id'];?> ">
             <input type="submit" value="Submit Comment" class="btn btn-success">
         </div>
     </form>
 <?php else : ?>
+
     <h2> Register or Login to make a comment </h2>
+
 <?php endif; ?>
+
+
+
 
 
 <?php require_once VIEW_PATH . '/footer.php'; ?>
