@@ -130,7 +130,6 @@ ORDER BY posts.created_at DESC;');
     public function deletePost($postId)
     {
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
-//        $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         $deleteBlogPost->execute([$postId]);
         return true;
     }

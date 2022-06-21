@@ -157,6 +157,7 @@ class UsersController
                     'users' => $users,
                 ];
                 return View::make('/admin/home', $data);
+                //if not an admin redirect to blogPosts homepage
             } else if ($_SESSION['is_admin'] == 0) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
