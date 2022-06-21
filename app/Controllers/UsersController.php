@@ -109,14 +109,12 @@ class UsersController
                     $data['email_err'] = 'No user with that email ';
                 }
             }
-//            header('location:' . 'http://localhost:8000/admin/home');
-//        }
             if(!empty($dataRow)) {
                 $hashed_password = $dataRow['password'];
             } else {$hashed_password = '';
             }
                 if (empty($data['password'])) {
-//                    $data['password_err'] = 'Please enter a password';
+                    $data['password_err'] = 'Please enter a password';
                 }
 
                 elseif (!password_verify($data['password'], $hashed_password)) {
