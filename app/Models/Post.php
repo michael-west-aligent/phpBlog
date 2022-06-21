@@ -83,7 +83,6 @@ ORDER BY posts.created_at DESC;');
                                                     INNER JOIN users
                                                     ON posts.user_id = users.id
                                                     ORDER BY posts.created_at DESC limit 4');
-        //THIS SHOULD RETURN AN ARRAY OF OBJECT BACK
         $results = $postStatement->fetchAll();
         return $results;
     }

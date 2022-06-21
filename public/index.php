@@ -4,12 +4,8 @@
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
-
 use App\Config\App;
-use App\Config\Config;
 use App\Routers\Router;
-use App\Controllers\HomeController;
-use App\Config\DB;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -18,11 +14,10 @@ const VIEW_PATH = __DIR__ . '/../app/Views';
 
 $router = new Router();
 
-
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
     ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
     ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
     ->get('/users/logout', [\App\Controllers\UsersController::class, 'logout'])

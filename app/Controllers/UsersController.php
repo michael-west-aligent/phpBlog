@@ -93,7 +93,6 @@ class UsersController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            //PROCESS FORM
             $data = [
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
@@ -118,21 +117,21 @@ class UsersController
             } elseif (!password_verify($data['password'], $hashed_password)) {
                 $data['password_err'] = 'Password does not match';
             }
-            //MAKE SURE ERRORS ARE EMPTY
+            //Make sure errors are empty, if empty of error create a new user
             if (empty($data['email_err']) && empty($data['password_err'])) {
-                //VALIDATED
                 $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
                 if ($currentUser) {
                     $this->createUserSession($currentUser);
                 }
-            } else {
             }
             $user = $this->userModel->currentUser($data['email'], $data['password']);
             if ($user != null) {
                 if ($user['is_admin'] == 1) {
+                    //if logged in as an admin direct to admin homepage
                     header('location: ' . 'http://localhost:8000/admin/home');
                 }
                 if ($user['is_admin'] == 0) {
+                    //if logged in a general user direct to blogPosts homepage.
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 }
             } else {

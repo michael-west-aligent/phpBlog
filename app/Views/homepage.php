@@ -1,7 +1,4 @@
 <?php
-
-
-
 require_once VIEW_PATH . '/header.php'; ?>
 
 <?php
@@ -9,7 +6,7 @@ $post = new \App\Models\Post();
 $allPosts = $post->blogsPostsForHomePage();
 ?>
 
-    <div class="jumbotron jumbotron-flud text-center">
+    <div class="jumbotron jumbotron-fluid text-center">
         <div class="container">
             <h1 class="display-3"> Bloggin from ya noggin </h1>
             <p class="lead"> A place to blog </p>
@@ -26,7 +23,6 @@ $allPosts = $post->blogsPostsForHomePage();
         <p class="card-text"><?php echo $posts['blog_body']?> </p>
         <a href="/blog/show?<?php echo $posts['postId'];?>" class="btn btn-dark"> View the Full Blog</a>
     </div>
-
 <?php endforeach; ?>
 
 <?php
