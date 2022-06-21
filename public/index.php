@@ -23,11 +23,9 @@ $router
     ->get('/users/login', [\App\Controllers\UsersController::class, 'logout'])
     ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'blogPosts'])
 
-
-//    ->get('/blogComments', [\App\Controllers\PostControllers::class, 'getBlogComments'])
-
-
     ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+
+
     ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
     ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
     ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])

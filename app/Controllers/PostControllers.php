@@ -32,16 +32,6 @@ class PostControllers
         return View::make('/blogs/home', $data);
     }
 
-
-//    public function getBlogComments()
-//    {
-//        $blogComments = $this->postModel->numberofComments();
-//        $commentData = [
-//            'blogComments' => $blogComments
-//        ];
-//        return View::make('/blogs/home', $commentData);
-//    }
-
     //admin home page see blogs
     public function adminSeeBlogs()
     {
@@ -83,7 +73,7 @@ class PostControllers
                 }
             } else {
                 //LOAD VIEWS WITH ERRORS
-                return View::make('posts/addBlog', $data);
+                return View::make('blogs/addBlog', $data);
             }
         } else {
             $data = [
@@ -92,66 +82,65 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            return View::make('/posts/addBlog', $data);
+            return View::make('/blogs/addBlog', $data);
         }
     }
 
     public function adminEditBlog()
-    {    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data = [
-                'id' => $_POST['postId'],
-                'title' => ($_POST['title']),
-                'blog_body' => ($_POST['blog_body']),
-                'user_id' => $_SESSION['user_id'],
-                'title_err' => '',
-                'blog_body_err' => '',
-            ];
+    {
+        {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $data = [
+                    'id' => $_POST['postId'],
+                    'title' => ($_POST['title']),
+                    'blog_body' => ($_POST['blog_body']),
+                    'user_id' => $_SESSION['user_id'],
+                    'title_err' => '',
+                    'blog_body_err' => '',
+                ];
 //                        die("here");
-            //VALIDATE data
-            if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a title';
-            }
-            //validate body length
-            if (empty($data['blog_body'])) {
-                $data['blog_body_err'] = 'Please enter a blog body';
-            }elseif (strlen($data['blog_body']) > 76){
-                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-                //            die("here");
-            }
+                //VALIDATE data
+                if (empty($data['title'])) {
+                    $data['title_err'] = 'Please enter a title';
+                }
+                //validate body length
+                if (empty($data['blog_body'])) {
+                    $data['blog_body_err'] = 'Please enter a blog body';
+                } elseif (strlen($data['blog_body']) > 76) {
+                    $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+                }
 //            die("here");
-            //Make sure no errors
-            if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                //VALIDATED
-                if ($this->postModel->updatePost($data)) {
+                //Make sure no errors
+                if (empty($data['title_err']) && empty($data['blog_body_err'])) {
+                    //VALIDATED
+                    if ($this->postModel->updatePost($data)) {
 //                    REDIRECT TO ALL BLOG POSTS
-                    header('location: ' . 'http://localhost:8000/blogPosts');
+                        header('location: ' . 'http://localhost:8000/blogPosts');
+                    } else {
+                        die('Something went wrong');
+                    }
                 } else {
-                    die('Something went wrong');
+                    //LOAD VIEWS WITH ERRORS
+                    return View::make('admin/editBlog', $data);
                 }
             } else {
-                //LOAD VIEWS WITH ERRORS
-                return View::make('admin/editBlog', $data);
-            }
-        } else
-        {
-            //GET EXISTING POST FROM MODEL
-            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-            $post = $this->postModel->getPostById($id);
-            var_dump($post);
-            $data = [
-                'id' => $post['id'],
-                'title' => $post['title'],
-                'blog_body' => $post['blog_body'],
-                'title_err' => '',
-                'blog_body_err' => '',
+                //GET EXISTING POST FROM MODEL
+                $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+                $post = $this->postModel->getPostById($id);
+                var_dump($post);
+                $data = [
+                    'id' => $post['id'],
+                    'title' => $post['title'],
+                    'blog_body' => $post['blog_body'],
+                    'title_err' => '',
+                    'blog_body_err' => '',
 
-            ];
-            return View::make('/admin/editBlog', $data);
+                ];
+                return View::make('/admin/editBlog', $data);
+            }
         }
-    }
-    return View::make('admin/editBlog');
+        return View::make('admin/editBlog');
     }
 
     public function editBlog()
@@ -232,8 +221,7 @@ class PostControllers
                 } else {
                     die('Something went wrong');
                 }
-            }
-            else {
+            } else {
                 //LOAD VIEWS WITH ERRORS
                 return View::make('posts/editBlog', $data);
             }
@@ -273,7 +261,7 @@ class PostControllers
             'username' => $user['username'],
 //THIS NOW GETS THE FULL COMMENTS array.
             'comments' => $comment,
-            'comment_error'=>''
+            'comment_error' => ''
         ];
         return View::make('posts/show', $data);
     }
@@ -312,8 +300,7 @@ class PostControllers
     public function adminDeleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($this->postModel->deletePost($_POST['postId'],))
-            {
+            if ($this->postModel->deletePost($_POST['postId'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('something is not working ');
