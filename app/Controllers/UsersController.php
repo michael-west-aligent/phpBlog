@@ -17,6 +17,7 @@ class UsersController
         $this->userModel = new User();
     }
 
+
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -115,9 +116,7 @@ class UsersController
             }
                 if (empty($data['password'])) {
                     $data['password_err'] = 'Please enter a password';
-                }
-
-                elseif (!password_verify($data['password'], $hashed_password)) {
+                } elseif (!password_verify($data['password'], $hashed_password)) {
                     $data['password_err'] = 'Password does not match';
                 }
                 //Make sure errors are empty, if empty of error create a new user

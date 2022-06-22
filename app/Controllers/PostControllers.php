@@ -41,6 +41,19 @@ class PostControllers
         return View::make('/admin/home', $blogData);
     }
 
+    public function blogValidation($data)
+    {
+        //VALIDATE data
+        if (empty($data['title'])) {
+            $data['title_err'] = 'Please enter a blog title';
+        }
+        if (empty($data['blog_body'])) {
+            $data['blog_body_err'] = 'Please enter a blog body';
+        } elseif (strlen($data['blog_body']) > 76) {
+            $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+        }
+    }
+
     public function addBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -52,15 +65,17 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
+
+            $this->blogValidation($data);
             //VALIDATE data
-            if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a blog title';
-            }
-            if (empty($data['blog_body'])) {
-                $data['blog_body_err'] = 'Please enter a blog body';
-            } elseif (strlen($data['blog_body']) > 76) {
-                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-            }
+//            if (empty($data['title'])) {
+//                $data['title_err'] = 'Please enter a blog title';
+//            }
+//            if (empty($data['blog_body'])) {
+//                $data['blog_body_err'] = 'Please enter a blog body';
+//            } elseif (strlen($data['blog_body']) > 76) {
+//                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+//            }
             //Make SURE NO ERRORS
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 //VALIDATED
@@ -99,16 +114,17 @@ class PostControllers
                     'blog_body_err' => '',
                 ];
 
+                $this->blogValidation($data);
                 //VALIDATE data
-                if (empty($data['title'])) {
-                    $data['title_err'] = 'Please enter a title';
-                }
-                //validate body length
-                if (empty($data['blog_body'])) {
-                    $data['blog_body_err'] = 'Please enter a blog body';
-                } elseif (strlen($data['blog_body']) > 76) {
-                    $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-                }
+//                if (empty($data['title'])) {
+//                    $data['title_err'] = 'Please enter a title';
+//                }
+//                //validate body length
+//                if (empty($data['blog_body'])) {
+//                    $data['blog_body_err'] = 'Please enter a blog body';
+//                } elseif (strlen($data['blog_body']) > 76) {
+//                    $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+//                }
                 //Make sure no errors
                 if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                     //VALIDATED
@@ -149,16 +165,18 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
+
+            $this->blogValidation($data);
             //VALIDATE TITLE
-            if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a blog title';
-            }
-            //VALIDATE body length
-            if (empty($data['blog_body'])) {
-                $data['blog_body_err'] = 'Please enter a blog body';
-            } elseif (strlen($data['blog_body']) > 76) {
-                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-            }
+//            if (empty($data['title'])) {
+//                $data['title_err'] = 'Please enter a blog title';
+//            }
+//            //VALIDATE body length
+//            if (empty($data['blog_body'])) {
+//                $data['blog_body_err'] = 'Please enter a blog body';
+//            } elseif (strlen($data['blog_body']) > 76) {
+//                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+//            }
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 if ($this->postModel->updatePost($data)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');

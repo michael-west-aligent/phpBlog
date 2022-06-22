@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Config\App;
+use App\View;
 
 class Post
 {
@@ -74,11 +75,16 @@ ORDER BY posts.created_at DESC;');
 
     public function addPost($data)
     {
-        $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
-        $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
-        return true;
-        header('location: ' . 'http://localhost:8000/blogPosts');
-    }
+        try {
+
+            $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
+            $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
+            return true;
+            header('location: ' . 'http://localhost:8000/blogPosts');
+
+        } catch (\Exception $e) {
+            echo View::make('error/404', (array)$e);
+        }    }
 
     public function adminUpdateBlog($data)
     {
