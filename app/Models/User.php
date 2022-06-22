@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Config\App;
 
 class User {
-
     public $db;
 
     public function __construct()

@@ -14,6 +14,7 @@ class CommentControllers
 
     protected $commentModel;
 
+
     public function __construct()
     {
         $this->postModel = new Post();
@@ -21,6 +22,12 @@ class CommentControllers
         $this->commentModel = new Comment();
     }
 
+
+    /**
+     * Add a new blog comment
+     * make sure comment is validated and meets criteria i.e. less than 50 characters
+     * @return View|void
+     */
     public function addBlogComment()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -50,7 +57,7 @@ class CommentControllers
 
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
-                    die('Something went wrong');
+                    die('Unable to add a new Blog Comments');
                 }
             } else {
                 $postModel = new Post();
@@ -76,6 +83,11 @@ class CommentControllers
     }
 
     //THIS WAS ADDED FROM POST CONTROLLER
+
+    /**
+     * function that allows an admin user to approve comments before they can be seen
+     * @return void
+     */
     public function adminApproved()
     {
         $data = [
@@ -86,14 +98,17 @@ class CommentControllers
         $this->commentModel->adminApproved($data);
     }
 
-
+    /**
+     * function for admin that allows them to delete comments
+     * @return void
+     */
     public function adminDeleteBlogComment()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($this->commentModel->adminDeleteComment($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
-                die('something is not working ');
+                die('admin is unable to delete blog Comment');
             }
         }
     }
