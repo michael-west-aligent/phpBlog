@@ -18,6 +18,37 @@ class UsersController
         $this->userModel = new User();
     }
 
+    public function validateUser($data)
+    {
+        if (empty($data['email'])) {
+            $data['email_err'] = 'Please enter an email';
+        } else {
+            if ($this->userModel->findUserByEmail($data)) {
+                $data['email_err'] = "Email being used";
+            }
+        }
+        if (empty($data['name'])) {
+            $data['name_err'] = 'Please enter a name';
+        } else {
+            if($this->userModel->finderUserByUsername($data)) {
+                $data['name_err'] = "Username being used";
+            }
+        }
+        if (empty($data['password'])) {
+            $data['password_err'] = 'Please enter a password';
+        } elseif (strlen($data['password']) < 6) {
+            $data['password_err'] = 'Password must be at least 6 characters';
+        }
+        if (empty($data['confirm_password'])) {
+            $data['confirm_password_err'] = 'Please confirm password';
+        } else {
+            if ($data['password'] != $data['confirm_password']) {
+                $data['confirm_password_err'] = 'Passwords do not match, try again';
+            }
+        }
+        return $data;
+    }
+
     /**
      * function to register a new user
      * @return View|void
@@ -36,32 +67,35 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            if (empty($data['email'])) {
-                $data['email_err'] = 'Please enter an email';
-            } else {
-                if ($this->userModel->findUserByEmail($data)) {
-                    $data['email_err'] = "Email being used";
-                }
-            }
-            if (empty($data['name'])) {
-                $data['name_err'] = 'Please enter a name';
-            } else {
-                if($this->userModel->finderUserByUsername($data)) {
-                    $data['name_err'] = "Username being used";
-                }
-            }
-            if (empty($data['password'])) {
-                $data['password_err'] = 'Please enter a password';
-            } elseif (strlen($data['password']) < 6) {
-                $data['password_err'] = 'Password must be at least 6 characters';
-            }
-            if (empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Please confirm password';
-            } else {
-                if ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'Passwords do not match, try again';
-                }
-            }
+            $this->validateUser($data);
+//            if (empty($data['email'])) {
+//                $data['email_err'] = 'Please enter an email';
+//            } else {
+//                if ($this->userModel->findUserByEmail($data)) {
+//                    $data['email_err'] = "Email being used";
+//                }
+//            }
+//            if (empty($data['name'])) {
+//                $data['name_err'] = 'Please enter a name';
+//            } else {
+//                if($this->userModel->finderUserByUsername($data)) {
+//                    $data['name_err'] = "Username being used";
+//                }
+//            }
+//            if (empty($data['password'])) {
+//                $data['password_err'] = 'Please enter a password';
+//            } elseif (strlen($data['password']) < 6) {
+//                $data['password_err'] = 'Password must be at least 6 characters';
+//            }
+//            if (empty($data['confirm_password'])) {
+//                $data['confirm_password_err'] = 'Please confirm password';
+//            } else {
+//                if ($data['password'] != $data['confirm_password']) {
+//                    $data['confirm_password_err'] = 'Passwords do not match, try again';
+//                }
+//            }
+
+
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 if ($this->userModel->newRegister($data)) {
@@ -187,37 +221,44 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            if (empty($data['email'])) {
-                $data['email_err'] = 'Please enter an email';
-            } else {
-                if ($this->userModel->findUserByEmail($data)) {
-                    $data['email_err'] = "Email being used";
-                }
-            }
-            if (empty($data['name'])) {
-                $data['name_err'] = 'Please enter a name';
-            } else {
-                if($this->userModel->finderUserByUsername($data)) {
-                    $data['name_err'] = "name being used";
-                }
-            }
-            if (empty($data['password'])) {
-                $data['password_err'] = 'Please enter a password';
-            } elseif (strlen($data['password']) < 6) {
-                $data['password_err'] = 'Password must be at least 6 characters';
-            }
-            if (empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Please confirm password';
-            } else {
-                if ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'Passwords do not match, try again';
-                }
-            }
-            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['is_admin_err'])) {
+            $data2 = $this->validateUser($data);
+//            if (empty($data['email'])) {
+//                $data['email_err'] = 'Please enter an email';
+//            } else {
+//                if ($this->userModel->findUserByEmail($data)) {
+//                    $data['email_err'] = "Email being used";
+//                }
+//            }
+//            if (empty($data['name'])) {
+//                $data['name_err'] = 'Please enter a name';
+//            } else {
+//                if($this->userModel->finderUserByUsername($data)) {
+//                    $data['name_err'] = "name being used";
+//                }
+//            }
+//            if (empty($data['password'])) {
+//                $data['password_err'] = 'Please enter a password';
+//            } elseif (strlen($data['password']) < 6) {
+//                $data['password_err'] = 'Password must be at least 6 characters';
+//            }
+//            if (empty($data['confirm_password'])) {
+//                $data['confirm_password_err'] = 'Please confirm password';
+//            } else {
+//                if ($data['password'] != $data['confirm_password']) {
+//                    $data['confirm_password_err'] = 'Passwords do not match, try again';
+//                }
+//            }
+
+
+            if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err']) && empty($data2['is_admin_err'])) {
+
                 //HASH PASSWORD
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
+                        if ($this->userModel->adminUserAdd($data2)) {
+            header('location: ' . 'http://localhost:8000/admin/home');
+        }
             } else {
-                return View::make('admin/addUser', $data);
+                return View::make('admin/addUser', $data2);
             }
         } else {
             $data = [
@@ -234,9 +275,9 @@ class UsersController
             ];
             return View::make('admin/addUser', $data);
         }
-        if ($this->userModel->adminUserAdd($data)) {
-            header('location: ' . 'http://localhost:8000/admin/home');
-        }
+//        if ($this->userModel->adminUserAdd($data)) {
+//            header('location: ' . 'http://localhost:8000/admin/home');
+//        }
     }
 
     public function adminUpdateUser(): View
