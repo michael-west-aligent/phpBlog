@@ -12,7 +12,11 @@ use App\Models\Comment;
 
 class PostControllers
 {
-    protected $postModel;
+    protected Post $postModel;
+    protected User $userModel;
+    protected Comment $commentModel;
+
+
 
     public function __construct()
     {
@@ -21,8 +25,12 @@ class PostControllers
         $this->commentModel = new Comment();
     }
 
-    //Get All Blog Posts
-    public function blogPosts()
+
+    /**
+     * function to get All Blog Post Data.
+     * @return View
+     */
+    public function blogPosts(): View
     {
         $posts = $this->postModel->getAllBlogPosts();
         $data = [
@@ -31,8 +39,12 @@ class PostControllers
         return View::make('/blogs/home', $data);
     }
 
-    //admin homepage see blogs
-    public function adminSeeBlogs()
+
+    /**
+     * function for admin to see blog posts in admin homepage
+     * @return View
+     */
+    public function adminSeeBlogs(): View
     {
         $posts = $this->postModel->adminBlogInfoHome();
         $blogData = [
@@ -41,9 +53,14 @@ class PostControllers
         return View::make('/admin/home', $blogData);
     }
 
-    public function blogValidation($data)
+
+    /**
+     * function to validate blog Data
+     * @param $data
+     * @return void
+     */
+    public function blogValidation($data): void
     {
-        //VALIDATE data
         if (empty($data['title'])) {
             $data['title_err'] = 'Please enter a blog title';
         }
@@ -54,6 +71,10 @@ class PostControllers
         }
     }
 
+    /**
+     * function to add Blog and make sure all input areas are filled in
+     * @return View|void
+     */
     public function addBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -65,28 +86,14 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-
             $this->blogValidation($data);
-            //VALIDATE data
-//            if (empty($data['title'])) {
-//                $data['title_err'] = 'Please enter a blog title';
-//            }
-//            if (empty($data['blog_body'])) {
-//                $data['blog_body_err'] = 'Please enter a blog body';
-//            } elseif (strlen($data['blog_body']) > 76) {
-//                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-//            }
-            //Make SURE NO ERRORS
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                //VALIDATED
                 if ($this->postModel->addPost($data)) {
-                    //REDIRECT TO ALL BLOG POSTS
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
                     die('Something went wrong');
                 }
             } else {
-                //LOAD VIEWS WITH ERRORS
                 return View::make('blogs/addBlog', $data);
             }
         } else {
@@ -100,6 +107,11 @@ class PostControllers
         }
     }
 
+
+    /**
+     * function so admin can edit any blog title and blog body from admin homepage.
+     * @return View|void
+     */
     public function adminEditBlog()
     {
         {
@@ -113,28 +125,14 @@ class PostControllers
                     'title_err' => '',
                     'blog_body_err' => '',
                 ];
-
                 $this->blogValidation($data);
-                //VALIDATE data
-//                if (empty($data['title'])) {
-//                    $data['title_err'] = 'Please enter a title';
-//                }
-//                //validate body length
-//                if (empty($data['blog_body'])) {
-//                    $data['blog_body_err'] = 'Please enter a blog body';
-//                } elseif (strlen($data['blog_body']) > 76) {
-//                    $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-//                }
-                //Make sure no errors
                 if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                    //VALIDATED
                     if ($this->postModel->updatePost($data)) {
                         header('location: ' . 'http://localhost:8000/blogPosts');
                     } else {
                         die('Something went wrong');
                     }
                 } else {
-                    //LOAD VIEWS WITH ERRORS
                     return View::make('admin/editBlog', $data);
                 }
             } else {
@@ -153,6 +151,11 @@ class PostControllers
         return View::make('admin/editBlog');
     }
 
+
+    /**
+     * function for a user to be able to edit their blog, and to make sure it is filled in if they do edit.
+     * @return View|void
+     */
     public function editBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -165,18 +168,7 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-
             $this->blogValidation($data);
-            //VALIDATE TITLE
-//            if (empty($data['title'])) {
-//                $data['title_err'] = 'Please enter a blog title';
-//            }
-//            //VALIDATE body length
-//            if (empty($data['blog_body'])) {
-//                $data['blog_body_err'] = 'Please enter a blog body';
-//            } elseif (strlen($data['blog_body']) > 76) {
-//                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-//            }
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 if ($this->postModel->updatePost($data)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
@@ -184,13 +176,11 @@ class PostControllers
                     die('Something went wrong');
                 }
             } else {
-                //LOAD VIEWS WITH ERRORS
                 return View::make('blogs/editBlog', $data);
             }
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
-            //CHECK THE OWNER
             if ($post['user_id'] != $_SESSION['user_id']) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
@@ -205,6 +195,11 @@ class PostControllers
         }
     }
 
+
+    /**
+     * function for user to update post based on their postID
+     * @return View|void
+     */
     public function updatePost()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -216,29 +211,17 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            //Validate the title
-            if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter a blog title';
-            }
-            //Validate the blog_body length
-            if (empty($data['blog_body'])) {
-                $data['blog_body_err'] = 'Please enter a blog body';
-            } elseif (strlen($data['blog_body']) > 76) {
-                $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-            }
-            //if no error updateEditPost and redirect to blogPosts
+            $this->blogValidation($data);
             if (empty($data['title_err']) && empty($data['blog_body_err'])) {
                 if ($this->postModel->updateEditPost($data)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 }
             } else {
-                //LOAD VIEWS WITH ERRORS
                 return View::make('blogs/editBlog', $data);
             }
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             $post = $this->postModel->getPostById($id);
-            //Check the owner
             if ($post['user_id'] != $_SESSION['user_id']) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
@@ -255,7 +238,11 @@ class PostControllers
         $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
     }
 
-    //SHOW A SINGLE BLOG BASED ON ITS POT ID
+
+    /**
+     * function for single blog, when user clicks on view full blog.
+     * @return View
+     */
     public function showSingleBlog()
     {
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -275,6 +262,10 @@ class PostControllers
         return View::make('blogs/show', $data);
     }
 
+    /**
+     * function for admin to see full blog including comments waiting to be approved
+     * @return View
+     */
     public function adminFullBlog()
     {
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -294,6 +285,10 @@ class PostControllers
         return View::make('admin/approveComments', $data);
     }
 
+    /**
+     * function for user to delete a blog if they are the owner of it
+     * @return void
+     */
     public function deleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -305,6 +300,10 @@ class PostControllers
         }
     }
 
+    /**
+     * function for admin user to delete any blog
+     * @return void
+     */
     public function adminDeleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

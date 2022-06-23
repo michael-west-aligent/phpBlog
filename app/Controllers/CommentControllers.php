@@ -12,7 +12,9 @@ use App\Models\Comment;
 class CommentControllers
 {
 
-    protected $commentModel;
+    protected Comment $commentModel;
+    protected User $userModel;
+    protected Post $postModel;
 
 
     public function __construct()
@@ -82,7 +84,7 @@ class CommentControllers
         }
     }
 
-    //THIS WAS ADDED FROM POST CONTROLLER
+
 
     /**
      * function that allows an admin user to approve comments before they can be seen
