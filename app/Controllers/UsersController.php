@@ -18,6 +18,10 @@ class UsersController
         $this->userModel = new User();
     }
 
+    /** validate user inputs
+     * @param $data
+     * @return mixed
+     */
     public function validateUser($data)
     {
         if (empty($data['email'])) {
@@ -50,7 +54,7 @@ class UsersController
     }
 
     /**
-     * function to register a new user
+     * register a new user
      * @return View|void
      */
     public function register()
@@ -67,42 +71,14 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            $this->validateUser($data);
-//            if (empty($data['email'])) {
-//                $data['email_err'] = 'Please enter an email';
-//            } else {
-//                if ($this->userModel->findUserByEmail($data)) {
-//                    $data['email_err'] = "Email being used";
-//                }
-//            }
-//            if (empty($data['name'])) {
-//                $data['name_err'] = 'Please enter a name';
-//            } else {
-//                if($this->userModel->finderUserByUsername($data)) {
-//                    $data['name_err'] = "Username being used";
-//                }
-//            }
-//            if (empty($data['password'])) {
-//                $data['password_err'] = 'Please enter a password';
-//            } elseif (strlen($data['password']) < 6) {
-//                $data['password_err'] = 'Password must be at least 6 characters';
-//            }
-//            if (empty($data['confirm_password'])) {
-//                $data['confirm_password_err'] = 'Please confirm password';
-//            } else {
-//                if ($data['password'] != $data['confirm_password']) {
-//                    $data['confirm_password_err'] = 'Passwords do not match, try again';
-//                }
-//            }
-
-
-            if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                if ($this->userModel->newRegister($data)) {
+            $data2 =  $this->validateUser($data);
+            if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err'])) {
+                $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
+                if ($this->userModel->newRegister($data2)) {
                     header('location: ' . 'http://localhost:8000/users/login');
                 }
             } else {
-                return View::make('users/userRegister', $data);
+                return View::make('users/userRegister', $data2);
             }
         }
         else {
@@ -121,7 +97,7 @@ class UsersController
     }
 
     /**
-     * function for user to login to blog page
+     * user login to blog page
      * @return View|void
      */
     public function userLogin()
@@ -182,7 +158,7 @@ class UsersController
     }
 
     /**
-     *
+     *direct where to go once logged in based on admin status
      * @return View|void
      */
     public function adminHome()
@@ -203,7 +179,7 @@ class UsersController
     }
 
     /**
-     * function for logged in admin to create a new user
+     * logged in admin to create a new user
      * @return View|void
      */
     public function adminAddUser()
@@ -222,37 +198,7 @@ class UsersController
                 'confirm_password_err' => ''
             ];
             $data2 = $this->validateUser($data);
-//            if (empty($data['email'])) {
-//                $data['email_err'] = 'Please enter an email';
-//            } else {
-//                if ($this->userModel->findUserByEmail($data)) {
-//                    $data['email_err'] = "Email being used";
-//                }
-//            }
-//            if (empty($data['name'])) {
-//                $data['name_err'] = 'Please enter a name';
-//            } else {
-//                if($this->userModel->finderUserByUsername($data)) {
-//                    $data['name_err'] = "name being used";
-//                }
-//            }
-//            if (empty($data['password'])) {
-//                $data['password_err'] = 'Please enter a password';
-//            } elseif (strlen($data['password']) < 6) {
-//                $data['password_err'] = 'Password must be at least 6 characters';
-//            }
-//            if (empty($data['confirm_password'])) {
-//                $data['confirm_password_err'] = 'Please confirm password';
-//            } else {
-//                if ($data['password'] != $data['confirm_password']) {
-//                    $data['confirm_password_err'] = 'Passwords do not match, try again';
-//                }
-//            }
-
-
             if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err']) && empty($data2['is_admin_err'])) {
-
-                //HASH PASSWORD
                 $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
                         if ($this->userModel->adminUserAdd($data2)) {
             header('location: ' . 'http://localhost:8000/admin/home');
@@ -275,9 +221,6 @@ class UsersController
             ];
             return View::make('admin/addUser', $data);
         }
-//        if ($this->userModel->adminUserAdd($data)) {
-//            header('location: ' . 'http://localhost:8000/admin/home');
-//        }
     }
 
     public function adminUpdateUser(): View
@@ -299,7 +242,7 @@ class UsersController
     }
 
     /**
-     * function to delete user
+     * delete user
      * @return void
      */
     public function removeUser(): void
@@ -317,7 +260,7 @@ class UsersController
     }
 
     /**
-     * function to create a userSession
+     * create a userSession
      * @param $user
      * @return void
      */
@@ -330,7 +273,7 @@ class UsersController
     }
 
     /**
-     * function to logout and destroy session
+     * logout and destroy session
      * @return View
      */
     public function logout()
