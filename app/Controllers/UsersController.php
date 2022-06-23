@@ -17,7 +17,41 @@ class UsersController
         $this->userModel = new User();
     }
 
+    public function userValidation($data)
+    {
+        if (empty($data['email'])) {
+            $data['email_err'] = 'Please enter an email';
+        } else {
+            if ($this->userModel->findUserByEmail($data)) {
+                $data['email_err'] = "Email being used";
+            }
+        }
+        if (empty($data['name'])) {
+            $data['name_err'] = 'Please enter a name';
+        } else {
+            if($this->userModel->finderUserByUsername($data)) {
+                $data['name_err'] = "Username being used";
+            }
+        }
+        if (empty($data['password'])) {
+            $data['password_err'] = 'Please enter a password';
+        } elseif (strlen($data['password']) < 6) {
+            $data['password_err'] = 'Password must be at least 6 characters';
+        }
+        if (empty($data['confirm_password'])) {
+            $data['confirm_password_err'] = 'Please confirm password';
+        } else {
+            if ($data['password'] != $data['confirm_password']) {
+                $data['confirm_password_err'] = 'Passwords do not match, try again';
+            }
+        }
+    }
 
+    /**
+     * function to register a new user
+     * the db is checked to make sure the details entered are not existing
+     * @return View|void
+     */
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -32,16 +66,14 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            //Validate Email
+
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
-                //Check the DB for email, if exists display validation warning.
                 if ($this->userModel->findUserByEmail($data)) {
                     $data['email_err'] = "Email being used";
                 }
             }
-            //Validate Name
             if (empty($data['name'])) {
                 $data['name_err'] = 'Please enter a name';
             } else {
@@ -49,13 +81,11 @@ class UsersController
                     $data['name_err'] = "Username being used";
                 }
             }
-            //Validate Password
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
             } elseif (strlen($data['password']) < 6) {
                 $data['password_err'] = 'Password must be at least 6 characters';
             }
-            //Validate Confirm Password
             if (empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Please confirm password';
             } else {
@@ -63,11 +93,8 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
-            //Make sure there are no errors and then hashpassword
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-                //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                //REGISTER USER and direct to login page
                 if ($this->userModel->newRegister($data)) {
                     header('location: ' . 'http://localhost:8000/users/login');
                 }
@@ -90,6 +117,10 @@ class UsersController
         }
     }
 
+    /**
+     * function for user to login to blog page
+     * @return View|void
+     */
     public function userLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -101,8 +132,6 @@ class UsersController
                 'password_err' => '',
             ];
             $dataRow = $this->userModel->findUserByEmail($data);
-
-            //Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
@@ -119,7 +148,6 @@ class UsersController
                 } elseif (!password_verify($data['password'], $hashed_password)) {
                     $data['password_err'] = 'Password does not match';
                 }
-                //Make sure errors are empty, if empty of error create a new user
                 if (empty($data['email_err']) && empty($data['password_err'])) {
                     $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
                     if ($currentUser) {
@@ -146,7 +174,6 @@ class UsersController
                     'email_err' => '',
                     'password_err' => '',
                 ];
-                //LOAD VIEW FILE
                 return View::make('users/userLogin', $data);
         }
     }
@@ -160,7 +187,6 @@ class UsersController
                     'users' => $users,
                 ];
                 return View::make('/admin/home', $data);
-                //if not an admin redirect to blogPosts homepage
             } else if ($_SESSION['is_admin'] == 0) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             }
@@ -188,12 +214,10 @@ class UsersController
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
-                //CHECK EMAIL IS NOT ALREADY IN DB
                 if ($this->userModel->findUserByEmail($data)) {
                     $data['email_err'] = "Email being used";
                 }
             }
-            //Validate name
             if (empty($data['name'])) {
                 $data['name_err'] = 'Please enter a name';
             } else {
@@ -201,13 +225,11 @@ class UsersController
                     $data['name_err'] = "name being used";
                 }
             }
-            //Validate Password
             if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter a password';
             } elseif (strlen($data['password']) < 6) {
                 $data['password_err'] = 'Password must be at least 6 characters';
             }
-            //Validate Confirm Password
             if (empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Please confirm password';
             } else {
@@ -215,12 +237,12 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
-            //Make sure errors are empty
+
+
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['is_admin_err'])) {
                 //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
             } else {
-                //LOAD VIEW WITH ERRORRs
                 return View::make('admin/addUser', $data);
             }
         } else {
@@ -236,7 +258,6 @@ class UsersController
                 'confirm_password_err' => '',
                 'is_admin_err' => '',
             ];
-            //LOAD VIEW FILE
             return View::make('admin/addUser', $data);
         }
         if ($this->userModel->adminUserAdd($data)) {
@@ -276,7 +297,6 @@ class UsersController
 
     public function createUserSession($user)
     {
-        // user ID is coming from currentUser function in User controller, from dataRow as it is getting all data from any row
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_username'] = $user['username'];
