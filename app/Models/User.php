@@ -12,26 +12,30 @@ class User {
         $this->db = App::db();
     }
 
-    public function newRegister ($data) {
+    public function newRegister ($data): bool
+    {
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password) VALUES(?,?,?)');
         $newUser->execute([$data['name'], $data['email'], $data['password']]);
         return true;
     }
 
-    public function adminUserAdd($data){
+    public function adminUserAdd($data): bool
+    {
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password, is_admin) VALUES(?,?,?,?)');
         $newUser->execute([$data['name'], $data['email'], $data['password'], $data['is_admin']]);
         return true;
     }
 
-    public function adminUpdate($data){
+    public function adminUpdate($data): bool
+    {
         $updateUserDetails = $this->db->prepare('UPDATE users SET is_admin = ? WHERE id = ? ');
         $updateUserDetails->execute([$data['is_admin'], $data['user_id']]);
         header('location: ' . 'http://localhost:8000/admin/home');
         return true;
     }
 
-    public function adminRemove($id){
+    public function adminRemove($id): bool
+    {
         $deleteUser = $this->db->prepare('DELETE FROM users where id = ?');
         $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         $deleteUser->execute([$id]);
@@ -52,7 +56,6 @@ class User {
              return false;
          }
     }
-
 
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT username, email, password FROM users WHERE email =?');

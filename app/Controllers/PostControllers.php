@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-
 use App\View;
 use App\Models\Post;
 use App\Models\User;
@@ -12,12 +11,10 @@ use App\Models\Comment;
 
 class PostControllers
 {
-    CONST REQUEST_METHOD = 'POST';
+    const REQUEST_METHOD = 'POST';
     protected Post $postModel;
     protected User $userModel;
     protected Comment $commentModel;
-
-
 
     public function __construct()
     {
@@ -26,9 +23,8 @@ class PostControllers
         $this->commentModel = new Comment();
     }
 
-
     /**
-     * function to get All Blog Post Data.
+     * get All Blog Post Data.
      * @return View
      */
     public function blogPosts(): View
@@ -40,9 +36,8 @@ class PostControllers
         return View::make('/blogs/home', $data);
     }
 
-
     /**
-     * function for admin to see blog posts in admin homepage
+     * admin to see blog posts in admin homepage
      * @return View
      */
     public function adminSeeBlogs(): View
@@ -54,9 +49,8 @@ class PostControllers
         return View::make('/admin/home', $blogData);
     }
 
-
     /**
-     * function to validate blog Data
+     * validate blog Data
      * @param $data
      * @return void
      */
@@ -73,7 +67,7 @@ class PostControllers
     }
 
     /**
-     * function to add Blog and make sure all input areas are filled in
+     * add Blog and make sure all input areas are filled in
      * @return View|void
      */
     public function addBlog()
@@ -108,9 +102,8 @@ class PostControllers
         }
     }
 
-
     /**
-     * function so admin can edit any blog title and blog body from admin homepage.
+     * admin can edit any blog title and blog body from admin homepage.
      * @return View|void
      */
     public function adminEditBlog()
@@ -152,9 +145,8 @@ class PostControllers
         return View::make('admin/editBlog');
     }
 
-
     /**
-     * function for a user to be able to edit their blog, and to make sure it is filled in if they do edit.
+     * a user to be able to edit their blog, and to make sure it is filled in if they do edit.
      * @return View|void
      */
     public function editBlog()
@@ -196,9 +188,8 @@ class PostControllers
         }
     }
 
-
     /**
-     * function for user to update post based on their postID
+     * user to update post based on their postID
      * @return View|void
      */
     public function updatePost()
@@ -239,9 +230,8 @@ class PostControllers
         $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
     }
 
-
     /**
-     * function for single blog, when user clicks on view full blog.
+     * single blog, when user clicks on view full blog.
      * @return View
      */
     public function showSingleBlog()
@@ -264,7 +254,7 @@ class PostControllers
     }
 
     /**
-     * function for admin to see full blog including comments waiting to be approved
+     * admin to see full blog including comments waiting to be approved
      * @return View
      */
     public function adminFullBlog()
@@ -287,7 +277,7 @@ class PostControllers
     }
 
     /**
-     * function for user to delete a blog if they are the owner of it
+     * user to delete a blog if they are the owner of it
      * @return void
      */
     public function deleteBlog()
@@ -302,7 +292,7 @@ class PostControllers
     }
 
     /**
-     * function for admin user to delete any blog
+     * admin user to delete any blog
      * @return void
      */
     public function adminDeleteBlog()

@@ -10,7 +10,7 @@ class Comment {
         $this->db = App::db();
     }
 
-    public function getCommentsById($id)
+    public function getCommentsById($id): bool|array
     {
         $commentsOnBlog = $this->db->prepare('SELECT body, username, comments.created_at, approved, comments.id
                                                     FROM comments
@@ -22,21 +22,23 @@ class Comment {
         return is_bool($dataRow) ? [] : $dataRow;
     }
 
-    public function addComment($data)
+    public function addComment($data): bool
     {
         $newComment = $this->db->prepare('INSERT INTO comments (user_id, body, post_id, created_at) VALUES(?, ?, ?, NOW()); ');
         $newComment->execute([$data['user_id'], $data['body'], $data['post_id']]);
         return true;
     }
 
-    public function adminApproved($data) {
+    public function adminApproved($data): bool
+    {
         $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
         $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);
         header('location: ' . 'http://localhost:8000/admin/approveBlogComment?' . $data['post_id']);
         return true;
     }
 
-    public function adminDeleteComment($comment_id){
+    public function adminDeleteComment($comment_id): bool
+    {
         $deleteBlogPostComment = $this->db->prepare('DELETE FROM comments WHERE id = ?');
         $deleteBlogPostComment->execute([$comment_id]);
         return true;

@@ -50,7 +50,6 @@ class Post
         return $statement->fetch();
     }
 
-
     /**
      * function to get neccessary data for admin home page
      * @return array|false
@@ -66,8 +65,6 @@ FROM posts
          INNER JOIN users
                     ON posts.user_id = users.id
 ORDER BY posts.created_at DESC;');
-//        $results = $postInfo->fetchAll();
-//        return $results;
         return $postInfo->fetchAll();
     }
 

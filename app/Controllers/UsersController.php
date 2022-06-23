@@ -11,13 +11,12 @@ use App\Models\User;
 class UsersController
 {
     CONST REQUEST_METHOD = 'POST';
-    protected $userModel;
+    protected User $userModel;
 
     public function __construct()
     {
         $this->userModel = new User();
     }
-
 
     /**
      * function to register a new user
@@ -37,7 +36,6 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
@@ -241,8 +239,7 @@ class UsersController
         }
     }
 
-
-    public function adminUpdateUser()
+    public function adminUpdateUser(): View
     {
             $data = [
                 'user_id' => (intval($_POST['id'])),
@@ -251,7 +248,8 @@ class UsersController
             return View::make('admin/updateUser', $data);
     }
 
-    public function adminUpdateUser2(){
+    public function adminUpdateUser2(): void
+    {
         $data = [
             'user_id' => (intval($_POST['user_id'])),
             'is_admin' => isset($_POST['is_admin']),
@@ -263,7 +261,8 @@ class UsersController
      * function to delete user
      * @return void
      */
-    public function removeUser() {
+    public function removeUser(): void
+    {
         if($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD)
         {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
@@ -281,7 +280,7 @@ class UsersController
      * @param $user
      * @return void
      */
-    public function createUserSession($user)
+    public function createUserSession($user): void
     {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
