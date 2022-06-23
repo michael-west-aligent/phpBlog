@@ -56,8 +56,10 @@ if ($_SESSION != null) :
 
     <form action="/blog/addComment" method="post">
         <div class="form-group">
-            <label for="comment"> Add Comment To Blog </label> <sup>* Blog Comments can be a maximum of 50
-                characters</sup>
+            <label for="comment"> Add Comment To Blog </label>
+            <sup>* Blog Comments can be a maximum of 50 characters</sup>
+            <br>
+            <sup>* Comments will only appear once they have been approved </sup>
 
             <div class="form-group">
 
