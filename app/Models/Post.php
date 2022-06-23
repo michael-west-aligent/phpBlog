@@ -15,7 +15,7 @@ class Post
     }
 
     /**
-     * function to get all blog information
+     * get all blog information
      * @return array|false
      */
     public function getAllBlogPosts(): bool|array
@@ -37,7 +37,7 @@ class Post
     }
 
     /**
-     * function to get number of comments on a post
+     * get number of comments on a post
      * @param $postId
      * @return mixed
      */
@@ -51,7 +51,7 @@ class Post
     }
 
     /**
-     * function to get neccessary data for admin home page
+     * get neccessary data for admin home page
      * @return array|false
      */
     public function adminBlogInfoHome(): bool|array
@@ -69,7 +69,7 @@ ORDER BY posts.created_at DESC;');
     }
 
     /**
-     * function to set the number of blogs to homepage as 4,
+     * set the number of blogs to homepage as 4,
      * @return array|false
      */
     public function blogsPostsForHomePage(): bool|array
@@ -88,7 +88,7 @@ ORDER BY posts.created_at DESC;');
     }
 
     /**
-     * function to get info so new post can be added
+     * get info so new post can be added
      * @param $data
      * @return bool|void
      */
@@ -104,7 +104,7 @@ ORDER BY posts.created_at DESC;');
         }    }
 
     /**
-     * function so an admin can update Blog based on id
+     * admin can update Blog based on id
      * @param $data
      * @return bool
      */
@@ -117,7 +117,7 @@ ORDER BY posts.created_at DESC;');
     }
 
     /**
-     * function to updatePost  based on id
+     * updatePost based on id
      * @param $data
      * @return bool
      */
@@ -138,7 +138,7 @@ ORDER BY posts.created_at DESC;');
     }
 
     /**
-     * function to select all data for specfic post based on id
+     * select all data for specfic post based on id
      * @param $id
      * @return mixed
      */
@@ -151,7 +151,7 @@ ORDER BY posts.created_at DESC;');
     }
 
     /**
-     * function to delete blogpost based on id
+     * delete blogpost based on id
      * @param $postId
      * @return bool
      */

@@ -79,7 +79,7 @@ class CommentControllers
     }
 
     /**
-     * function that allows an admin user to approve comments before they can be seen
+     * allows an admin user to approve comments before they can be seen
      * @return void
      */
     public function adminApproved()
@@ -93,7 +93,7 @@ class CommentControllers
     }
 
     /**
-     * function for admin that allows them to delete comments
+     * allow admin to delete comments
      * @return void
      */
     public function adminDeleteBlogComment()
