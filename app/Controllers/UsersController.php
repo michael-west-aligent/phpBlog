@@ -10,6 +10,7 @@ use App\Models\User;
 
 class UsersController
 {
+    CONST REQUEST_METHOD = 'POST';
     protected $userModel;
 
     public function __construct()
@@ -17,44 +18,14 @@ class UsersController
         $this->userModel = new User();
     }
 
-    public function userValidation($data)
-    {
-        if (empty($data['email'])) {
-            $data['email_err'] = 'Please enter an email';
-        } else {
-            if ($this->userModel->findUserByEmail($data)) {
-                $data['email_err'] = "Email being used";
-            }
-        }
-        if (empty($data['name'])) {
-            $data['name_err'] = 'Please enter a name';
-        } else {
-            if($this->userModel->finderUserByUsername($data)) {
-                $data['name_err'] = "Username being used";
-            }
-        }
-        if (empty($data['password'])) {
-            $data['password_err'] = 'Please enter a password';
-        } elseif (strlen($data['password']) < 6) {
-            $data['password_err'] = 'Password must be at least 6 characters';
-        }
-        if (empty($data['confirm_password'])) {
-            $data['confirm_password_err'] = 'Please confirm password';
-        } else {
-            if ($data['password'] != $data['confirm_password']) {
-                $data['confirm_password_err'] = 'Passwords do not match, try again';
-            }
-        }
-    }
 
     /**
      * function to register a new user
-     * the db is checked to make sure the details entered are not existing
      * @return View|void
      */
     public function register()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'name' => trim($_POST['name']),
@@ -123,7 +94,7 @@ class UsersController
      */
     public function userLogin()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'email' => trim($_POST['email']),
@@ -178,6 +149,10 @@ class UsersController
         }
     }
 
+    /**
+     *
+     * @return View|void
+     */
     public function adminHome()
     {
         if ($_SESSION != null) {
@@ -195,9 +170,13 @@ class UsersController
         }
     }
 
+    /**
+     * function for logged in admin to create a new user
+     * @return View|void
+     */
     public function adminAddUser()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'name' => trim($_POST['name']),
@@ -210,7 +189,6 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            //Validate Email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter an email';
             } else {
@@ -237,8 +215,6 @@ class UsersController
                     $data['confirm_password_err'] = 'Passwords do not match, try again';
                 }
             }
-
-
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['is_admin_err'])) {
                 //HASH PASSWORD
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -265,6 +241,7 @@ class UsersController
         }
     }
 
+
     public function adminUpdateUser()
     {
             $data = [
@@ -282,19 +259,28 @@ class UsersController
         $this->userModel->adminUpdate($data);
     }
 
+    /**
+     * function to delete user
+     * @return void
+     */
     public function removeUser() {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        if($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD)
         {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             if($this->userModel->adminRemove($id))
             {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
-                die('something is not working');
+                die('Unable to delete User ');
             }
         }
     }
 
+    /**
+     * function to create a userSession
+     * @param $user
+     * @return void
+     */
     public function createUserSession($user)
     {
         $_SESSION['user_id'] = $user['id'];
@@ -303,6 +289,10 @@ class UsersController
         $_SESSION['is_admin'] = $user['is_admin'];
     }
 
+    /**
+     * function to logout and destroy session
+     * @return View
+     */
     public function logout()
     {
         unset($_SESSION['user_id']);

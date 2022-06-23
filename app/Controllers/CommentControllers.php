@@ -11,7 +11,7 @@ use App\Models\Comment;
 
 class CommentControllers
 {
-
+    const REQUEST_METHOD = 'POST';
     protected Comment $commentModel;
     protected User $userModel;
     protected Post $postModel;
@@ -25,6 +25,8 @@ class CommentControllers
     }
 
 
+
+
     /**
      * Add a new blog comment
      * make sure comment is validated and meets criteria i.e. less than 50 characters
@@ -32,7 +34,9 @@ class CommentControllers
      */
     public function addBlogComment()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//        const $REQUEST_METHOD = 'POST';
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD)
+        {
             $data = [
                 'user_id' => $_SESSION['user_id'],
                 'post_id' => $_POST['post_id'],
@@ -106,7 +110,7 @@ class CommentControllers
      */
     public function adminDeleteBlogComment()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             if ($this->commentModel->adminDeleteComment($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {

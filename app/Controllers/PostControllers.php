@@ -12,6 +12,7 @@ use App\Models\Comment;
 
 class PostControllers
 {
+    CONST REQUEST_METHOD = 'POST';
     protected Post $postModel;
     protected User $userModel;
     protected Comment $commentModel;
@@ -77,7 +78,7 @@ class PostControllers
      */
     public function addBlog()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'title' => trim($_POST['title']),
@@ -115,7 +116,7 @@ class PostControllers
     public function adminEditBlog()
     {
         {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $data = [
                     'id' => $_POST['postId'],
@@ -158,7 +159,7 @@ class PostControllers
      */
     public function editBlog()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'id' => $_POST['id'],
@@ -202,7 +203,7 @@ class PostControllers
      */
     public function updatePost()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'id' => $_POST['post_id'],
@@ -291,11 +292,11 @@ class PostControllers
      */
     public function deleteBlog()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             if ($this->postModel->deletePost($_POST['postId'])) {
                 header('location: ' . 'http://localhost:8000/blogPosts');
             } else {
-                die('something is not working ');
+                die('Could not delete blog post ');
             }
         }
     }
@@ -306,11 +307,11 @@ class PostControllers
      */
     public function adminDeleteBlog()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
             if ($this->postModel->deletePost($_POST['postId'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
-                die('something is not working ');
+                die('Could not delete blog post  ');
             }
         }
     }

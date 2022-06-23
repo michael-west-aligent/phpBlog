@@ -14,7 +14,11 @@ class Post
         $this->db = App::db();
     }
 
-    public function getAllBlogPosts()
+    /**
+     * function to get all blog information
+     * @return array|false
+     */
+    public function getAllBlogPosts(): bool|array
     {
         $postStatement = $this->db->query('SELECT *,
                                                     posts.id as postId,
@@ -32,7 +36,12 @@ class Post
         return $results;
     }
 
-    public function numberofComments($postId)
+    /**
+     * function to get number of comments on a post
+     * @param $postId
+     * @return mixed
+     */
+    public function numberofComments($postId): mixed
     {
         $statement = $this->db->prepare('SELECT COUNT(post_id) as postComments from comments WHERE post_id = ?;');
         $statement->bindParam(1, $postId);
@@ -42,7 +51,11 @@ class Post
     }
 
 
-    public function adminBlogInfoHome()
+    /**
+     * function to get neccessary data for admin home page
+     * @return array|false
+     */
+    public function adminBlogInfoHome(): bool|array
     {
         $postInfo = $this->db->query('SELECT *,
        posts.id as postId,
@@ -53,12 +66,16 @@ FROM posts
          INNER JOIN users
                     ON posts.user_id = users.id
 ORDER BY posts.created_at DESC;');
-        $results = $postInfo->fetchAll();
-        return $results;
+//        $results = $postInfo->fetchAll();
+//        return $results;
+        return $postInfo->fetchAll();
     }
 
-    //set bloghome page limit to 4 blogs
-    public function blogsPostsForHomePage()
+    /**
+     * function to set the number of blogs to homepage as 4,
+     * @return array|false
+     */
+    public function blogsPostsForHomePage(): bool|array
     {
         $postStatement = $this->db->query('SELECT *,
                                                     posts.id as postId, 
@@ -73,10 +90,14 @@ ORDER BY posts.created_at DESC;');
         return $results;
     }
 
+    /**
+     * function to get info so new post can be added
+     * @param $data
+     * @return bool|void
+     */
     public function addPost($data)
     {
         try {
-
             $newBlogPost = $this->db->prepare('INSERT INTO posts  (title, user_id, blog_body, created_at) VALUES(?,?,?, NOW())');
             $newBlogPost->execute([$data['title'], $data['user_id'], $data['blog_body']]);
             return true;
@@ -86,7 +107,12 @@ ORDER BY posts.created_at DESC;');
             echo View::make('error/404', (array)$e);
         }    }
 
-    public function adminUpdateBlog($data)
+    /**
+     * function so an admin can update Blog based on id
+     * @param $data
+     * @return bool
+     */
+    public function adminUpdateBlog($data): bool
     {
         $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
@@ -94,7 +120,12 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
-    public function updatePost($data)
+    /**
+     * function to updatePost  based on id
+     * @param $data
+     * @return bool
+     */
+    public function updatePost($data): bool
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
@@ -102,7 +133,7 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
-    public function updateEditPost($data)
+    public function updateEditPost($data): bool
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data['title'], $data['blog_body'], $data['id']]);
@@ -110,7 +141,12 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
-    public function getPostById($id)
+    /**
+     * function to select all data for specfic post based on id
+     * @param $id
+     * @return mixed
+     */
+    public function getPostById($id): mixed
     {
         $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
         $singleBlog->execute([$id]);
@@ -118,7 +154,12 @@ ORDER BY posts.created_at DESC;');
         return $results;
     }
 
-    public function deletePost($postId)
+    /**
+     * function to delete blogpost based on id
+     * @param $postId
+     * @return bool
+     */
+    public function deletePost($postId): bool
     {
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
         $deleteBlogPost->execute([$postId]);
