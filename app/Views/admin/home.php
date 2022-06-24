@@ -6,16 +6,23 @@ require_once VIEW_PATH . '/header.php';
 $post = new \App\Models\Post();
 $allPosts = $post->adminBlogInfoHome();
 ?>
-
+<?php var_dump($this->params['users']); ?>
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
     <table>
-        <h2> USERS
+        <h2> USERS </h2>
             <div class="button">
-                <a href="/admin/addUser" class="btn btn-success"> Add a New User </a>
+                <a href="/admin/addUser" class="btn btn-success"> Add a New User </a
+            </div
+            <div class="search">
+            <form method="post" action="/admin/updateUserStatus">
+                <input type="text"  name="id" placeholder="search by id" style="margin-top: 10px">
+                <input name="is_admin" value="<?php echo $this->params['users']['is_admin'] ?>" >
+                <button type="submit" class="btn btn-primary"> Search </button>
+            </form>
             </div>
-        </h2>
+
         <tr>
             <th>id</th>
             <th>username</th>

@@ -14,13 +14,13 @@ if (sizeof($singleBlog) > 1) {
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
-<h1> Blog Title: <?php echo $this->params['title']; ?> </h1>
+<h1> <?php echo $this->params['title']; ?> </h1>
 
 <div class="bg-secondary text-white p-2 mb-3">
     Blogged By<?php echo $this->params['username']; ?> on <?php echo $this->params['created_at']; ?>
 </div>
 
-<p>  <?php echo $this->params['blog_body']; ?> </p>
+<h3>  <?php echo $this->params['blog_body']; ?> </h3>
 <?php
 if ($_SESSION != null) :
     ?>
@@ -42,10 +42,10 @@ if ($_SESSION != null) :
 
     <?php if ($comment['approved'] != null) : ?>
         <input type="hidden">
-        <div class="bg-secondary text-white p-2 mb-3">
+        <div class="bg-primary text-white p-2 mb-3">
             Replied by <?php echo $comment['username']; ?> at <?php echo $comment['created_at']; ?>
         </div>
-        <p class="card-text"><?php echo $comment['body']; ?> </p>
+        <p class="card-text" style="color: darkred"><?php echo $comment['body']; ?> </p>
         <hr>
         </input>
 
@@ -58,8 +58,7 @@ if ($_SESSION != null) :
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label>
             <sup>* Blog Comments can be a maximum of 50 characters</sup>
-            <br>
-            <sup>* Comments will only appear once they have been approved </sup>
+            <sup>* Blog Comments can be a maximum of 50 characters</sup>
 
             <div class="form-group">
 

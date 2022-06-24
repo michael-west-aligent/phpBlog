@@ -22,7 +22,7 @@ class UsersController
      * @param $data
      * @return mixed
      */
-    public function validateUser($data)
+    public function validateUser($data): mixed
     {
         if (empty($data['email'])) {
             $data['email_err'] = 'Please enter an email';
@@ -71,7 +71,7 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            $data2 =  $this->validateUser($data);
+            $data2 = $this->validateUser($data);
             if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err'])) {
                 $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
                 if ($this->userModel->newRegister($data2)) {
@@ -222,6 +222,8 @@ class UsersController
             return View::make('admin/addUser', $data);
         }
     }
+
+    
 
     public function adminUpdateUser(): View
     {

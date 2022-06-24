@@ -5,7 +5,7 @@ require_once VIEW_PATH . '/header.php';
 <a href="/admin/home" class="btn btn-light"> Back to Admin Home </a>
 
 <div class="card card-body bg light mt-5">
-    <h2> Update User Details </h2>
+    <h2> Update Details of User <?php echo $this->params['user_id'] ?> </h2>
     <p> Update admin for user</p>
     <form method="post" action="/admin/updateUser">
         <div class="form-group">
