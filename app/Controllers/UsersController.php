@@ -10,7 +10,7 @@ use App\Models\User;
 
 class UsersController
 {
-    CONST REQUEST_METHOD = 'POST';
+    CONST REQUEST_METHOD_POST = 'POST';
     protected User $userModel;
 
     public function __construct()
@@ -59,7 +59,7 @@ class UsersController
      */
     public function register()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'name' => trim($_POST['name']),
@@ -102,7 +102,7 @@ class UsersController
      */
     public function userLogin()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'email' => trim($_POST['email']),
@@ -184,7 +184,7 @@ class UsersController
      */
     public function adminAddUser()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'name' => trim($_POST['name']),
@@ -249,7 +249,7 @@ class UsersController
      */
     public function removeUser(): void
     {
-        if($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD)
+        if($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST)
         {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
             if($this->userModel->adminRemove($id))

@@ -11,7 +11,7 @@ use App\Models\Comment;
 
 class CommentControllers
 {
-    const REQUEST_METHOD = 'POST';
+    const REQUEST_METHOD_POST = 'POST';
     protected Comment $commentModel;
     protected User $userModel;
     protected Post $postModel;
@@ -31,7 +31,7 @@ class CommentControllers
      */
     public function addBlogComment()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD)
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST)
         {
             $data = [
                 'user_id' => $_SESSION['user_id'],
@@ -52,7 +52,7 @@ class CommentControllers
             $this->commentModel->getCommentsById($post['id']);
             if (empty($data['comment_error'])) {
                 if ($this->commentModel->addComment($data)) {
-                    header('location: ' . 'http://localhost:8000/blogPosts');
+                    header('location: ' . 'http://localhost:8000/blogPosts/');
                 } else {
                     die('Unable to add a new Blog Comments');
                 }
@@ -98,7 +98,7 @@ class CommentControllers
      */
     public function adminDeleteBlogComment()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD) {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             if ($this->commentModel->adminDeleteComment($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {

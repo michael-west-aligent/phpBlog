@@ -58,7 +58,6 @@ if ($_SESSION != null) :
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label>
             <sup>* Blog Comments can be a maximum of 50 characters</sup>
-            <sup>* Blog Comments can be a maximum of 50 characters</sup>
 
             <div class="form-group">
 
@@ -73,6 +72,10 @@ if ($_SESSION != null) :
             <input type="submit" value="Submit Comment" class="btn btn-success">
         </div>
     </form>
+
+
+
+
 <?php else : ?>
 
     <a href="http://localhost:8000/users/register"> Register </a> or <a href="http://localhost:8000/users/login"> Login </a> <a> to make a comment </a>
