@@ -63,15 +63,19 @@ $allPosts = $post->adminBlogInfoHome();
             <a href="/blog/addBlog" class="btn btn-success"> Add Blog Post </a>
         </div>
         <tr>
-            <th>Title</th>
-            <th>Blogged By</th>
-            <th>Blog Body</th>
             <th>PostId</th>
+            <th>Title</th>
+            <th>Blogger</th>
+            <th>Blog Body</th>
+            <th> Created At</th>
             <th>Update Blog</th>
             <th>Remove Blog</th>
         </tr>
         <?php foreach ($allPosts as $posts) : ?>
             <tr>
+                <td>
+                    <p> <?php echo $posts["postId"] ?></p>
+                </td>
                 <td>
                     <p> <?php echo $posts["title"] ?></p>
                 </td>
@@ -82,7 +86,7 @@ $allPosts = $post->adminBlogInfoHome();
                     <p> <?php echo $posts["blog_body"] ?></p>
                 </td>
                 <td>
-                    <p> <?php echo $posts["postId"] ?></p>
+                    <p> <?php echo $posts["created_at"] ?></p>
                 </td>
                 <td>
                     <a href="/admin/editBlog?<?php echo $posts['postId'] ?>">

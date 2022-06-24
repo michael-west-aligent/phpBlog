@@ -54,7 +54,7 @@ class PostControllers
      * @param $data
      * @return void
      */
-    public function blogValidation($data): void
+    public function blogValidation($data)
     {
         if (empty($data['title'])) {
             $data['title_err'] = 'Please enter a blog title';
@@ -64,6 +64,7 @@ class PostControllers
         } elseif (strlen($data['blog_body']) > 76) {
             $data['blog_body_err'] = 'Blog body must be less than 76 characters';
         }
+        return $data;
     }
 
     /**
@@ -81,15 +82,15 @@ class PostControllers
                 'title_err' => '',
                 'blog_body_err' => '',
             ];
-            $this->blogValidation($data);
-            if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                if ($this->postModel->addPost($data)) {
+            $data2 = $this->blogValidation($data);
+            if (empty($data2['title_err']) && empty($data2['blog_body_err'])) {
+                if ($this->postModel->addPost($data2)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 } else {
                     die('Something went wrong');
                 }
             } else {
-                return View::make('blogs/addBlog', $data);
+                return View::make('blogs/addBlog', (array)$data2);
             }
         } else {
             $data = [
