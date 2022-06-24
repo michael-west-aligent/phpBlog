@@ -115,7 +115,7 @@ class UsersController
                 $data['email_err'] = 'Please enter an email';
             } else {
                 if (!$dataRow) {
-                    $data['email_err'] = 'No user with that email ';
+                    $data['email_err'] = 'Invalid attempt';
                 }
             }
             if(!empty($dataRow)) {
@@ -125,7 +125,7 @@ class UsersController
                 if (empty($data['password'])) {
                     $data['password_err'] = 'Please enter a password';
                 } elseif (!password_verify($data['password'], $hashed_password)) {
-                    $data['password_err'] = 'Password does not match';
+                    $data['password_err'] = 'Invalid attempt';
                 }
                 if (empty($data['email_err']) && empty($data['password_err'])) {
                     $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
@@ -223,7 +223,7 @@ class UsersController
         }
     }
 
-    
+
 
     public function adminUpdateUser(): View
     {
