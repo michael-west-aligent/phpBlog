@@ -75,7 +75,7 @@ if ($_SESSION != null) :
     </form>
 <?php else : ?>
 
-    <h2> Register or Login to make a comment </h2>
+    <a href="http://localhost:8000/users/register"> Register </a> or <a href="http://localhost:8000/users/login"> Login </a> <a> to make a comment </a>
 
 <?php endif; ?>
 
