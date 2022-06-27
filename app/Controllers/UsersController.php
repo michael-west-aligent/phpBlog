@@ -227,11 +227,17 @@ class UsersController
 
     public function adminUpdateUser(): View
     {
+        $user = $this->userModel->getUserById($_POST['id']);
+//        var_dump($user);
+        if($user === false) {
+            return View::make('error/404');
+        }
             $data = [
-                'user_id' => (intval($_POST['id'])),
-                'is_admin' => (intval($_POST['is_admin'])),
+                'user_id' => ($user['id']),
+                'is_admin' => ($user['is_admin']),
+                'username' => ($user['username'])
             ];
-            return View::make('admin/updateUser', $data);
+        return View::make('admin/updateUser', $data);
     }
 
     public function adminUpdateUser2(): void

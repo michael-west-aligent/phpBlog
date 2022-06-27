@@ -6,7 +6,10 @@ require_once VIEW_PATH . '/header.php';
 $post = new \App\Models\Post();
 $allPosts = $post->adminBlogInfoHome();
 ?>
-<?php var_dump($this->params['users']); ?>
+<?php //var_dump($this->params['users']); ?>
+<?php //var_dump($_POST); ?>
+
+
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
@@ -18,7 +21,7 @@ $allPosts = $post->adminBlogInfoHome();
             <div class="search">
             <form method="post" action="/admin/updateUserStatus">
                 <input type="text"  name="id" placeholder="search by id" style="margin-top: 10px">
-                <input name="is_admin" value="<?php echo $this->params['users']['is_admin'] ?>" >
+<!--                <input name="is_admin" value="--><?php //echo $this->params['users']['is_admin'] ?><!--" >-->
                 <button type="submit" class="btn btn-primary"> Search </button>
             </form>
             </div>
@@ -62,6 +65,17 @@ $allPosts = $post->adminBlogInfoHome();
         <div class="button">
             <a href="/blog/addBlog" class="btn btn-success"> Add Blog Post </a>
         </div>
+        <div clas="search">
+            <form>
+            <input type="text"  name="id" placeholder="search by id" style="margin-top: 10px" >
+<!--                how to access data here so postID submit direct to same location as updateBlog button -->
+                <button type="submit" class="btn btn-primary"> Search </button>
+
+
+            </form>
+
+        </div>
+
         <tr>
             <th>PostId</th>
             <th>Title</th>
