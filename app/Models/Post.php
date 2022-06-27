@@ -5,8 +5,13 @@ namespace App\Models;
 use App\Config\App;
 use App\View;
 
+
 class Post
 {
+
+    const BLOG_MISSING_BODY = 1;
+//    const BLOG_MISSING_BODY = 1;
+
     public $db;
 
     public function __construct()
@@ -123,6 +128,7 @@ ORDER BY posts.created_at DESC;');
      */
     public function updatePost($data): bool
     {
+
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
         header('location: ' . 'http://localhost:8000/blogPosts');
@@ -144,6 +150,7 @@ ORDER BY posts.created_at DESC;');
      */
     public function getPostById($id): mixed
     {
+
         $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
         $singleBlog->execute([$id]);
         $results = $singleBlog->fetch();
@@ -161,5 +168,51 @@ ORDER BY posts.created_at DESC;');
         $deleteBlogPost->execute([$postId]);
         return true;
     }
+
+
+    public function blogValidation($data): bool
+    {
+        if (empty($data['title'])) {
+            $data['title_err'] = 'Please enter a blog title';
+        }
+        if (empty($data['blog_body'])) {
+            $data['blog_body_err'] = 'Please enter a blog body';
+        } elseif (strlen($data['blog_body']) > 76) {
+            $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+        }
+        return $data;
+
+    }
+
+    public function validate($data) {
+        if (empty($data['title'])) {
+            return false;
+        }
+        if (empty($data['blog_body'])) {
+            return false;
+        } elseif (strlen($data['blog_body']) > 76) {
+            return false;
+        }
+        return true;
+    }
+
+    public function validationError($data) : string
+    {
+        if (empty($data['title'])) {
+            return 'Please enter a blog title';
+        }
+        if (empty($data['blog_body'])) {
+            return 'Please enter a blog body';
+        } elseif (strlen($data['blog_body']) > 76) {
+            return 'Blog body must be less than 76 characters';
+        }
+    }
+
+
+
+
+
+
+
 
 }

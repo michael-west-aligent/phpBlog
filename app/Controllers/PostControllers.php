@@ -248,15 +248,15 @@ class PostControllers
                 'id' => $_POST['post_id'],
                 'title' => trim($_POST['title']),
                 'blog_body' => trim($_POST['blog_body']),
-                'title_err' => '',
-                'blog_body_err' => '',
+
             ];
-            $this->blogValidation($data);
-            if (empty($data['title_err']) && empty($data['blog_body_err'])) {
+            $isValid = $this->postModel->validate($data);
+            if ($isValid) {
                 if ($this->postModel->updateEditPost($data)) {
                     header('location: ' . 'http://localhost:8000/blogPosts');
                 }
             } else {
+                $data['error_message'] = $this->postModel->validationError($data);
                 return View::make('blogs/editBlog', $data);
             }
         } else {
@@ -269,8 +269,7 @@ class PostControllers
                 'id' => $post['id'],
                 'title' => $post['title'],
                 'blog_body' => $post['blog_body'],
-                'title_err' => '',
-                'blog_body_err' => '',
+
             ];
             return View::make('/blogs/editBlog', $data);
         }
