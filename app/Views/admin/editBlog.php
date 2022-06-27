@@ -2,6 +2,9 @@
 require_once VIEW_PATH . '/header.php';
 ?>
 
+<?php //echo ($this->params['id']) ?>
+<?php //echo ($this->params['title']) ?>
+
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">

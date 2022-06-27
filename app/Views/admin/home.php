@@ -21,7 +21,6 @@ $allPosts = $post->adminBlogInfoHome();
             <div class="search">
             <form method="post" action="/admin/updateUserStatus">
                 <input type="text"  name="id" placeholder="search by id" style="margin-top: 10px">
-<!--                <input name="is_admin" value="--><?php //echo $this->params['users']['is_admin'] ?><!--" >-->
                 <button type="submit" class="btn btn-primary"> Search </button>
             </form>
             </div>
@@ -65,15 +64,12 @@ $allPosts = $post->adminBlogInfoHome();
         <div class="button">
             <a href="/blog/addBlog" class="btn btn-success"> Add Blog Post </a>
         </div>
-        <div clas="search">
-            <form>
-            <input type="text"  name="id" placeholder="search by id" style="margin-top: 10px" >
+        <div class="search">
+            <form method="post" action="/admin/editBlog">
+            <input type="text"  name="id" placeholder="search by post id" style="margin-top: 10px" >
 <!--                how to access data here so postID submit direct to same location as updateBlog button -->
                 <button type="submit" class="btn btn-primary"> Search </button>
-
-
             </form>
-
         </div>
 
         <tr>
@@ -81,7 +77,7 @@ $allPosts = $post->adminBlogInfoHome();
             <th>Title</th>
             <th>Blogger</th>
             <th>Blog Body</th>
-            <th> Created At</th>
+            <th>Created At</th>
             <th>Update Blog</th>
             <th>Remove Blog</th>
         </tr>
@@ -107,6 +103,15 @@ $allPosts = $post->adminBlogInfoHome();
                         <button type="submit" value="Update User" class="btn btn-success"> Update Blog</button>
                     </a>
                 </td>
+
+
+
+
+
+
+
+
+
                 <td>
                     <form action="/admin/deleteBlog" method="post">
                         <input type="hidden" name="postId" value="<?= $posts['postId']; ?> ">

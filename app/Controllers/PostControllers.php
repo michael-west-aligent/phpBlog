@@ -109,42 +109,89 @@ class PostControllers
      */
     public function adminEditBlog()
     {
-        {
-            if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $data = [
-                    'id' => $_POST['postId'],
-                    'title' => ($_POST['title']),
-                    'blog_body' => ($_POST['blog_body']),
-                    'user_id' => $_SESSION['user_id'],
-                    'title_err' => '',
-                    'blog_body_err' => '',
-                ];
-                $this->blogValidation($data);
-                if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-                    if ($this->postModel->updatePost($data)) {
-                        header('location: ' . 'http://localhost:8000/blogPosts');
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    return View::make('admin/editBlog', $data);
-                }
-            } else {
-                $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-                $post = $this->postModel->getPostById($id);
+        // work out how we've got to this controller = POST or GET
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+            $id = $_POST['id'];
+        }
+        else {
+            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        }
+        // if there is an ID passed
+        if ($id) {
+            //use the ID to find the post
+            $post = $this->postModel->getPostById($id);
+            if($post === false){
+                return View::make('error/404');
+            }
+            // what happens if no post is found? >>>>> RETURN A 404
+
+
+            $isValid = $this->blogValidation($post);  // change this!
+
+            if ($isValid) {
+                // populate data array
                 $data = [
                     'id' => $post['id'],
                     'title' => $post['title'],
                     'blog_body' => $post['blog_body'],
+                    'user_id' => $_SESSION['user_id'],
                     'title_err' => '',
                     'blog_body_err' => '',
                 ];
-                return View::make('/admin/editBlog', $data);
+                return View::make('admin/editBlog', $data);
+            }
+            else {
+                die('Something went wrong');
             }
         }
         return View::make('admin/editBlog');
     }
+
+
+
+
+
+
+
+//        {
+//            if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+//                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+//                $data = [
+//                    'id' => $_POST['id'],
+//                    'title' => ($_POST['title']),
+//                    'blog_body' => ($_POST['blog_body']),
+//                    'user_id' => $_SESSION['user_id'],
+//                    'title_err' => '',
+//                    'blog_body_err' => '',
+//                ];
+//                $this->blogValidation($data);
+//                if (empty($data['title_err']) && empty($data['blog_body_err'])) {
+//                    if ($this->postModel->updatePost($data)) {
+//                        header('location: ' . 'http://localhost:8000/blogPosts');
+//                    } else {
+//                        die('Something went wrong');
+//                    }
+//                } else {
+//                    return View::make('admin/editBlog', $data);
+//                }
+//            } else {
+//                $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+//                $post = $this->postModel->getPostById($id);
+//                $data = [
+//                    'id' => $post['id'],
+//                    'title' => $post['title'],
+//                    'blog_body' => $post['blog_body'],
+//                    'title_err' => '',
+//                    'blog_body_err' => '',
+//                ];
+//                return View::make('/admin/editBlog', $data);
+//            }
+//        }
+//        return View::make('admin/editBlog');
+//    }
+
+
+
 
     /**
      * a user to be able to edit their blog, and to make sure it is filled in if they do edit.
