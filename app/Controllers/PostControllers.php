@@ -67,41 +67,37 @@ class PostControllers
         return $data;
     }
 
-    /**
-     * add Blog and make sure all input areas are filled in
-     * @return View|void
-     */
+
     public function addBlog()
     {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data = [
-                'title' => trim($_POST['title']),
-                'blog_body' => trim($_POST['blog_body']),
-                'user_id' => $_SESSION['user_id'],
-                'title_err' => '',
-                'blog_body_err' => '',
-            ];
-            $data2 = $this->blogValidation($data);
-            if (empty($data2['title_err']) && empty($data2['blog_body_err'])) {
-                if ($this->postModel->addPost($data2)) {
-                    header('location: ' . 'http://localhost:8000/blogPosts');
+            if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $data = [
+                    'title' => trim($_POST['title']),
+                    'blog_body' => trim($_POST['blog_body']),
+                    'user_id' => $_SESSION['user_id'],
+                ];
+                $isValid = $this->postModel->validate($data);
+                if ($isValid) {
+                    if ($this->postModel->addPost($data)) {
+                        header('location: ' . 'http://localhost:8000/blogPosts');
+                    }
                 } else {
-                    die('Something went wrong');
+                    $data['error_message'] = $this->postModel->validationError($data);
+                    return View::make('/blogs/addBlog', $data);
                 }
             } else {
-                return View::make('blogs/addBlog', (array)$data2);
+                $data = [
+                    'title' => '',
+                    'blog_body' => '',
+                    'title_err' => '',
+                    'blog_body_err' => '',
+                    'error_message' => ''
+                ];
+                return View::make('/blogs/addBlog', $data);
             }
-        } else {
-            $data = [
-                'title' => '',
-                'blog_body' => '',
-                'title_err' => '',
-                'blog_body_err' => '',
-            ];
-            return View::make('/blogs/addBlog', $data);
-        }
     }
+
 
     /**
      * admin can edit any blog title and blog body from admin homepage.
@@ -109,13 +105,13 @@ class PostControllers
      */
     public function adminEditBlog()
     {
-      if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $id = $_POST['id'];
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         }
-     if ($id) {
-         $post = $this->postModel->getPostById($id);
+        if ($id) {
+            $post = $this->postModel->getPostById($id);
             if ($post === false) {
                 return View::make('error/404');
             }
@@ -188,7 +184,7 @@ class PostControllers
     public function updatePost()
     {
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            $postId =$_POST['post_id'];
+            $postId = $_POST['post_id'];
         }
         $post = $this->postModel->getPostById($postId);
         if (isset($_POST['blog_body'])) {
@@ -196,8 +192,7 @@ class PostControllers
             $post['title'] = $_POST['title'];
             $isValid = $this->postModel->validate($post);
             if ($isValid) {
-                if ($this->postModel->updateEditPost($post))
-                {
+                if ($this->postModel->updateEditPost($post)) {
                     header('location: ' . 'http://localhost:8000/admin/home');
                 }
             }
