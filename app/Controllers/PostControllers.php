@@ -49,26 +49,6 @@ class PostControllers
         return View::make('/admin/home', $blogData);
     }
 
-    /**
-     * validate blog Data
-     * @param $data
-     * @return void
-     */
-    public function blogValidation($data)
-    {
-        if (empty($data['title'])) {
-            $data['title_err'] = 'Please enter a blog title';
-        }
-        if (empty($data['blog_body'])) {
-            $data['blog_body_err'] = 'Please enter a blog body';
-        } elseif (strlen($data['blog_body']) > 76) {
-            $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-        }
-        return $data;
-    }
-
-
-
     public function addBlog()
     {
             if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
@@ -97,41 +77,6 @@ class PostControllers
                 ];
                 return View::make('/blogs/addBlog', $data);
             }
-    }
-
-
-    /**
-     * admin can edit any blog title and blog body from admin homepage.
-     * @return View|void
-     */
-    public function adminEditBlog()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            $id = $_POST['id'];
-        } else {
-            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-        }
-        if ($id) {
-            $post = $this->postModel->getPostById($id);
-            if ($post === false) {
-                return View::make('error/404');
-            }
-            $isValid = $this->blogValidation($post);
-            if ($isValid) {
-                $data = [
-                    'id' => $post['id'],
-                    'title' => $post['title'],
-                    'blog_body' => $post['blog_body'],
-                    'user_id' => $_SESSION['user_id'],
-                    'title_err' => '',
-                    'blog_body_err' => '',
-                ];
-                return View::make('admin/editBlog', $data);
-            } else {
-                die('Something went wrong');
-            }
-        }
-        return View::make('admin/editBlog');
     }
 
 
@@ -178,6 +123,7 @@ class PostControllers
         }
     }
 
+
     /**
      * user to update post based on their postID
      * @return View|void
@@ -204,6 +150,21 @@ class PostControllers
     }
 
     /**
+     * user to delete a blog if they are the owner of it
+     * @return void
+     */
+    public function deleteBlog()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+            if ($this->postModel->deletePost($_POST['postId'])) {
+                header('location: ' . 'http://localhost:8000/blogPosts');
+            } else {
+                die('Could not delete blog post ');
+            }
+        }
+    }
+
+    /**
      * single blog, when user clicks on view full blog.
      * @return View
      */
@@ -224,6 +185,57 @@ class PostControllers
             'comment_error' => ''
         ];
         return View::make('blogs/show', $data);
+    }
+
+    /**
+     * admin can edit any blog title and blog body from admin homepage.
+     * @return View|void
+     */
+    public function adminEditBlog()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+            $id = $_POST['id'];
+        } else {
+            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
+        }
+        if ($id) {
+            $post = $this->postModel->getPostById($id);
+            if ($post === false) {
+                return View::make('error/404');
+            }
+            $isValid = $this->blogValidation($post);
+            if ($isValid) {
+                $data = [
+                    'id' => $post['id'],
+                    'title' => $post['title'],
+                    'blog_body' => $post['blog_body'],
+                    'user_id' => $_SESSION['user_id'],
+                    'title_err' => '',
+                    'blog_body_err' => '',
+                ];
+                return View::make('admin/editBlog', $data);
+            } else {
+                die('Something went wrong');
+            }
+        }
+        return View::make('admin/editBlog');
+    }
+
+    /**
+     * validate blog Data
+     * @param $data
+     */
+    public function blogValidation($data)
+    {
+        if (empty($data['title'])) {
+            $data['title_err'] = 'Please enter a blog title';
+        }
+        if (empty($data['blog_body'])) {
+            $data['blog_body_err'] = 'Please enter a blog body';
+        } elseif (strlen($data['blog_body']) > 76) {
+            $data['blog_body_err'] = 'Blog body must be less than 76 characters';
+        }
+        return $data;
     }
 
     /**
@@ -249,20 +261,7 @@ class PostControllers
         return View::make('admin/approveComments', $data);
     }
 
-    /**
-     * user to delete a blog if they are the owner of it
-     * @return void
-     */
-    public function deleteBlog()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            if ($this->postModel->deletePost($_POST['postId'])) {
-                header('location: ' . 'http://localhost:8000/blogPosts');
-            } else {
-                die('Could not delete blog post ');
-            }
-        }
-    }
+
 
     /**
      * admin user to delete any blog
