@@ -29,7 +29,7 @@ if ($_SESSION != null) :
 <?php foreach ($this->params['comments'] as $comment) : ?>
 
     <td>
-        <form action="/admin/deleteBlogComment" method="post">
+        <form action="/admin/delete" method="post">
             <input type="hidden" name="comment_id" value="<?= $comment['id']; ?> ">
             <input type="submit" value="Delete Comment" class="float-right btn btn-danger">
         </form>

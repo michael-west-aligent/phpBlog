@@ -46,7 +46,7 @@ $router
     ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog'])
     ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'adminApproved'])
-    ->post('/admin/deleteBlogComment', [\App\Controllers\CommentControllers::class, 'adminDeleteBlogComment']);
+    ->post('/admin/delete', [\App\Controllers\CommentControllers::class, 'adminDelete']);
 
 (new App(
     $router,
