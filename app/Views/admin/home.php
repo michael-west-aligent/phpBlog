@@ -99,23 +99,16 @@ $allPosts = $post->adminBlogInfoHome();
                     <p> <?php echo $posts["created_at"] ?></p>
                 </td>
                 <td>
-                    <a href="/admin/editBlog?<?php echo $posts['postId'] ?>">
-                        <button type="submit" value="Update User" class="btn btn-success"> Update Blog</button>
-                    </a>
+                    <form action="/blog/updatePost?<?=$posts['postId'];?>" method="post">
+                        <input type="hidden" name="post_id" value="<?= $posts['postId']; ?> ">
+                        <input type="submit" value="Update" class="btn btn-success">
+                    </form>
                 </td>
-
-
-
-
-
-
-
-
 
                 <td>
                     <form action="/admin/deleteBlog" method="post">
-                        <input type="hidden" name="postId" value="<?= $posts['postId']; ?> ">
-                        <input type="submit" value="Delete Blog" class="btn btn-danger">
+                        <input type="hidden" name="post_id" value="<?= $posts['postId']; ?> ">
+                        <input type="submit" value="Delete" class="btn btn-danger">
                     </form>
                 </td>
             </tr>

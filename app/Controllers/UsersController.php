@@ -224,7 +224,9 @@ class UsersController
     }
 
 
-
+    /**
+     * @return View
+     */
     public function adminUpdateUser(): View
     {
         $user = $this->userModel->getUserById($_POST['id']);
@@ -240,6 +242,9 @@ class UsersController
         return View::make('admin/updateUser', $data);
     }
 
+    /**
+     * @return void
+     */
     public function adminUpdateUser2(): void
     {
         $data = [

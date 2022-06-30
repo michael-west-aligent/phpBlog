@@ -8,10 +8,6 @@ use App\View;
 
 class Post
 {
-
-    const BLOG_MISSING_BODY = 1;
-//    const BLOG_MISSING_BODY = 1;
-
     public $db;
 
     public function __construct()
@@ -117,7 +113,7 @@ ORDER BY posts.created_at DESC;');
     {
         $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
-        header('location: ' . 'http://localhost:8000/admin/home');
+//        header('location: ' . 'http://localhost:8000/admin/home');
         return true;
     }
 
@@ -128,18 +124,22 @@ ORDER BY posts.created_at DESC;');
      */
     public function updatePost($data): bool
     {
-
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
-        header('location: ' . 'http://localhost:8000/blogPosts');
+//        header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }
 
+
+    /** updating the edited post
+     * @param $data
+     * @return bool
+     */
     public function updateEditPost($data): bool
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data['title'], $data['blog_body'], $data['id']]);
-        header('location: ' . 'http://localhost:8000/blogPosts');
+//        header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }
 
@@ -150,7 +150,6 @@ ORDER BY posts.created_at DESC;');
      */
     public function getPostById($id): mixed
     {
-
         $singleBlog = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
         $singleBlog->execute([$id]);
         $results = $singleBlog->fetch();
@@ -169,22 +168,13 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
-
-    public function blogValidation($data): bool
+    /**
+     * validate post data
+     * @param $data
+     * @return bool
+     */
+    public function validate($data)
     {
-        if (empty($data['title'])) {
-            $data['title_err'] = 'Please enter a blog title';
-        }
-        if (empty($data['blog_body'])) {
-            $data['blog_body_err'] = 'Please enter a blog body';
-        } elseif (strlen($data['blog_body']) > 76) {
-            $data['blog_body_err'] = 'Blog body must be less than 76 characters';
-        }
-        return $data;
-
-    }
-
-    public function validate($data) {
         if (empty($data['title'])) {
             return false;
         }
@@ -196,6 +186,11 @@ ORDER BY posts.created_at DESC;');
         return true;
     }
 
+    /**
+     * check for validation errors
+     * @param $data
+     * @return string
+     */
     public function validationError($data) : string
     {
         if (empty($data['title'])) {
@@ -206,6 +201,7 @@ ORDER BY posts.created_at DESC;');
         } elseif (strlen($data['blog_body']) > 76) {
             return 'Blog body must be less than 76 characters';
         }
+        return '';
     }
 
 

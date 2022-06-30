@@ -12,6 +12,10 @@ class User {
         $this->db = App::db();
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public function newRegister ($data): bool
     {
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password) VALUES(?,?,?)');
@@ -19,6 +23,10 @@ class User {
         return true;
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public function adminUserAdd($data): bool
     {
         $newUser = $this->db->prepare('INSERT INTO users (username, email, password, is_admin) VALUES(?,?,?,?)');
@@ -26,6 +34,10 @@ class User {
         return true;
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public function adminUpdate($data): bool
     {
         $updateUserDetails = $this->db->prepare('UPDATE users SET is_admin = ? WHERE id = ? ');
@@ -34,6 +46,10 @@ class User {
         return true;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function adminRemove($id): bool
     {
         $deleteUser = $this->db->prepare('DELETE FROM users where id = ?');
@@ -42,6 +58,11 @@ class User {
         return true;
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool|mixed
+     */
     public function currentUser($email, $password){
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE email = ?');
         $userStatement->execute([$email]);
@@ -57,6 +78,10 @@ class User {
          }
     }
 
+    /**
+     * @param $data
+     * @return array|mixed
+     */
     public function findUserByEmail($data) {
         $userStatement = $this->db->prepare('SELECT username, email, password FROM users WHERE email =?');
         $userStatement->execute([$data['email']]);
@@ -64,6 +89,10 @@ class User {
         return is_bool($dataRow) ? [] : $dataRow;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function finderUserByUsername($data) {
         $userStatement = $this->db->prepare('SELECT username FROM users WHERE username =?');
         $userStatement->execute([$data['name']]);
@@ -71,6 +100,10 @@ class User {
         return $dataRow;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getUserById($id) {
         $userStatement = $this->db->prepare('SELECT * FROM users WHERE id = ?');
         $userStatement->execute([$id]);
@@ -78,6 +111,9 @@ class User {
         return $dataRow;
     }
 
+    /**
+     * @return array|false
+     */
     public function getUserinfo(){
         $adminUserStatement = $this->db->prepare('SELECT id, username, email, is_admin, created_at, password from users;');
         $adminUserStatement->execute();

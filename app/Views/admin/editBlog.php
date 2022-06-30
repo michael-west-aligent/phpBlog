@@ -2,14 +2,14 @@
 require_once VIEW_PATH . '/header.php';
 ?>
 
-<?php //echo ($this->params['id']) ?>
-<?php //echo ($this->params['title']) ?>
+<?php var_dump($_SESSION['is_admin']); ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
-    <h2> Admin Edit Blog -  ID <?php echo $this->params['id']?> </h2>
+    <h2> Admin - Edit Blog -  ID <?php echo $this->params['id']?> </h2>
     <p> Edit the blog title or blog body!  </p>
+<!--    <form action="/blog/updatePost" method="post">-->
     <form action="/blog/updatePost" method="post">
         <div class="form-group">
             <label for="title"> Title: <sup>*</sup></label>
@@ -17,9 +17,8 @@ require_once VIEW_PATH . '/header.php';
                    value="<?php echo !empty($this->params['title']) ? $this->params['title'] : ''; ?>"/>
         </div>
 
-
         <div class="form-group">
-            <label for="body"> Blog Body: <sup>*</sup></label>
+            <label for="body"> Blog Body: <sup>* Make sure it is less than 75 characters</sup></label>
             <textarea name="blog_body" class="form-control form-control-lg"
                    ><?php echo ($this->params['blog_body']); ?></textarea>
         </div>
@@ -32,7 +31,9 @@ require_once VIEW_PATH . '/header.php';
 
     </form>
 
+<?php if ($_SESSION['is_admin']) :?>
     <a href="/admin/approveBlogComment?<?php echo $this->params['id']?> " >
         <button type="submit" value="Update User" class="btn btn-success"> View Full Blog to Approve or Remove Comments </button>
     </a>
+<?php endif ?>
 </div>
