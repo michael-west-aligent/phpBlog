@@ -4,6 +4,7 @@
 ?>
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
+<a href="/admin/home" class="btn btn-primary"> Return To Admin Home  </a>
 
 <h1> <?php echo $this->params['title']; ?> </h1>
 
