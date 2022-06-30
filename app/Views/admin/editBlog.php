@@ -7,7 +7,7 @@ require_once VIEW_PATH . '/header.php';
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
 <div class="card card-body bg light mt-5">
-    <h2> Admin - Edit Blog -  ID <?php echo $this->params['id']?> </h2>
+    <h2> Edit Blog -  ID <?php echo $this->params['id']?> </h2>
     <p> Edit the blog title or blog body!  </p>
 <!--    <form action="/blog/updatePost" method="post">-->
     <form action="/blog/updatePost" method="post">
