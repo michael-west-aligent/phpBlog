@@ -2,7 +2,7 @@
 require_once VIEW_PATH . '/header.php';
 ?>
 
-<?php var_dump($_SESSION['is_admin']); ?>
+
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>
 
@@ -33,7 +33,7 @@ require_once VIEW_PATH . '/header.php';
 
 <?php if ($_SESSION['is_admin']) :?>
     <a href="/admin/approveBlogComment?<?php echo $this->params['id']?> " >
-        <button type="submit" value="Update User" class="btn btn-success"> View Full Blog to Approve or Remove Comments </button>
+        <button type="submit" value="Update User" class="btn btn-primary"> View Full Blog to Approve or Remove Comments </button>
     </a>
 <?php endif ?>
 </div>

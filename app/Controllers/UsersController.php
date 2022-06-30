@@ -230,7 +230,6 @@ class UsersController
     public function adminUpdateUser(): View
     {
         $user = $this->userModel->getUserById($_POST['id']);
-//        var_dump($user);
         if($user === false) {
             return View::make('error/404');
         }

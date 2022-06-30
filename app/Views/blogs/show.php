@@ -2,7 +2,6 @@
 
 require_once VIEW_PATH . '/header.php';
 
-//var_dump($this->params);
 ?>
 
 <?php $singleBlog = explode('?', $_SERVER['REQUEST_URI']);
@@ -27,9 +26,6 @@ if (sizeof($singleBlog) > 1) {
 <?php
 if ($_SESSION != null) :
     ?>
-
-<?php echo $_SESSION['user_id'] ?>
-<?php echo $this->params['user_id'] ?>
 
     <?php if ($this->params['user_id'] == $_SESSION['user_id']) : ?>
     <a href="/blog/edit?<?php echo $this->params['post_id']; ?> " class="btn btn-dark"> Edit Blog </a>
@@ -60,8 +56,6 @@ if ($_SESSION != null) :
 
 <?php if ($_SESSION != null) : ?>
 
-<!--    <form action="/blog/addComment" method="post">-->
-<!--    <form action="/blog/addComment?--><?php //echo $this->params['id']?><!--" method="post">-->
     <form action="/blog/show?<?php echo $this->params['post_id']?> " method="post">
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label>

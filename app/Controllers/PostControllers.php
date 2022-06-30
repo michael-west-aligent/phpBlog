@@ -109,24 +109,18 @@ class PostControllers
      */
     public function adminEditBlog()
     {
-        // work out how we've got to this controller = POST or GET
-        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+      if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $id = $_POST['id'];
         } else {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
         }
-        // if there is an ID passed
-        if ($id) {
-            //use the ID to find the post
-            $post = $this->postModel->getPostById($id);
+     if ($id) {
+         $post = $this->postModel->getPostById($id);
             if ($post === false) {
                 return View::make('error/404');
             }
-            // what happens if no post is found? >>>>> RETURN A 404
-            $isValid = $this->blogValidation($post);  // change this!
-
+            $isValid = $this->blogValidation($post);
             if ($isValid) {
-                // populate data array
                 $data = [
                     'id' => $post['id'],
                     'title' => $post['title'],
@@ -150,7 +144,6 @@ class PostControllers
      */
     public function editBlog()
     {
-        echo('editPost');
         $userId = $_SESSION['user_id'];
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -191,102 +184,28 @@ class PostControllers
     /**
      * user to update post based on their postID
      * @return View|void
-     * line 198-225 + 248
      */
     public function updatePost()
     {
-        // 1. getting the post
-//        $userId = $_SESSION['user_id'];
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $postId =$_POST['post_id'];
         }
-        // TODO: what happens if this is a GET rather than a POST
         $post = $this->postModel->getPostById($postId);
-
-        // 2. are we saving, or are we viewing? // if there is a blog body, we are attempting to save
         if (isset($_POST['blog_body'])) {
             $post['blog_body'] = $_POST['blog_body'];
             $post['title'] = $_POST['title'];
-
             $isValid = $this->postModel->validate($post);
             if ($isValid) {
-//                var_dump($post);
                 if ($this->postModel->updateEditPost($post))
                 {
                     header('location: ' . 'http://localhost:8000/admin/home');
                 }
             }
-            // otherwise if this is a GET we just want to view it
             $post['error_message'] = $this->postModel->validationError($post);
         }
-
-        // else we're just viewing
         $post['is_admin'] = $_SESSION['is_admin'];
         return View::make('admin/editBlog', $post);
-
-//        } else {
-//            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-////            $post = $this->postModel->getPostById($id);
-////            $user = $this->userModel->getUserById($userId);
-//
-//            if ($post['user_id'] != $userId) {
-//                header('location: ' . 'http://localhost:8000/blogPosts');
-//            }
-//            $data = [
-//                'id' => $post['id'],
-//                'title' => $post['title'],
-//                'blog_body' => $post['blog_body'],
-//                'is_admin' => $user['is_admin'],
-//
-//            ];
-//            return View::make('/blogs/editBlog', $data);
-//        }
-//        $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
-//        $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
-
     }
-
-//    public function updatePost()
-//    {
-//        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST)
-//        {
-//            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-//
-//            $data = [
-//                'id' => $_POST['post_id'],
-//                'title' => trim($_POST['title']),
-//                'blog_body' => trim($_POST['blog_body']),
-//                'title_err' => '',
-//                'blog_body_err' => '',
-//            ];
-////            var_dump($data);
-//            $this->blogValidation($data);
-//            if (empty($data['title_err']) && empty($data['blog_body_err'])) {
-//                if ($this->postModel->updateEditPost($data)) {
-////                    header('location: ' . 'http://localhost:8000/blogPosts');
-//                }
-//            } else {
-//                return View::make('blogs/editBlog', $data);
-//            }
-//        } else {
-//            $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-//            $post = $this->postModel->getPostById($id);
-//            if ($post['user_id'] != $_SESSION['user_id']) {
-//                header('location: ' . 'http://localhost:8000/blogPosts');
-//            }
-//            $data = [
-//                'id' => $post['id'],
-//                'title' => $post['title'],
-//                'blog_body' => $post['blog_body'],
-//                'title_err' => '',
-//                'blog_body_err' => '',
-//            ];
-//            return View::make('/blogs/editBlog', $data);
-//        }
-//        $this->postModel->updatePost([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
-//        $this->postModel->adminUpdateBlog([$_POST['title'], $_POST['blog_body'], $_POST['post_id']]);
-//    }
-
 
     /**
      * single blog, when user clicks on view full blog.
@@ -310,7 +229,6 @@ class PostControllers
         ];
         return View::make('blogs/show', $data);
     }
-
 
     /**
      * admin to see full blog including comments waiting to be approved

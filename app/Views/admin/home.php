@@ -6,8 +6,7 @@ require_once VIEW_PATH . '/header.php';
 $post = new \App\Models\Post();
 $allPosts = $post->adminBlogInfoHome();
 ?>
-<?php //var_dump($this->params['users']); ?>
-<?php //var_dump($_POST); ?>
+
 
 
 <a href="/blogPosts" class="btn btn-light"> Back to All Blogs </a>

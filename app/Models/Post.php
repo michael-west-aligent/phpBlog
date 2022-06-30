@@ -104,18 +104,6 @@ ORDER BY posts.created_at DESC;');
             echo View::make('error/404', (array)$e);
         }    }
 
-    /**
-     * admin can update Blog based on id
-     * @param $data
-     * @return bool
-     */
-    public function adminUpdateBlog($data): bool
-    {
-        $adminUpdateBlog = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
-        $adminUpdateBlog->execute([$data[0], $data[1], $data[2]]);
-//        header('location: ' . 'http://localhost:8000/admin/home');
-        return true;
-    }
 
     /**
      * updatePost based on id
@@ -126,7 +114,6 @@ ORDER BY posts.created_at DESC;');
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data[0], $data[1], $data[2]]);
-//        header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }
 
@@ -139,7 +126,6 @@ ORDER BY posts.created_at DESC;');
     {
         $newBlogPost = $this->db->prepare('UPDATE posts SET title = ?, blog_body = ?, created_at = NOW() WHERE id = ?');
         $newBlogPost->execute([$data['title'], $data['blog_body'], $data['id']]);
-//        header('location: ' . 'http://localhost:8000/blogPosts');
         return true;
     }
 
