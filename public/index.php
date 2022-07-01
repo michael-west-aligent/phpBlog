@@ -42,12 +42,11 @@ $router
     ->post('/admin/home', [\App\Controllers\PostControllers::class, 'adminSeeBlogs'])
     ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
     ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
-
     ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog'])
     ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
     ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog'])
-    ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'adminApprovedComment'])
-    ->post('/admin/deleteBlogComment', [\App\Controllers\CommentControllers::class, 'adminDeleteBlogComment']);
+    ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'approveComment'])
+    ->post('/admin/deleteBlogComment', [\App\Controllers\CommentControllers::class, 'delete']);
 
 (new App(
     $router,

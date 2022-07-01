@@ -65,24 +65,24 @@ class CommentControllers
      * allows an admin user to approve comments before they can be seen
      * @return void
      */
-    public function adminApprovedComment()
+    public function approveComment()
     {
         $data = [
             'comment_id' => $_POST['comment_id'],
             'approved' => $_POST['approved'],
             'post_id' => $_POST['post_id']
         ];
-        $this->commentModel->adminApprovedComment($data);
+        $this->commentModel->approveComment($data);
     }
 
     /**
      * allow admin to delete comments
      * @return void
      */
-    public function adminDeleteBlogComment()
+    public function delete()
     {
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            if ($this->commentModel->adminDeleteBlogComment($_POST['comment_id'],)) {
+            if ($this->commentModel->delete($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('admin is unable to delete blog Comment');

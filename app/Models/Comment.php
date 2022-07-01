@@ -41,7 +41,7 @@ class Comment {
      * @param $data
      * @return bool
      */
-    public function adminApprovedComment($data): bool
+    public function approveComment($data): bool
     {
         $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
         $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);
@@ -53,7 +53,7 @@ class Comment {
      * @param $comment_id
      * @return bool
      */
-    public function adminDeleteBlogComment($comment_id): bool
+    public function delete($comment_id): bool
     {
         $deleteBlogPostComment = $this->db->prepare('DELETE FROM comments WHERE id = ?');
         $deleteBlogPostComment->execute([$comment_id]);
