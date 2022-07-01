@@ -24,6 +24,7 @@ require_once VIEW_PATH . '/header.php';
 
     <div class="form-group">
         <label for="user_id"> Remove User <sup></sup></label>
+<!--        <form action="/admin/delete?--><?php //echo $this->params['user_id'] ?><!--" method="post">-->
         <form action="delete?<?php echo $this->params['user_id'] ?>" method="post">
             <input type="submit" name="user_id" class="btn btn-danger" value="Delete User ">
         </form>

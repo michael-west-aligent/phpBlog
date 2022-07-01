@@ -59,6 +59,8 @@ class CommentControllers
         return View::make('blogs/show', $newComment);
     }
 
+
+
     /**
      * allows an admin user to approve comments before they can be seen
      * @return void
@@ -77,10 +79,10 @@ class CommentControllers
      * allow admin to delete comments
      * @return void
      */
-    public function adminDelete()
+    public function adminDeleteBlogComment()
     {
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            if ($this->commentModel->adminDelete($_POST['comment_id'],)) {
+            if ($this->commentModel->adminDeleteComment($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('admin is unable to delete blog Comment');

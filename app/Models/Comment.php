@@ -53,7 +53,7 @@ class Comment {
      * @param $comment_id
      * @return bool
      */
-    public function adminDelete($comment_id): bool
+    public function adminDeleteComment($comment_id): bool
     {
         $deleteBlogPostComment = $this->db->prepare('DELETE FROM comments WHERE id = ?');
         $deleteBlogPostComment->execute([$comment_id]);

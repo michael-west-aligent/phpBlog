@@ -221,6 +221,7 @@ class PostControllers
         return View::make('admin/editBlog');
     }
 
+
     /**
      * validate blog Data
      * @param $data
@@ -237,6 +238,8 @@ class PostControllers
         }
         return $data;
     }
+
+
 
     /**
      * admin to see full blog including comments waiting to be approved
