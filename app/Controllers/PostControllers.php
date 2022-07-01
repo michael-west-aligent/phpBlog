@@ -273,7 +273,7 @@ class PostControllers
     public function adminDeleteBlog()
     {
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            if ($this->postModel->deletePost($_POST['post_id'],)) {
+            if ($this->postModel->adminDeleteBlog($_POST['post_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('Could not delete blog post');

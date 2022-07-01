@@ -147,7 +147,7 @@ ORDER BY posts.created_at DESC;');
      * @param $postId
      * @return bool
      */
-    public function deletePost($postId): bool
+    public function adminDeleteBlog($postId): bool
     {
         $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
         $deleteBlogPost->execute([$postId]);
