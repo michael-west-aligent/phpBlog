@@ -40,7 +40,7 @@ class PostControllers
      * admin to see blog posts in admin homepage
      * @return View
      */
-    public function adminSeeBlogs(): View
+    public function adminBlogInfoHome(): View
     {
         $posts = $this->postModel->adminBlogInfoHome();
         $blogData = [
