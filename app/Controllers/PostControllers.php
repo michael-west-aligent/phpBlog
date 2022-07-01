@@ -51,32 +51,32 @@ class PostControllers
 
     public function addBlog()
     {
-            if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $data = [
-                    'title' => trim($_POST['title']),
-                    'blog_body' => trim($_POST['blog_body']),
-                    'user_id' => $_SESSION['user_id'],
-                ];
-                $isValid = $this->postModel->validate($data);
-                if ($isValid) {
-                    if ($this->postModel->addPost($data)) {
-                        header('location: ' . 'http://localhost:8000/blogPosts');
-                    }
-                } else {
-                    $data['error_message'] = $this->postModel->validationError($data);
-                    return View::make('/blogs/addBlog', $data);
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = [
+                'title' => trim($_POST['title']),
+                'blog_body' => trim($_POST['blog_body']),
+                'user_id' => $_SESSION['user_id'],
+            ];
+            $isValid = $this->postModel->validate($data);
+            if ($isValid) {
+                if ($this->postModel->addPost($data)) {
+                    header('location: ' . 'http://localhost:8000/blogPosts');
                 }
             } else {
-                $data = [
-                    'title' => '',
-                    'blog_body' => '',
-                    'title_err' => '',
-                    'blog_body_err' => '',
-                    'error_message' => ''
-                ];
+                $data['error_message'] = $this->postModel->validationError($data);
                 return View::make('/blogs/addBlog', $data);
             }
+        } else {
+            $data = [
+                'title' => '',
+                'blog_body' => '',
+                'title_err' => '',
+                'blog_body_err' => '',
+                'error_message' => ''
+            ];
+            return View::make('/blogs/addBlog', $data);
+        }
     }
 
 
@@ -240,7 +240,6 @@ class PostControllers
     }
 
 
-
     /**
      * admin to see full blog including comments waiting to be approved
      * @return View
@@ -263,7 +262,6 @@ class PostControllers
         ];
         return View::make('admin/approveComments', $data);
     }
-
 
 
     /**

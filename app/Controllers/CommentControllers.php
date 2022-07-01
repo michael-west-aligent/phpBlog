@@ -60,7 +60,6 @@ class CommentControllers
     }
 
 
-
     /**
      * allows an admin user to approve comments before they can be seen
      * @return void

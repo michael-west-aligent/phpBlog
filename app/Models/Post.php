@@ -153,6 +153,17 @@ ORDER BY posts.created_at DESC;');
         $deleteBlogPost->execute([$postId]);
         return true;
     }
+    /**
+     * delete blogpost based on id
+     * @param $postId
+     * @return bool
+     */
+    public function deletePost($postId): bool
+    {
+        $deleteBlogPost = $this->db->prepare('DELETE FROM posts WHERE id = ?');
+        $deleteBlogPost->execute([$postId]);
+        return true;
+    }
 
     /**
      * validate post data
