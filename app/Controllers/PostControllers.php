@@ -27,9 +27,9 @@ class PostControllers
      * get All Blog Post Data.
      * @return View
      */
-    public function blogPosts(): View
+    public function allPosts(): View
     {
-        $posts = $this->postModel->getAllBlogPosts();
+        $posts = $this->postModel->allPosts();
         $data = [
             'posts' => $posts,
         ];

@@ -19,7 +19,7 @@ class Post
      * get all blog information
      * @return array|false
      */
-    public function getAllBlogPosts(): bool|array
+    public function allPosts(): bool|array
     {
         $postStatement = $this->db->query('SELECT *,
                                                     posts.id as postId,

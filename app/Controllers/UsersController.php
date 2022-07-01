@@ -136,11 +136,9 @@ class UsersController
                 $user = $this->userModel->currentUser($data['email'], $data['password']);
                 if ($user != null) {
                     if ($user['is_admin'] == 1) {
-                        //if logged in as an admin direct to admin homepage
                         header('location: ' . 'http://localhost:8000/admin/home');
                     }
                     if ($user['is_admin'] == 0) {
-                        //if logged in a general user direct to blogPosts homepage.
                         header('location: ' . 'http://localhost:8000/blogPosts');
                     }
                 } else {
