@@ -10,7 +10,7 @@ use App\Models\User;
 
 class UsersController
 {
-    CONST REQUEST_METHOD_POST = 'POST';
+    const REQUEST_METHOD_POST = 'POST';
     protected User $userModel;
 
     public function __construct()
@@ -18,40 +18,6 @@ class UsersController
         $this->userModel = new User();
     }
 
-    /** validate user inputs
-     * @param $data
-     * @return mixed
-     */
-    public function validateUser($data): mixed
-    {
-        if (empty($data['email'])) {
-            $data['email_err'] = 'Please enter an email';
-        } else {
-            if ($this->userModel->findUserByEmail($data)) {
-                $data['email_err'] = "Email being used";
-            }
-        }
-        if (empty($data['name'])) {
-            $data['name_err'] = 'Please enter a name';
-        } else {
-            if($this->userModel->finderUserByUsername($data)) {
-                $data['name_err'] = "Username being used";
-            }
-        }
-        if (empty($data['password'])) {
-            $data['password_err'] = 'Please enter a password';
-        } elseif (strlen($data['password']) < 6) {
-            $data['password_err'] = 'Password must be at least 6 characters';
-        }
-        if (empty($data['confirm_password'])) {
-            $data['confirm_password_err'] = 'Please confirm password';
-        } else {
-            if ($data['password'] != $data['confirm_password']) {
-                $data['confirm_password_err'] = 'Passwords do not match, try again';
-            }
-        }
-        return $data;
-    }
 
     /**
      * register a new user
@@ -71,17 +37,16 @@ class UsersController
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
-            $data2 = $this->validateUser($data);
-            if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err'])) {
-                $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
-                if ($this->userModel->newRegister($data2)) {
+            $validData = $this->validateUser($data);
+            if (empty($validData['email_err']) && empty($validData['name_err']) && empty($validData['password_err']) && empty($validData['confirm_password_err'])) {
+                $validData['password'] = password_hash($validData['password'], PASSWORD_DEFAULT);
+                if ($this->userModel->newRegister($validData)) {
                     header('location: ' . 'http://localhost:8000/users/login');
                 }
             } else {
-                return View::make('users/userRegister', $data2);
+                return View::make('users/userRegister', $validData);
             }
-        }
-        else {
+        } else {
             $data = [
                 'name' => '',
                 'email' => '',
@@ -118,41 +83,77 @@ class UsersController
                     $data['email_err'] = 'Invalid attempt';
                 }
             }
-            if(!empty($dataRow)) {
+            if (!empty($dataRow)) {
                 $hashed_password = $dataRow['password'];
-            } else {$hashed_password = '';
+            } else {
+                $hashed_password = '';
             }
-                if (empty($data['password'])) {
-                    $data['password_err'] = 'Please enter a password';
-                } elseif (!password_verify($data['password'], $hashed_password)) {
-                    $data['password_err'] = 'Invalid attempt';
+            if (empty($data['password'])) {
+                $data['password_err'] = 'Please enter a password';
+            } elseif (!password_verify($data['password'], $hashed_password)) {
+                $data['password_err'] = 'Invalid attempt';
+            }
+            if (empty($data['email_err']) && empty($data['password_err'])) {
+                $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
+                if ($currentUser) {
+                    $this->createUserSession($currentUser);
                 }
-                if (empty($data['email_err']) && empty($data['password_err'])) {
-                    $currentUser = $this->userModel->currentUser($data['email'], $data['password']);
-                    if ($currentUser) {
-                        $this->createUserSession($currentUser);
-                    }
+            }
+            $user = $this->userModel->currentUser($data['email'], $data['password']);
+            if ($user != null) {
+                if ($user['is_admin'] == 1) {
+                    header('location: ' . 'http://localhost:8000/admin/home');
                 }
-                $user = $this->userModel->currentUser($data['email'], $data['password']);
-                if ($user != null) {
-                    if ($user['is_admin'] == 1) {
-                        header('location: ' . 'http://localhost:8000/admin/home');
-                    }
-                    if ($user['is_admin'] == 0) {
-                        header('location: ' . 'http://localhost:8000/blogPosts');
-                    }
-                } else {
-                    return View::make('users/userLogin', $data);
+                if ($user['is_admin'] == 0) {
+                    header('location: ' . 'http://localhost:8000/blogPosts');
                 }
             } else {
-                $data = [
-                    'email' => '',
-                    'password' => '',
-                    'email_err' => '',
-                    'password_err' => '',
-                ];
                 return View::make('users/userLogin', $data);
+            }
+        } else {
+            $data = [
+                'email' => '',
+                'password' => '',
+                'email_err' => '',
+                'password_err' => '',
+            ];
+            return View::make('users/userLogin', $data);
         }
+    }
+
+    /** validate user inputs
+     * @param $data
+     * @return mixed
+     */
+    public function validateUser($data): mixed
+    {
+        if (empty($data['email'])) {
+            $data['email_err'] = 'Please enter an email';
+        } else {
+            if ($this->userModel->findUserByEmail($data)) {
+                $data['email_err'] = "Email being used";
+            }
+        }
+        if (empty($data['name'])) {
+            $data['name_err'] = 'Please enter a name';
+        } else {
+            if ($this->userModel->finderUserByUsername($data)) {
+                $data['name_err'] = "Username being used";
+            }
+        }
+        if (empty($data['password'])) {
+            $data['password_err'] = 'Please enter a password';
+        } elseif (strlen($data['password']) < 6) {
+            $data['password_err'] = 'Password must be at least 6 characters';
+        }
+        if (empty($data['confirm_password'])) {
+            $data['confirm_password_err'] = 'Please confirm password';
+        } else {
+            if ($data['password'] != $data['confirm_password']) {
+                $data['confirm_password_err'] = 'Passwords do not match, try again';
+            }
+        }
+        return $data;
     }
 
     /**
@@ -198,9 +199,9 @@ class UsersController
             $data2 = $this->validateUser($data);
             if (empty($data2['email_err']) && empty($data2['name_err']) && empty($data2['password_err']) && empty($data2['confirm_password_err']) && empty($data2['is_admin_err'])) {
                 $data2['password'] = password_hash($data2['password'], PASSWORD_DEFAULT);
-                        if ($this->userModel->adminUserAdd($data2)) {
-            header('location: ' . 'http://localhost:8000/admin/home');
-        }
+                if ($this->userModel->adminUserAdd($data2)) {
+                    header('location: ' . 'http://localhost:8000/admin/home');
+                }
             } else {
                 return View::make('admin/addUser', $data2);
             }
@@ -221,21 +222,20 @@ class UsersController
         }
     }
 
-
     /**
      * @return View
      */
     public function adminUpdateUser(): View
     {
         $user = $this->userModel->getUserById($_POST['id']);
-        if($user === false) {
+        if ($user === false) {
             return View::make('error/404');
         }
-            $data = [
-                'user_id' => ($user['id']),
-                'is_admin' => ($user['is_admin']),
-                'username' => ($user['username'])
-            ];
+        $data = [
+            'user_id' => ($user['id']),
+            'is_admin' => ($user['is_admin']),
+            'username' => ($user['username'])
+        ];
         return View::make('admin/updateUser', $data);
     }
 
@@ -257,11 +257,9 @@ class UsersController
      */
     public function removeUser(): void
     {
-        if($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST)
-        {
+        if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
             $id = explode('?', $_SERVER['REQUEST_URI'])[1];
-            if($this->userModel->adminRemove($id))
-            {
+            if ($this->userModel->adminRemove($id)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('Unable to delete User ');

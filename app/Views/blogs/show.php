@@ -60,6 +60,8 @@ if ($_SESSION != null) :
         <div class="form-group">
             <label for="comment"> Add Comment To Blog </label>
             <sup>* Blog Comments can be a maximum of 50 characters</sup>
+            <br>
+            <sup> Comments will only display once they have been approved </sup>
             <div class="form-group">
             <textarea maxlength="50" name="blog_body" class="form-control form-control-lg"<?php echo (!empty($this->params
                 ['comment_error']) && ($this->params['comment_error'] != '')) ? 'is-invalid' : ''; ?>></textarea>
