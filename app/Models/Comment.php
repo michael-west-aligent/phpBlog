@@ -41,7 +41,7 @@ class Comment {
      * @param $data
      * @return bool
      */
-    public function adminApproved($data): bool
+    public function adminApprovedComment($data): bool
     {
         $adminUpdateBlog = $this->db->prepare('UPDATE comments SET  approved = ?  WHERE id = ?');
         $adminUpdateBlog->execute([$data['approved'], $data['comment_id']]);

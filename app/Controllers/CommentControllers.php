@@ -65,14 +65,14 @@ class CommentControllers
      * allows an admin user to approve comments before they can be seen
      * @return void
      */
-    public function adminApproved()
+    public function adminApprovedComment()
     {
         $data = [
             'comment_id' => $_POST['comment_id'],
             'approved' => $_POST['approved'],
             'post_id' => $_POST['post_id']
         ];
-        $this->commentModel->adminApproved($data);
+        $this->commentModel->adminApprovedComment($data);
     }
 
     /**
