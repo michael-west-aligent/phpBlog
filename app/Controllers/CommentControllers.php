@@ -82,7 +82,7 @@ class CommentControllers
     public function adminDeleteBlogComment()
     {
         if ($_SERVER['REQUEST_METHOD'] == self::REQUEST_METHOD_POST) {
-            if ($this->commentModel->adminDeleteComment($_POST['comment_id'],)) {
+            if ($this->commentModel->adminDeleteBlogComment($_POST['comment_id'],)) {
                 header('location: ' . 'http://localhost:8000/admin/home');
             } else {
                 die('admin is unable to delete blog Comment');
