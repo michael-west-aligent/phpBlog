@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace App\Routers;
 
 use App\Exceptions\RouteNotFoundException;
-use mysql_xdevapi\CollectionModify;
+
 
 class Router
 {
-
     private array $routes;
 
     public function register(string $requestMethod, string $route, callable|array $action): self
     {
         $this->routes[$requestMethod][$route] = $action;
-
         return $this;
     }
 
@@ -36,29 +34,31 @@ class Router
 
     public function resolve(string $requestUri, string $requestMethod)
     {
+//        echo("URI: $requestUri <br />");
+//        echo("method: $requestMethod <br />");
+
         $route = explode('?', $requestUri)[0];
+//        echo("Route: $route <br />");
+
         $action = $this->routes[$requestMethod][$route] ?? null;
+//        echo("Action: $action <br />");
+
 
         if (! $action) {
             throw new RouteNotFoundException();
         }
-
         if (is_callable($action)) {
             return call_user_func($action);
         }
-
         if (is_array($action)) {
             [$class, $method] = $action;
-
             if (class_exists($class)) {
                 $class = new $class();
-
                 if (method_exists($class, $method)) {
                     return call_user_func_array([$class, $method], []);
                 }
             }
         }
-
         throw new RouteNotFoundException();
     }
 

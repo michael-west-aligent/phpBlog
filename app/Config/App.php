@@ -4,10 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Config;
 
-use App\Config\Config;
-use App\Config\DB;
 use App\Routers\Router;
 use App\Exceptions\RouteNotFoundException;
+use App\View;
 
 class App
 {

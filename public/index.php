@@ -1,19 +1,13 @@
 <?php
 
 //require_once '../app/bootstrap.php';
+session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
-//Init Core Library
-//$init = new Core;
-
 use App\Config\App;
-use App\Config\Config;
 use App\Routers\Router;
-use App\Controllers\HomeController;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-
-
 $dotenv->load();
 
 const VIEW_PATH = __DIR__ . '/../app/Views';
@@ -22,14 +16,37 @@ $router = new Router();
 
 $router
     ->get('/', [\App\Controllers\HomeController::class, 'home'])
-    ->get('/signup', [\App\Controllers\SignUpController::class, 'signup'])
-    ->get('/login', [\App\Controllers\LoginController::class, 'login'])
-    ->get('/invoices', [\App\Controllers\InvoiceController::class, 'invoices'])
-    ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-    ->post('/invoices/create', [\App\Controllers\InvoiceController::class, 'index']);
-
-
-//echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
+    ->get('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->post('/users/register', [\App\Controllers\UsersController::class, 'register'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->post('/users/userLogin', [\App\Controllers\UsersController::class, 'userLogin'])
+    ->get('/users/login', [\App\Controllers\UsersController::class, 'logout'])
+    ->get('/blogPosts', [\App\Controllers\PostControllers::class, 'allPosts'])
+    ->get('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+    ->post('/blog/addBlog', [\App\Controllers\PostControllers::class, 'addBlog'])
+    ->get('/blog/show', [\App\Controllers\PostControllers::class, 'showSingleBlog'])
+    ->post('/blog/show', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
+    ->post('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+    ->get('/blog/edit', [\App\Controllers\PostControllers::class, 'editBlog'])
+    ->post('/blog/updatePost', [\App\Controllers\PostControllers::class, 'updatePost'])
+    ->get('/blog/updatePost', [\App\Controllers\PostControllers::class, 'updatePost'])
+    ->post('/blog/delete', [\App\Controllers\PostControllers::class, 'deleteBlog'])
+    ->post('/blog/addComment', [\App\Controllers\CommentControllers::class, 'addBlogComment'])
+    ->get('/admin/home', [\App\Controllers\UsersController::class, 'adminHome'])
+    ->get('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
+    ->post('/admin/addUser', [\App\Controllers\UsersController::class, 'adminAddUser'])
+    ->get('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/admin/updateUserStatus', [\App\Controllers\UsersController::class, 'adminUpdateUser'])
+    ->post('/admin/updateUser', [\App\Controllers\UsersController::class, 'adminUpdateUser2'])
+    ->post('/admin/delete', [\App\Controllers\UsersController::class, 'removeUser'])
+    ->post('/admin/home', [\App\Controllers\PostControllers::class, 'adminBlogInfoHome'])
+    ->get('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+    ->post('/admin/editBlog', [\App\Controllers\PostControllers::class, 'adminEditBlog'])
+    ->post('/admin/deleteBlog', [\App\Controllers\PostControllers::class, 'adminDeleteBlog'])
+    ->post('/admin/submitEditBlog', [\App\Controllers\PostControllers::class, 'updatePost'])
+    ->get('/admin/approveBlogComment', [\App\Controllers\PostControllers::class, 'adminFullBlog'])
+    ->post('/admin/approvedComment', [\App\Controllers\CommentControllers::class, 'approveComment'])
+    ->post('/admin/deleteBlogComment', [\App\Controllers\CommentControllers::class, 'delete']);
 
 (new App(
     $router,
